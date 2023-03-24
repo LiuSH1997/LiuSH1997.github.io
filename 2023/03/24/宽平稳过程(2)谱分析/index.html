@@ -31,7 +31,7 @@
 <meta property="og:description" content="这篇文章介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-24T10:58:07.150Z">
-<meta property="article:modified_time" content="2023-03-24T13:01:09.637Z">
+<meta property="article:modified_time" content="2023-03-24T15:11:05.631Z">
 <meta property="article:author" content="&lt;font color&#x3D;&quot;#000000&quot;&gt;Liu Shuhao&lt;&#x2F;font&gt;">
 <meta property="article:tag" content="数学">
 <meta property="article:tag" content="随机过程">
@@ -229,7 +229,157 @@ target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi
 </ol>
 <p>实际上光谱、抗菌谱都是谱分解过程的产物，它们可以让我们从不同角度认识特定对象，进而使我们有机会可以更深入地了解这些对象。在本文中我们要讨论的对象是一个宽平稳随机过程<span
 class="math inline">\(\mathbb{X}(t)\)</span>，这里的谱也就是我们熟悉的频率。</p>
+<p>首先我们先回顾一下确定性函数的傅里叶分解。</p>
+<p>对于一个周期为<span class="math inline">\(T\)</span>的实函数<span
+class="math inline">\(X(t)\)</span>，有 <span class="math display">\[
+X(t) = \sum_{k=-\infty}^{\infty} \alpha_k \exp (\mathrm{i}\omega_kt) ,
+\]</span> 其中，<span
+class="math inline">\(\omega_k=\cfrac{2k\pi}{T}\)</span>，<span
+class="math inline">\(\cfrac{2\pi}{T}\)</span>被称作基频，并且 <span
+class="math display">\[
+\alpha_k = \cfrac{1}{T} \int_{-T/2}^{T/2} X(t)
+\exp(-\mathrm{i}\omega_kt)\mathrm{d}t .
+\]</span> 而如果<span
+class="math inline">\(X(t)\)</span>是非周期函数，则对于给定的一个<span
+class="math inline">\(T\)</span>，上式在区间<span
+class="math inline">\(\left[-\cfrac{T}{2},\cfrac{T}{2}\right]\)</span>内仍成立，而在该区间外，表达式右端不再等于左端，而是对<span
+class="math inline">\(X(t)\)</span>基于区间<span
+class="math inline">\(\left[-\cfrac{T}{2},\cfrac{T}{2}\right]\)</span>做周期延拓。</p>
+<p>此时令<span class="math inline">\(T\rightarrow
+\infty\)</span>，上式中q求和将被表示为积分，进而得到我们熟悉的傅里叶变换：
+<span class="math display">\[
+\begin{eqnarray}
+\hat{X}(\omega) &amp; = &amp; \int_{-\infty}^\infty X(t) \exp
+(-\mathrm{i}\omega t) \mathrm{d}t , \\
+X(t) &amp; = &amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty \hat{X}(\omega)
+\exp (\mathrm{i}\omega t) \mathrm{d}\omega ,
+\end{eqnarray}
+\]</span></p>
+<blockquote>
+<p>积分和的形式可以简单记为 <span class="math display">\[
+\sum_k f(x_k) \Delta x_k \stackrel{\Delta x_k\rightarrow
+0}{\longrightarrow} \int f(x) \mathrm{d}x ,
+\]</span> 其中，<span class="math inline">\(\Delta x_k = x_k -
+x_{k-1}\)</span>。这里要注意<span class="math inline">\(\Delta
+x_k\)</span>的形式和前面<span
+class="math inline">\(x_k\)</span>的形式保持一致。</p>
+</blockquote>
+<p>需要注意的是，函数<span
+class="math inline">\(X(t)\)</span>的傅里叶变换存在的充分条件是其在无限区间内绝对可积，即
+<span class="math display">\[
+\int_{-\infty}^\infty \left| X(t) \right| \mathrm{d} t &lt; +\infty .
+\]</span> 但这并非必要条件。
+当引入广义函数的概念后，许多不满足绝对可积条件的函数也能进行傅里叶变换，这在后面的内容中将体现。</p>
 <h1 id="随机过程的谱分析功率谱密度">随机过程的谱分析：功率谱密度</h1>
+<p>对于宽平稳随机过程<span
+class="math inline">\(\mathbb{X}(t)\)</span>，我们仍然可以将上述过程进行到
+<span class="math display">\[
+\mathbb{X}(t) = \cfrac{1}{2\pi} \sum_{k=-\infty}^\infty
+\left(\int_{-T/2}^{T/2} X(s) \exp(-\mathrm{i} \cfrac{2k\pi}{T}
+s)\mathrm{d}s\right) \exp (\mathrm{i} \cfrac{2k\pi}{T} t)
+\cfrac{2\pi}{T} .
+\]</span> 然而，此后并不能直接令<span class="math inline">\(T\rightarrow
+\infty\)</span>来得到<span
+class="math inline">\(\mathbb{X}\)</span>的傅里叶变换，因为宽平稳过程在无穷远处并不能保证绝对收敛，从而不满足绝对可积这一条件。</p>
+<p>此时我们可以另辟蹊径，既然不能考察<span
+class="math inline">\(\mathbb{X}\)</span>本身，是否可以考察其相关函数<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>呢？答案是肯定的。</p>
+<p>我们从这一积分式开始 <span class="math display">\[
+\int_{-T/2}^{T/2} \mathbb{X}(t) \exp(-\mathrm{i} \omega t)\mathrm{d}t
+\]</span></p>
+<blockquote>
+<p>注意这个积分式并非<span
+class="math inline">\(\mathbb{X}\)</span>的傅里叶变换，因为虽然这里的变量是连续的，但积分区间并非无穷。</p>
+</blockquote>
+<p>取该积分的模平方的期望，乘以<span
+class="math inline">\(\cfrac{1}{T}\)</span>，再令<span
+class="math inline">\(T\rightarrow\infty\)</span>，即 <span
+class="math display">\[
+\lim_{T\rightarrow\infty} \cfrac{1}{T} E \left|
+\int_{-T/2}^{T/2} \mathbb{X}(t) \exp(-\mathrm{i} \omega t)\mathrm{d}t
+\right| ^2
+\]</span></p>
+<blockquote>
+<p>这里取模方的过程实际上损失了这段信号的相位信息，得到的结果可以认为是其“能量”，继而再乘以<span
+class="math inline">\(\cfrac{1}{T}\)</span>并取极限后得到的结果可以认为是“能量密度”。</p>
+</blockquote>
+<p>进一步计算该式， $$ <span class="math display">\[\begin{eqnarray}
+
+\cfrac{1}{T} E \left|
+\int_{-T/2}^{T/2} \mathbb{X}(t) \exp(-\mathrm{i} \omega t)\mathrm{d}t
+\right| ^2
+
+&amp; = &amp;
+
+\cfrac{1}{T} E \left(
+\int_{-T/2}^{T/2} \mathbb{X}(t) \exp(-\mathrm{i} \omega t)\mathrm{d}t
+\right)
+\overline{ \left(
+\int_{-T/2}^{T/2} \mathbb{X}(s) \exp(-\mathrm{i} \omega s)\mathrm{d}s
+\right) } \\
+
+&amp; = &amp; \cfrac{1}{T} \int_{-T/2}^{T/2} \int_{-T/2}^{T/2} E\left(
+\mathbb{X}(t) \overline{\mathbb{X}(s)} \right)
+\exp (-\mathrm{i} \omega (t-s)) \mathrm{d}t \mathrm{d}s
+
+\end{eqnarray}\]</span> $$ 其中，$ E( (t) )<span
+class="math inline">\(是\)</span><span
+class="math inline">\(的自相关函数\)</span>R_(t,s) = R_(t-s)<span
+class="math inline">\(（\)</span>$是宽平稳的）。</p>
+<p>于是，上式可以继续写为 <span class="math display">\[
+\cdots = \cfrac{1}{T} \int_{-T/2}^{T/2} \int_{-T/2}^{T/2}
+R_\mathbb{X}(t-s)
+\exp (-\mathrm{i} \omega (t-s)) \mathrm{d}t \mathrm{d}s
+\]</span> 这里被积函数看似有两个变量<span class="math inline">\(t,
+s\)</span>，实际上只与二者之差有关系，于是我们可以考虑换元。令<span
+class="math inline">\(u=t-s, v=t+s\)</span>，上式可以写为 <span
+class="math display">\[
+\begin{eqnarray}
+\cdots &amp; = &amp; \int_{-T}^{T} \left( 1- \cfrac{|u|}{T} \right)
+R_\mathbb{X}(u)
+\exp (-\mathrm{i} \omega u) \mathrm{d}u \\
+&amp; \stackrel{T \rightarrow \infty}{\longrightarrow} &amp;
+\int_{-\infty}^{\infty} R_\mathbb{X}(u)
+\exp (-\mathrm{i} \omega u) \mathrm{d}u
+\end{eqnarray}
+\]</span></p>
+<blockquote>
+<p>关于多元积分的换元，这里不再过多赘述了。主要需要注意：</p>
+<ol type="1">
+<li>被积函数中自变量的替换；</li>
+<li>积分元 <span class="math inline">\(\mathrm{d}t\mathrm{d}s = \left|
+\det \left( \cfrac{\partial(t,s)}{\partial(u,v)} \right) \right|
+\mathrm{d}u \mathrm{d} v\)</span>；</li>
+<li>积分区间的需要对应考虑。</li>
+</ol>
+</blockquote>
+<p>这正好是<span class="math inline">\(\mathbb{X}\)</span>相关函数<span
+class="math inline">\(R_\mathbb{X}\)</span>的傅里叶变换，可以记为 <span
+class="math display">\[
+S_\mathbb{X} (\omega) = \int_{-\infty}^{\infty} R_\mathbb{X}(u) \exp
+(-\mathrm{i} \omega u) \mathrm{d}u .
+\]</span> <span class="math inline">\(S_\mathbb{X}\)</span>又被称为<span
+class="math inline">\(\mathbb{X}\)</span>的功率谱密度(Power Spectral
+Density, PSD)。</p>
+<p>相应的傅里叶变换对就表示为 <span class="math display">\[
+\begin{eqnarray}
+S_\mathbb{X} (\omega) &amp; = &amp; \int_{-\infty}^{\infty}
+R_\mathbb{X}(u) \exp (-\mathrm{i} \omega u) \mathrm{d}u , \\
+R_\mathbb{X}(u) &amp; = &amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty
+S_\mathbb{X} (\omega) \exp (\mathrm{i}\omega u) \mathrm{d}\omega ,
+\end{eqnarray}
+\]</span> 令逆变换中<span class="math inline">\(u=0\)</span>，则有 <span
+class="math display">\[
+\begin{eqnarray}
+E \left| \mathbb{X}(t) \right| ^2 &amp; = &amp; R_\mathbb{X}(0) \\
+&amp; = &amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty S_\mathbb{X}
+(\omega)  \mathrm{d}\omega
+\end{eqnarray}
+\]</span>
+即功率谱密度在无穷区间上的积分是一个常量，而功率谱密度本身反应了随机过程在每一个频点上的功率大小。</p>
+<blockquote>
+<p>这里的概念实际上可以类比概率密度函数和概率的关系。</p>
+</blockquote>
 <h1 id="功率谱密度的性质">功率谱密度的性质</h1>
 
     </div>
