@@ -31,7 +31,7 @@
 <meta property="og:description" content="这篇文章介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-24T10:58:07.150Z">
-<meta property="article:modified_time" content="2023-03-24T15:11:05.631Z">
+<meta property="article:modified_time" content="2023-03-25T04:20:32.873Z">
 <meta property="article:author" content="&lt;font color&#x3D;&quot;#000000&quot;&gt;Liu Shuhao&lt;&#x2F;font&gt;">
 <meta property="article:tag" content="数学">
 <meta property="article:tag" content="随机过程">
@@ -303,29 +303,30 @@ class="math display">\[
 <p>这里取模方的过程实际上损失了这段信号的相位信息，得到的结果可以认为是其“能量”，继而再乘以<span
 class="math inline">\(\cfrac{1}{T}\)</span>并取极限后得到的结果可以认为是“能量密度”。</p>
 </blockquote>
-<p>进一步计算该式， $$ <span class="math display">\[\begin{eqnarray}
-
+<p>进一步计算该式，</p>
+<p><span class="math display">\[
+\begin{eqnarray}
 \cfrac{1}{T} E \left|
 \int_{-T/2}^{T/2} \mathbb{X}(t) \exp(-\mathrm{i} \omega t)\mathrm{d}t
 \right| ^2
-
 &amp; = &amp;
-
 \cfrac{1}{T} E \left(
 \int_{-T/2}^{T/2} \mathbb{X}(t) \exp(-\mathrm{i} \omega t)\mathrm{d}t
 \right)
 \overline{ \left(
 \int_{-T/2}^{T/2} \mathbb{X}(s) \exp(-\mathrm{i} \omega s)\mathrm{d}s
 \right) } \\
-
 &amp; = &amp; \cfrac{1}{T} \int_{-T/2}^{T/2} \int_{-T/2}^{T/2} E\left(
 \mathbb{X}(t) \overline{\mathbb{X}(s)} \right)
 \exp (-\mathrm{i} \omega (t-s)) \mathrm{d}t \mathrm{d}s
-
-\end{eqnarray}\]</span> $$ 其中，$ E( (t) )<span
-class="math inline">\(是\)</span><span
-class="math inline">\(的自相关函数\)</span>R_(t,s) = R_(t-s)<span
-class="math inline">\(（\)</span>$是宽平稳的）。</p>
+\end{eqnarray}
+\]</span></p>
+<p>其中，<span class="math inline">\(E\left( \mathbb{X}(t)
+\overline{\mathbb{X}(s)} \right)\)</span>是<span
+class="math inline">\(\mathbb{X}\)</span>的自相关函数<span
+class="math inline">\(R_\mathbb{X}(t,s) =
+R_\mathbb{X}(t-s)\)</span>（<span
+class="math inline">\(\mathbb{X}\)</span>是宽平稳的）。</p>
 <p>于是，上式可以继续写为 <span class="math display">\[
 \cdots = \cfrac{1}{T} \int_{-T/2}^{T/2} \int_{-T/2}^{T/2}
 R_\mathbb{X}(t-s)
