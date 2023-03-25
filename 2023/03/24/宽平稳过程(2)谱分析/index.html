@@ -23,19 +23,20 @@
     var CONFIG = {"hostname":"shuhaoliu.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="这篇文章介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+  <meta name="description" content="前面一篇文章介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="随机过程笔记：宽平稳过程(2)谱分析">
 <meta property="og:url" content="https://shuhaoliu.com/2023/03/24/%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B(2)%E8%B0%B1%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="三天打鱼">
-<meta property="og:description" content="这篇文章介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:description" content="前面一篇文章介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-24T10:58:07.150Z">
-<meta property="article:modified_time" content="2023-03-25T04:20:32.873Z">
+<meta property="article:modified_time" content="2023-03-25T09:09:17.280Z">
 <meta property="article:author" content="&lt;font color&#x3D;&quot;#000000&quot;&gt;Liu Shuhao&lt;&#x2F;font&gt;">
 <meta property="article:tag" content="数学">
 <meta property="article:tag" content="随机过程">
 <meta property="article:tag" content="宽平稳过程">
+<meta property="article:tag" content="傅里叶分析">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://shuhaoliu.com/2023/03/24/%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B(2)%E8%B0%B1%E5%88%86%E6%9E%90/">
@@ -218,7 +219,7 @@
 
       
         <p><a
-href="../../../../2023/03/23/宽平稳过程(1)时域分析">这篇文章</a>介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
+href="../../../../2023/03/23/宽平稳过程(1)时域分析">前面一篇文章</a>介绍了宽平稳过程的概念和性质，并在时域中对其进行了一定的分析，本文将继续从傅里叶变换开始，以不同的角度继续分析该过程，进而引入功率谱密度的概念，并简单介绍其性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
 target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
 <span id="more"></span>
 <h1 id="确定性信号的频谱分析">确定性信号的频谱分析</h1>
@@ -300,8 +301,18 @@ class="math display">\[
 \right| ^2
 \]</span></p>
 <blockquote>
-<p>这里取模方的过程实际上损失了这段信号的相位信息，得到的结果可以认为是其“能量”，继而再乘以<span
-class="math inline">\(\cfrac{1}{T}\)</span>并取极限后得到的结果可以认为是“能量密度”。</p>
+<p>这里取模方的过程实际上损失了这段信号的相位信息，得到的结果可以认为是这段信号的“能量”，继而再乘以<span
+class="math inline">\(\cfrac{1}{T}\)</span>并取极限后得到的结果可以认为是“能量密度”。比如，若<span
+class="math inline">\(\mathbb{X}\)</span>是一段电信号，代表单位电阻上的电流<span
+class="math inline">\(I\)</span>，那么其对时间<span
+class="math inline">\(t\)</span>积分后取模方，再乘以<span
+class="math inline">\(\cfrac{1}{T}\)</span>所对应的量纲应该是<span
+class="math inline">\(I\)</span>的功率；若<span
+class="math inline">\(\mathbb{X}\)</span>表示作用在单位质量上的力<span
+class="math inline">\(F\)</span>，那么其对时间<span
+class="math inline">\(t\)</span>积分后取模方，再乘以<span
+class="math inline">\(\cfrac{1}{T}\)</span>所对应则是<span
+class="math inline">\(F\)</span>的功率。</p>
 </blockquote>
 <p>进一步计算该式，</p>
 <p><span class="math display">\[
@@ -361,7 +372,8 @@ S_\mathbb{X} (\omega) = \int_{-\infty}^{\infty} R_\mathbb{X}(u) \exp
 (-\mathrm{i} \omega u) \mathrm{d}u .
 \]</span> <span class="math inline">\(S_\mathbb{X}\)</span>又被称为<span
 class="math inline">\(\mathbb{X}\)</span>的功率谱密度(Power Spectral
-Density, PSD)。</p>
+Density, PSD)。<strong>宽平稳过程<span
+class="math inline">\(\mathbb{X}\)</span>的功率谱密度实际上就是其自相关函数的傅里叶变换。</strong></p>
 <p>相应的傅里叶变换对就表示为 <span class="math display">\[
 \begin{eqnarray}
 S_\mathbb{X} (\omega) &amp; = &amp; \int_{-\infty}^{\infty}
@@ -379,9 +391,202 @@ E \left| \mathbb{X}(t) \right| ^2 &amp; = &amp; R_\mathbb{X}(0) \\
 \]</span>
 即功率谱密度在无穷区间上的积分是一个常量，而功率谱密度本身反应了随机过程在每一个频点上的功率大小。</p>
 <blockquote>
-<p>这里的概念实际上可以类比概率密度函数和概率的关系。</p>
+<p>从物理概念的角度入手，能量、功率本身应该是非负的，因此功率谱密度显然应该是非负的；而从数学角度来看，<a
+href="../../../../2023/03/23/宽平稳过程(1)时域分析">前面一篇文章</a>已经介绍过，宽平稳过程<span
+class="math inline">\(\mathbb{X}(t)\)</span>的相关函数<span
+class="math inline">\(R_\mathbb{X}\)</span>是正定的，因此，其傅里叶变换得到的功率谱密度也是非负的。</p>
 </blockquote>
 <h1 id="功率谱密度的性质">功率谱密度的性质</h1>
+<h2 id="非线性性质">非线性性质</h2>
+<p>由于功率谱密度是一个二阶量，一个宽平稳过程的线性变换后，相应的功率谱密度应该是
+<span class="math display">\[
+S_{\alpha\mathbb{X}}(\omega) = \left| \alpha \right| ^2
+S_\mathbb{X}(\omega) .
+\]</span></p>
+<p>同样地，两段宽平稳过程<span
+class="math inline">\(\mathbb{X},\mathbb{Y}\)</span>之和的功率谱密度，通常不等于各自功率谱密度之和，而是相差一个交叉项
+<span class="math display">\[
+S_{\mathbb{X} + \mathbb{Y}}(\omega) = S_\mathbb{X}(\omega) +
+S_\mathbb{Y}(\omega) + 2S_\mathbb{XY}(\omega) ,
+\]</span> 其中，<span
+class="math inline">\(S_\mathbb{XY}(\omega)\)</span>被称作<span
+class="math inline">\(\mathbb{X}\)</span>和<span
+class="math inline">\(\mathbb{Y}\)</span>的互功率谱密度，是它们的互相关函数的傅里叶变换。</p>
+<p>若<span
+class="math inline">\(\mathbb{X}\)</span>是实函数，则其功率谱密度是偶函数。</p>
+<blockquote>
+<p>证明： <span class="math display">\[
+\begin{eqnarray}
+S_\mathbb{X} (\omega) &amp; = &amp; \int_{-\infty}^\infty
+R_\mathbb{X}(u)\exp(-\mathrm{i}\omega u) \mathrm{d}u \\
+&amp; = &amp; \int_{-\infty}^\infty R_\mathbb{X}(u) (\cos \omega u +
+\mathrm{i}\sin \omega u) \mathrm{d}u ,
+\end{eqnarray}
+\]</span> 其中，<span class="math inline">\(R_\mathbb{X}(u) \sin \omega
+u\)</span>这一项是奇函数，这一部分在对称区间内积分为0，因此上式可以继续写为
+<span class="math display">\[
+\begin{eqnarray}
+\cdots &amp; = &amp; \int_{-\infty}^\infty R_\mathbb{X}(u) \cos \omega u
+\mathrm{d}u \\
+&amp; = &amp; 2\int_0^\infty R_\mathbb{X}(u) \cos \omega u \mathrm{d}u ,
+\end{eqnarray}
+\]</span> 于是， <span class="math display">\[
+\begin{eqnarray}
+S_\mathbb{X} (-\omega) &amp; = &amp; 2\int_0^\infty R_\mathbb{X}(u) \cos
+(-\omega u) \mathrm{d}u\\
+&amp; = &amp; 2\int_0^\infty R_\mathbb{X}(u) \cos \omega u \mathrm{d}u
+\\
+&amp; = &amp; S_\mathbb{X} (\omega) ,
+\end{eqnarray}
+\]</span> 即，<span class="math inline">\(S_\mathbb{X}
+(\omega)\)</span>是偶函数。证毕。</p>
+</blockquote>
+<p>另外关于相关函数，有这样一个不等式 <span class="math display">\[
+R_\mathbb{X}(0) - R_\mathbb{X}(n\tau) \geq
+\cfrac{1}{4^n}(R_\mathbb{X}(0) - R_\mathbb{X}(2^n\tau)) ,
+\]</span> 实际上要证明这个不等式，只需要证明<span
+class="math inline">\(n=1\)</span>情况下成立即可，其后可以通过数学归纳法证明。</p>
+<blockquote>
+<p>证明：</p>
+<p><span class="math inline">\(n=1\)</span>时，上述不等式等价于<span
+class="math inline">\(3R_\mathbb{X}(0) - 4R_\mathbb{X}(\tau) +
+R_\mathbb{X}(2\tau) \geq 0 .\)</span></p>
+<p>由于宽平稳过程的自相关函数<span
+class="math inline">\(R_\mathbb{X}\)</span>是正定的，由定义，对于<span
+class="math inline">\(\forall n \in \N^+\)</span>，取<span
+class="math inline">\(\forall \alpha = (\alpha_1, \cdots
+\alpha_n)^\top\)</span>，都有 <span class="math display">\[
+\alpha ^\top
+\left[\begin{array}[] \\
+R_\mathbb{X}(0) &amp; R_\mathbb{X}(\tau) &amp; R_\mathbb{X}(2\tau) \\
+R_\mathbb{X}(\tau) &amp; R_\mathbb{X}(2\tau) &amp; R_\mathbb{X}(0) \\
+R_\mathbb{X}(2\tau) &amp; R_\mathbb{X}(0) &amp; R_\mathbb{X}(\tau)
+\end{array} \right]
+\alpha \geq 0 .
+\]</span> 上式可以表示为这样的形式 <span class="math display">\[
+f_1(\alpha) R_\mathbb{X}(0) + f_2(\alpha) R_\mathbb{X}(\tau) +
+f_3(\alpha) R_\mathbb{X}(2\tau) \geq 0 ,
+\]</span> 其中<span class="math inline">\(f_1, f_2,
+f_3\)</span>的具体形式省略，且对<span
+class="math inline">\(\alpha\)</span>的取值只需要确保<span
+class="math inline">\(f_1(\alpha) = 3, f_2(\alpha) = 4, f_3(\alpha) =
+1\)</span>即可。证毕。</p>
+</blockquote>
+<p>实际上，利用功率谱密度函数的性质也可以证明。</p>
+<blockquote>
+<p>证明：</p>
+<p>根据功率谱密度与相关函数的关系可知 <span class="math display">\[
+\begin{eqnarray}
+R_\mathbb{X}(0) &amp; = &amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty
+S_\mathbb{X} (\omega) \mathrm{d}\omega  , \\
+R_\mathbb{X}(u) &amp; = &amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty
+S_\mathbb{X} (\omega) \exp (\mathrm{i}\omega u) \mathrm{d}\omega , \\
+\end{eqnarray}
+\]</span> 于是， <span class="math display">\[
+\begin{eqnarray}
+3R_\mathbb{X}(0) - 4R_\mathbb{X}(\tau) + R_\mathbb{X}(2\tau) &amp; =
+&amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty S_\mathbb{X} (\omega)
+\left[3-4\exp(\mathrm{i}\omega \tau) + \exp(\mathrm{i}\omega
+2\tau)\right] \mathrm{d}\omega \\
+&amp; = &amp; \cfrac{1}{2\pi} \int_{-\infty}^\infty S_\mathbb{X}
+(\omega) \left(3-4\cos\omega\tau + \cos2\omega\tau\right)
+\mathrm{d}\omega ,
+\end{eqnarray}
+\]</span> 其中， <span class="math display">\[
+\begin{eqnarray}
+3-4\cos(\omega\tau) + \cos(2\omega\tau) &amp; = &amp;
+3-4\cos(\omega\tau) + 2\cos^2(\omega\tau) - 1 \\
+&amp; = &amp; 2(1-\cos\omega \tau)^2 ,
+\end{eqnarray}
+\]</span> 于是，上式可继续写作 <span class="math display">\[
+\begin{eqnarray}
+\cdots &amp; = &amp; \cfrac{1}{\pi} \int_{-\infty}^\infty S_\mathbb{X}
+(\omega) (1-\cos\omega \tau)^2 \mathrm{d}\omega
+\end{eqnarray} ,
+\]</span> 被积函数中，<span
+class="math inline">\(S_\mathbb{X}\)</span>和<span
+class="math inline">\((1-\cos\omega
+\tau)^2\)</span>都是非负的，因此积分结果也是非负的，即 <span
+class="math display">\[
+3R_\mathbb{X}(0) - 4R_\mathbb{X}(\tau) + R_\mathbb{X}(2\tau) =
+\cfrac{1}{\pi} \int_{-\infty}^\infty S_\mathbb{X} (\omega) (1-\cos\omega
+\tau)^2 \mathrm{d}\omega \geq 0 .
+\]</span> 证毕。</p>
+</blockquote>
+<h2 id="卷积与功率谱密度">卷积与功率谱密度</h2>
+<p>现在我们考察随机过程通过一个线性系统后，其功率谱密度将有何变化。</p>
+<p>设<span
+class="math inline">\(\mathbb{X}(t)\)</span>是一个宽平稳的随机过程，现用一线性时不变系统<span
+class="math inline">\(h\)</span>作用与它，得到 <span
+class="math display">\[
+\mathbb{Y}(t) = (h \ast \mathbb{X}) (t) = \int_{-\infty}^\infty
+h(t-\tau) \mathbb{X}(\tau) \mathrm{d}\tau .
+\]</span> 那么<span
+class="math inline">\(\mathbb{Y}\)</span>的相关函数和功率谱密度将是怎样的呢？</p>
+<p>首先看相关函数 <span class="math display">\[
+\begin{eqnarray}
+R_\mathbb{Y}(t,s) &amp; = &amp; E\left( \mathbb{Y}(t)
+\overline{\mathbb{Y}(s)} \right) \\
+&amp; = &amp; E\left( \int_{-\infty}^\infty h(t-\tau) \mathbb{X}(\tau)
+\mathrm{d}\tau \right)
+\overline{ \left(
+\int_{-\infty}^\infty h(s-r) \mathbb{X}(r) \mathrm{d}r
+\right) } \\
+&amp; = &amp; \int_{-\infty}^\infty \mathrm{d}\tau \int_{-\infty}^\infty
+\mathrm{d}r h(t-\tau) \overline{h(s-r)} E(\mathbb{X}(\tau)
+\overline{\mathbb{X}(r)}) \\
+&amp; = &amp; \int_{-\infty}^\infty \mathrm{d}\tau \int_{-\infty}^\infty
+\mathrm{d}r h(t-\tau) \overline{h(s-r)} R_\mathbb{X}(\tau-r) .
+\end{eqnarray}
+\]</span></p>
+<blockquote>
+<p>如何看一个积分式是否是卷积呢？主要看如下两点：</p>
+<ol type="1">
+<li>所有被积函数的自变量之和刚好把积分变量消掉；</li>
+<li>卷积的结果是一个函数，其自变量就是被积函数自变量之和的结果。</li>
+</ol>
+</blockquote>
+<p>目前来看上述积分还不满足卷积的定义。实际上，我们构造<span
+class="math inline">\(h^\prime(t) =
+\overline{h(-t)}\)</span>，那么上式可继续写为 <span
+class="math display">\[
+\begin{eqnarray}
+R_\mathbb{Y}(t,s) &amp; = &amp; \int_{-\infty}^\infty \mathrm{d}\tau
+\int_{-\infty}^\infty \mathrm{d}r h(t-\tau) h^\prime(r-s)
+R_\mathbb{X}(\tau-r) \\
+&amp; = &amp; (h\ast h^\prime \ast R_\mathbb{X}) (t-s).
+\end{eqnarray}
+\]</span> 即随机过程<span class="math inline">\(\mathbb{Y}(t) = (h \ast
+\mathbb{X}) (t)\)</span>仍然是一个宽平稳过程。</p>
+<p>进而我们可以根据卷积定理知道，<span
+class="math inline">\(\mathbb{Y}\)</span>的功率谱密度可以表示为 <span
+class="math display">\[
+S_\mathbb{Y}(\omega) = S_\mathbb{X}(\omega) H(\omega) H^\prime (\omega)
+,
+\]</span> 其中<span
+class="math inline">\(H\)</span>被称作系统的传递函数。现计算<span
+class="math inline">\(H^\prime\)</span>： <span class="math display">\[
+\begin{eqnarray}
+H^\prime (\omega) &amp; = &amp; \int_{-\infty}^\infty h^\prime(t)
+\exp(-\mathrm{i}\omega t) \mathrm{d}t \\
+&amp; = &amp; \int_{-\infty}^\infty \overline{h(-t)}
+\exp(-\mathrm{i}\omega t) \mathrm{d}t \\
+&amp; = &amp; \overline{ \int_{-\infty}^\infty h(-t)
+\exp(\mathrm{i}\omega t) \mathrm{d}t } \\
+&amp; \stackrel{t^\prime = -t}{=} &amp; \overline{ \int_{-\infty}^\infty
+h(t^\prime) \exp(-\mathrm{i}\omega t^\prime) \mathrm{d} t^\prime} \\
+&amp; = &amp; \overline{H(\omega)}，
+\end{eqnarray}
+\]</span> 于是， <span class="math display">\[
+\begin{eqnarray}
+S_\mathbb{Y}(\omega) &amp; = &amp; S_\mathbb{X}(\omega) H(\omega)
+H^\prime (\omega) \\
+&amp; = &amp; S_\mathbb{X}(\omega) H(\omega) \overline{H(\omega)} \\
+&amp; = &amp; S_\mathbb{X}(\omega) \left| H(\omega) \right| ^2，
+\end{eqnarray}
+\]</span> 即宽平稳随机过程<span
+class="math inline">\(\mathbb{X}\)</span>通过线性系统变换得到新的宽平稳随机过程<span
+class="math inline">\(\mathbb{Y}\)</span>，二者的功率谱密度相差因子正是系统的传递函数的模平方。</p>
 
     </div>
 
@@ -394,6 +599,7 @@ E \left| \mathbb{X}(t) \right| ^2 &amp; = &amp; R_\mathbb{X}(0) \\
               <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
               <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/" rel="tag"># 随机过程</a>
               <a href="/tags/%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B/" rel="tag"># 宽平稳过程</a>
+              <a href="/tags/%E5%82%85%E9%87%8C%E5%8F%B6%E5%88%86%E6%9E%90/" rel="tag"># 傅里叶分析</a>
           </div>
 
         
@@ -464,7 +670,7 @@ E \left| \mathbb{X}(t) \right| ^2 &amp; = &amp; R_\mathbb{X}(0) \\
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">确定性信号的频谱分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E7%9A%84%E8%B0%B1%E5%88%86%E6%9E%90%E5%8A%9F%E7%8E%87%E8%B0%B1%E5%AF%86%E5%BA%A6"><span class="nav-number">2.</span> <span class="nav-text">随机过程的谱分析：功率谱密度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E8%B0%B1%E5%AF%86%E5%BA%A6%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">3.</span> <span class="nav-text">功率谱密度的性质</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">确定性信号的频谱分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E7%9A%84%E8%B0%B1%E5%88%86%E6%9E%90%E5%8A%9F%E7%8E%87%E8%B0%B1%E5%AF%86%E5%BA%A6"><span class="nav-number">2.</span> <span class="nav-text">随机过程的谱分析：功率谱密度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E8%B0%B1%E5%AF%86%E5%BA%A6%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">3.</span> <span class="nav-text">功率谱密度的性质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%80%A7%E8%B4%A8"><span class="nav-number">3.1.</span> <span class="nav-text">非线性性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E4%B8%8E%E5%8A%9F%E7%8E%87%E8%B0%B1%E5%AF%86%E5%BA%A6"><span class="nav-number">3.2.</span> <span class="nav-text">卷积与功率谱密度</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -490,7 +696,7 @@ E \left| \mathbb{X}(t) \right| ^2 &amp; = &amp; R_\mathbb{X}(0) \\
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
