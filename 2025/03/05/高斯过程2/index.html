@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的一些重要性质，简单说明了高斯过程的应用场景。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机过程笔记：高斯过程(2)">
+<meta property="og:url" content="http://example.com/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B2/index.html">
+<meta property="og:site_name" content="三天打鱼">
+<meta property="og:description" content="高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的一些重要性质，简单说明了高斯过程的应用场景。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T08:30:08.460Z">
+<meta property="article:modified_time" content="2023-03-19T09:46:06.000Z">
+<meta property="article:author" content="刘书豪">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="随机过程">
+<meta property="article:tag" content="高斯过程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>随机过程笔记：高斯过程(2) | 三天打鱼</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">三天打鱼</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘书豪">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三天打鱼">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          随机过程笔记：高斯过程(2)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-03-05 16:30:08" itemprop="dateCreated datePublished" datetime="2025-03-05T16:30:08+08:00">2025-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-19 17:46:06" itemprop="dateModified" datetime="2023-03-19T17:46:06+08:00">2023-03-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的一些重要性质，简单说明了高斯过程的应用场景。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+<span id="more"></span>
+<h1 id="高斯过程的性质">高斯过程的性质</h1>
+<h2
+id="基本性质验证概率的非负性和归一性">基本性质验证：概率的非负性和归一性</h2>
+<p>在研究高斯过程的性质之前，我们先来验证多元高斯分布概率密度函数是合法的（当然不得不合法，不过我们据此可以熟悉一下矩阵-向量的运算）。</p>
+<p>概率密度函数最基本地满足两点要求：</p>
+<ol type="1">
+<li><p>非负性 <span class="math display">\[
+f\geq0
+\]</span></p></li>
+<li><p>归一性 <span class="math display">\[
+\int f =1
+\]</span></p></li>
+</ol>
+<p>前面已经给出，多元高斯分布地概率密度函数为</p>
+<p><span class="math display">\[
+f_\mathbb{X}(x)=\cfrac{1}{(2\pi)^\frac{n}{2}(\det\Sigma)^\frac{1}{2}}\exp\left(-\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1}(x-\mu)\right)
+\]</span></p>
+<p>对于非负性，<span
+class="math inline">\(e\)</span>指数部分显然非负。而协方差矩阵<span
+class="math inline">\(\Sigma=E((x-\mu)(x-\mu)^\mathrm{T})\)</span>是实对称的，且所有主元<span
+class="math inline">\(\Sigma_{ii} =
+E((x_i-\mu_i)^2)\)</span>都是非负的，故<span
+class="math inline">\(\Sigma\)</span>是正定的。</p>
+<blockquote>
+<p>不妨回头看看实对称矩阵正定的几个等价充要条件。</p>
+</blockquote>
+<p>因此，作为分母，其行列式恒为正。至此，非负性已得到了验证。</p>
+<p>对于归一性，我们可以直接开始计算 <span class="math display">\[
+\int_{\mathbb{R}^n}f_X(x)\mathrm{d}x = \cfrac{1}{(2\pi) ^ \frac{n}{2}
+(\det\Sigma) ^ \frac{1}{2}} \int_{\mathbb{R}^n} \exp \left(
+-\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1} (x-\mu) \right)
+\mathrm{d}x_1\mathrm{d}x_2\cdots\mathrm{d}x_n
+\]</span></p>
+<p>这个积分中，可以认为最难搞的就是被积函数中<span
+class="math inline">\(e\)</span>指数上的<span
+class="math inline">\(\Sigma^{-1}\)</span>了。稍加思考，<span
+class="math inline">\(\Sigma\)</span>是对称且正定的，因此可以将其对角化，写作这样的形式
+<span class="math display">\[
+\Sigma = U^\mathrm{T}\Lambda U
+\]</span> 其中，<span class="math inline">\(U\)</span>是正交的，<span
+class="math inline">\(U^\mathrm{T}U=UU^\mathrm{T}=I\)</span>；<span
+class="math inline">\(\Lambda\)</span>是对角阵，<span
+class="math inline">\(\Lambda = \mathrm{diag}(\lambda_1, \lambda_2,
+\cdots, \lambda_n)\)</span>。进一步地，有 <span class="math display">\[
+\Sigma = U^\mathrm{T} \Lambda^{\frac{1}{2}}U U^\mathrm{T}
+\Lambda^{\frac{1}{2}}U, \\
+\Sigma^{-1} =  U^\mathrm{T} \Lambda^{-\frac{1}{2}}U U^\mathrm{T}
+\Lambda^{-\frac{1}{2}}U = B^{\mathrm{T}} B
+\]</span> 其中，<span class="math inline">\(B = U^\mathrm{T}
+\Lambda^{-\frac{1}{2}}U\)</span>。</p>
+<p>于是，暂时抛开常数项，积分部分 <span class="math display">\[
+\int_{\mathbb{R}^n} \exp \left(
+-\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1} (x-\mu) \right)
+\mathrm{d}x_1\mathrm{d}x_2\cdots\mathrm{d}x_n  =  \int_{\mathbb{R}^n}
+\exp \left( -\cfrac{1}{2}(x-\mu)^\mathrm{T}B^{\mathrm{T}} B (x-\mu)
+\right) \mathrm{d}x_1\mathrm{d}x_2\cdots\mathrm{d}x_n \\
+\]</span> 令<span class="math inline">\(y=B(x-\mu)\)</span>，则有<span
+class="math inline">\(y^\mathrm{T}=(x-\mu)^\mathrm{T}B^\mathrm{T}\)</span>，积分元
+<span class="math display">\[
+\left( \cfrac{\mathrm{d}y}{\mathrm{d}x} \right) = B \Rightarrow
+\mathrm{d}x = (\det B)^{-1}\mathrm{d}y
+\]</span></p>
+<blockquote>
+<p>具体可以看看雅可比积分换元。</p>
+</blockquote>
+<p>于是上面积分就变为了 <span class="math display">\[
+\int_{\mathbb{R}^n} \exp \left( -\cfrac{1}{2}y^{\mathrm{T}} y \right)
+(\det B)^{-1}\mathrm{d}y
+\]</span></p>
+<p>其中，<span class="math inline">\((\det B)^{-1} = (\det
+\Sigma)^{\frac{1}{2}}\)</span>，故积分可以继续写作 <span
+class="math display">\[
+\int_{\mathbb{R}^n} \exp \left( -\cfrac{1}{2}y^{\mathrm{T}} y \right)
+(\det \Sigma)^{\frac{1}{2}}\mathrm{d}y = (\det \Sigma)^{\frac{1}{2}}
+\int_{\mathbb{R}^n} \exp \left( -\cfrac{1}{2}y^{\mathrm{T}} y \right)
+\mathrm{d}y
+\]</span> 注意这里<span
+class="math inline">\(y^{\mathrm{T}}y=\sum_{k=1}^{n}y_k^2\)</span>，再将前面的系数代回，计算<span
+class="math inline">\(f_X\)</span>在全空间的积分，有 <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\int_{\mathbb{R}^n} f_X(x)\mathrm{d}x &amp; =  \int_{\mathbb{R}^n}
+\cfrac{1}{(2\pi) ^ \frac{n}{2} (\det\Sigma) ^ \frac{1}{2}} \exp \left(
+-\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1} (x-\mu) \right) \mathrm{d}x
+\\
+&amp; =  \cfrac{1}{(2\pi) ^ \frac{n}{2} (\det\Sigma) ^ \frac{1}{2}}
+\left((\det \Sigma)^{\frac{1}{2}} \int_{\mathbb{R}^n} \exp \left(
+-\cfrac{1}{2}y^{\mathrm{T}} y \right) \mathrm{d}y \right) \\
+&amp; =  \cfrac{1}{(2\pi) ^ \frac{n}{2} } \int_{\mathbb{R}^n} \exp
+\left( -\cfrac{1}{2}\sum_{k=1}^{n}y_k^2 \right) \mathrm{d}y \\
+&amp; =  \prod_{k=1}^{n} \left( \cfrac{1}{(2\pi) ^ \frac{1}{2} }
+\int_{\mathbb{R}^n} \exp \left( -\cfrac{1}{2}y_k^2 \right) \mathrm{d}y_k
+\right) \\
+\end{aligned}
+\end{equation*}
+\]</span> 括号内积分项可以转换在极坐标下进行很同意得到结果为<span
+class="math inline">\(\sqrt{2\pi}\)</span>。至此我们可以得到最终结果
+<span class="math display">\[
+\int_{\mathbb{R}^n}f_X(x)\mathrm{d}x = 1
+\]</span> 即多元高斯分布的概率密度函数在整个定义空间上的积分确实是<span
+class="math inline">\(1\)</span>。</p>
+<h2 id="线性不变性linearity-invariance">线性不变性(Linearity
+Invariance)</h2>
+<p>定义<span
+class="math inline">\(\mathbb{X}\in\mathbb{R}^n\)</span>是<span
+class="math inline">\(n\)</span>维高斯随机变量，<span
+class="math inline">\(\mathbb{X}\sim N(\mu,\Sigma)\)</span>；<span
+class="math inline">\(A\in \mathbb{R}^{m\times n}\)</span>是<span
+class="math inline">\(m\times n\)</span>的线性变换矩阵，且<span
+class="math inline">\(\mathbb{Y} = A\mathbb{X}\)</span>。那么一定有
+<span class="math display">\[
+\mathbb{Y} \sim (A\mu, A\Sigma A^{\mathrm{T}})
+\]</span>
+通俗地讲，高斯分布的经过线性变换后仍然是高斯分布的。验证这个结论很简单，不过需要一个前提工作，也就是要得到<span
+class="math inline">\(\mathbb{X}\)</span>的特征函数</p>
+<blockquote>
+<p><span class="math display">\[
+\Phi_\mathbb{X}(\omega) = E \left( \exp(i\omega^\mathrm{T}\mathbb{X})
+\right) = \exp \left( i\omega^{\mathrm{T}} \mu - \cfrac{1}{2}\omega
+^{\mathrm{T}}\Sigma \omega \right)
+\]</span></p>
+<p>特征函数是研究随机过程一项很重要的工具，后面会经常用到。这里不妨自己先验证一下，后续有时间我再补充。</p>
+</blockquote>
+<p>据此我们写出<span class="math inline">\(\mathbb{Y}\)</span>的特征函数
+<span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_\mathbb{Y}(\omega) &amp; =  E \left(
+\exp(i\omega^\mathrm{T}\mathbb{Y}) \right) \\
+&amp; =  E \left( \exp(i\omega^\mathrm{T} A\mathbb{X}) \right) \\
+&amp; =  E \left( \exp(i (A^\mathrm{T}\omega)^\mathrm{T} \mathbb{X})
+\right)
+\end{aligned}
+\end{equation*}
+\]</span> 这实际上就是<span
+class="math inline">\(\mathbb{X}\)</span>的特征函数<span
+class="math inline">\(\Phi_\mathbb{X}(\omega^\prime)\)</span>在<span
+class="math inline">\(\omega^\prime = A^\mathrm{T}
+\omega\)</span>处的取值，故 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_\mathbb{Y}(\omega) &amp; = \left. \exp \left( i(\omega^\prime)
+^{\mathrm{T}} \mu - \cfrac{1}{2}(\omega^\prime) ^{\mathrm{T}}\Sigma
+(\omega^\prime) \right) \right|_{\omega^\prime = A^\mathrm{T} \omega} \\
+&amp; = \exp \left( i\omega^\mathrm{T}A \mu -
+\cfrac{1}{2}\omega^\mathrm{T}A\Sigma A^\mathrm{T} \omega \right)
+\end{aligned}
+\end{equation*}
+\]</span> 观察这里结果的形式，特征函数<span
+class="math inline">\(\Phi_\mathbb{Y}(\omega)\)</span>实际上就是高斯分布<span
+class="math inline">\(N(A\mu, A\Sigma
+A^\mathrm{T})\)</span>所对应的特征函数。至此，<span
+class="math inline">\(\mathbb{Y} \sim (A\mu, A\Sigma
+A^{\mathrm{T}})\)</span>得证。</p>
+<h2
+id="联合分布joint-distribution与边缘分布marginal-distribution">联合分布(Joint
+Distribution)与边缘分布(Marginal Distribution)</h2>
+<p>现在来考察多维随机变量联合高斯分布和边缘高斯分布的关系。</p>
+<p>现有<span class="math inline">\(\mathbb{X} = \left( X_1, X_2, \cdots
+, X_n\right)^\mathrm{T}\)</span>，另<span
+class="math inline">\(\widetilde{\mathbb{X}} = \left( X_{n_1}, X_{n_2},
+\cdots , X_{n_k}\right)^\mathrm{T}\)</span>，其中， <span
+class="math inline">\(n_1, n_2, \cdots , n_k \in
+\left(1,2,\cdots,n\right)\)</span>。根据前面的线性不变性，<span
+class="math inline">\(\widetilde{\mathbb{X}}\)</span>显然也是高斯的。即，联合高斯分布是能充分说明其边缘分布也是高斯的。</p>
+<p>这个结论反过来成立吗？答案是未必的。那么要如何判断多维随机变量的高斯性呢？这里给出一个判据：</p>
+<blockquote>
+<p>对随机变量<span class="math inline">\(\mathbb{X} \in
+\mathbb{R}^n,\forall \alpha \in \mathbb{R}^n\)</span>，都有<span
+class="math inline">\(\alpha^{\mathrm{T}} \mathbb{X} \sim N\)</span>
+是（一维）高斯分布的，则<span class="math inline">\(\mathbb{X}\sim
+N\)</span>是多元高斯分布的。</p>
+</blockquote>
+<p>实际上这是一个充分必要条件。下面来证明。</p>
+<p><strong>必要性“<span
+class="math inline">\(\Leftarrow\)</span>”</strong></p>
+<p>这里必要性是显然的，实际上是线性不变性的一种特殊情况而已。</p>
+<p><strong>充分性“<span
+class="math inline">\(\Rightarrow\)</span>”</strong></p>
+<p>证：根据定义，写出随机变量<span
+class="math inline">\(\mathbb{X}\)</span>的特征函数 <span
+class="math display">\[
+\Phi_\mathbb{X}(\omega) = E\left( \exp\left(
+i\omega^\mathrm{T}\mathbb{X} \right) \right)
+\]</span> 由于目前还不知道<span
+class="math inline">\(\mathbb{X}\)</span>的情况，不太好继续往下写了。然而这里我们已知<span
+class="math inline">\(\forall \alpha \in \mathbb{R}^n\)</span>,
+都有<span class="math inline">\(\alpha^{\mathrm{T}} \mathbb{X} \sim
+N\)</span> ，那么把上面式中<span
+class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>整体看作一个（一维的）随机变量，这个随机变量根据已知条件就可以知道是高斯的了。又根据特征函数的形式，我们可以把上式看作是<span
+class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>的特征函数<span
+class="math inline">\(\Phi_{\omega^\mathrm{T}\mathbb{X}}(\omega^\prime)\)</span>在<span
+class="math inline">\(\omega^\prime = 1\)</span>处的取值，即 <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_\mathbb{X}(\omega) &amp; = \left.
+\Phi_{\omega^\mathrm{T}\mathbb{X}}(\omega^\prime) \right|_{\omega^\prime
+= 1} \\
+&amp; = \exp\left( i\mu_{\omega^\mathrm{T}\mathbb{X}} -
+\cfrac{1}{2}\sigma_{\omega^\mathrm{T}\mathbb{X}}^2 \right)
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>其中，<span class="math inline">\(\mu_{\omega^\mathrm{T}\mathbb{X}} ,
+\sigma_{\omega^\mathrm{T}\mathbb{X}}^2\)</span>分别是一维随机变量<span
+class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>的均值和方差。现计算之。</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\mu_{\omega^\mathrm{T}\mathbb{X}} &amp; = E\left(
+\omega^\mathrm{T}\mathbb{X} \right) = \omega^\mathrm{T}
+E\left(\mathbb{X}\right) = \omega^\mathrm{T}\mu \\
+\\
+\sigma_{\omega^\mathrm{T}\mathbb{X}}^2 &amp; = E\left( \left(
+\omega^\mathrm{T}\mathbb{X} - E\left( \omega^\mathrm{T}\mathbb{X}
+\right) \right)^2 \right) \\
+&amp; = E\left( \left( \omega^\mathrm{T} \mathbb{X} -  \omega^\mathrm{T}
+\mu \right)^2\right) \\
+&amp; = \omega^\mathrm{T} E\left( \left( \mathbb{X} -  \mu \right)
+\left( \mathbb{X} -  \mu \right)^\mathrm{T} \right) \omega \\
+&amp; = \omega^\mathrm{T}\Sigma \omega^\mathrm{T}
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>故</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_\mathbb{X}(\omega) &amp; = \left.
+\Phi_{\omega^\mathrm{T}\mathbb{X}}(\omega^\prime) \right|_{\omega^\prime
+= 1} \\
+&amp; = \exp\left( i\mu_{\omega^\mathrm{T}\mathbb{X}} -
+\cfrac{1}{2}\sigma_{\omega^\mathrm{T}\mathbb{X}}^2 \right) \\
+&amp; = \exp\left( i\omega^\mathrm{T}\mu -
+\cfrac{1}{2}\omega^\mathrm{T}\Sigma \omega^\mathrm{T} \right)
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>得到标标准准的高斯分布特征函数。故<span
+class="math inline">\(\mathbb{X} \sim N(\mu,
+\Sigma)\)</span>是服从联合高斯分布的。</p>
+<p>至此，上述结论的充分性和必要性都得到了证明。</p>
+<h2
+id="相关性correlation与独立性independence">相关性(Correlation)与独立性(Independence)</h2>
+<p>首先需要明白的是，相关是描述随机变量在二阶矩上的联系，独立性是以概率密度函数来描述的随机变量之间的联系。</p>
+<blockquote>
+<p>现有随机变量<span class="math inline">\(X, Y\in
+\mathbb{R}^n\)</span>，其概率密度分布函数和联合概率密度分布函数分别是<span
+class="math inline">\(f_X(x), f_Y(y), f_{XY}(x,y)\)</span>，那么</p>
+<ol type="1">
+<li>若<span
+class="math inline">\(E(XY)=E(X)E(Y)\)</span>，则称随机变量<span
+class="math inline">\(X,Y\)</span>是不相关的；</li>
+<li>若<span class="math inline">\(f_{XY}(x,y) =
+f_X(x)f_Y(y)\)</span>，则称随机变量<span
+class="math inline">\(X,Y\)</span>是独立的。</li>
+</ol>
+</blockquote>
+<p>从定义来看，<strong>独立(Independent)的条件是要强于不相关(Uncorrelated)的</strong>，即
+<span class="math display">\[
+X, Y \left\{
+\begin{array}{rcl}
+\text{independent} &amp; \Rightarrow &amp; \text{uncorrelated} \\
+\text{uncorrelated} &amp; \not \Rightarrow &amp; \text{independent}
+\end{array}
+\right.
+\]</span> 这随便通过一个例子就能看出：</p>
+<p>设<span class="math inline">\(\theta \sim
+U(0,2\pi)\)</span>满足均匀分布，构建随机变量<span
+class="math inline">\(X=\cos(\theta), Y=\sin(\theta)\)</span>。显然<span
+class="math inline">\(X,Y\)</span>不独立；计算其相关： <span
+class="math display">\[
+E(X) = E(\cos \theta) = 0,\\
+E(Y) = E(\sin \theta) = 0,\\
+E(XY) = E(\cos\theta \sin\theta) = \cfrac{1}{2}(\sin 2\theta) = 0
+\]</span> 故<span
+class="math inline">\(E(X)E(Y)=E(XY)\)</span>。尽管<span
+class="math inline">\(X,Y\)</span>不独立，不过也是不相关的。</p>
+<p>那么，如果是高斯分布的随机变量<span
+class="math inline">\(X,Y\)</span>，它们独立就能等价不相关吗？继续来个例子：</p>
+<p>设<span class="math inline">\(X\sim
+N(0,1)\)</span>是服从高斯分布的，又有伯努利随机变量<span
+class="math inline">\(Z\sim \left( \begin{array}{} 1 &amp; -1\\
+\cfrac{1}{2} &amp; \cfrac{1}{2} \end{array} \right)\)</span>，构建<span
+class="math inline">\(Y = ZX\)</span></p>
+<ol type="1">
+<li><p><span class="math inline">\(Y\)</span>是高斯的吗？看特征函数。
+<span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_Y(\omega) &amp; = E\left(\exp (i\omega Y)\right) \\
+&amp; = E\left(\exp (i\omega ZX)\right)\\
+&amp; = E_Z\left( E_X\left(\left. \exp (i\omega ZX) \right|Z \right)
+\right)
+\end{aligned}
+\end{equation*}
+\]</span> 其中，<span class="math inline">\(E_X\)</span>项在，<span
+class="math inline">\(Z\)</span>被“条件住”了，在此可以看作是常量，这一项可以看作是<span
+class="math inline">\(X\)</span>的特征函数<span
+class="math inline">\(\Phi_X(\omega^\prime)\)</span>在<span
+class="math inline">\(\omega^\prime = \omega Z\)</span>处的取值 <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+E_X\left(\left. \exp (i\omega ZX) \right|Z \right) &amp; = \left.
+\Phi_X(\omega^\prime) \right|_{\omega^\prime = \omega Z} \\
+&amp; = \exp \left( i\omega Zm - \cfrac{1}{2}\sigma^2 (\omega Z)^2
+\right)
+\end{aligned}
+\end{equation*}
+\]</span> 其中，由于<span class="math inline">\(X\sim
+N(0,1)\)</span>，故这里的<span class="math inline">\(m=0, \sigma^2 =
+1\)</span>。于是 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_Y(\omega) &amp; = E_Z\left( E_X\left(\left. \exp (i\omega ZX)
+\right|Z \right) \right) \\
+&amp; = E\left( \exp \left(i\omega Zm - \cfrac{1}{2}\sigma^2 (\omega
+Z)^2 \right) \right) \\
+&amp; = E\left( \exp \left(- \cfrac{1}{2}\omega^2 Z^2 \right) \right) \\
+\end{aligned}
+\end{equation*}
+\]</span> 由于<span class="math inline">\(Z\sim \left( \begin{array}{} 1
+&amp; -1\\ \cfrac{1}{2} &amp; \cfrac{1}{2} \end{array}
+\right)\)</span>，因此不论取<span
+class="math inline">\(1\)</span>还是<span
+class="math inline">\(-1\)</span>，<span class="math inline">\(Z^2
+\equiv 1\)</span>。故 <span class="math display">\[
+\Phi_Y(\omega) = \exp(-\cfrac{1}{2}\omega ^2)
+\]</span> 因此，<span
+class="math inline">\(Y\)</span>是标标准准的高斯分布<span
+class="math inline">\(Y\sim N(0,1)\)</span>。</p></li>
+<li><p><span class="math inline">\(X,Y\)</span>相关吗？计算<span
+class="math inline">\(E(XY), E(X)E(Y)\)</span>。 <span
+class="math display">\[
+E(XY) = E(ZX^2) = E(Z)E(X^2)
+\]</span> 其中，<span class="math inline">\(E(Z) = 1\times \cfrac{1}{2}
++ (-1) \times \cfrac{1}{2} = 0\)</span>，故<span
+class="math inline">\(E(XY) = 0\)</span>。</p>
+<p>而<span class="math inline">\(X, Y\)</span>都是<span
+class="math inline">\(m=0, \sigma^2 = 1\)</span>的高斯分布，故<span
+class="math inline">\(E(X) = E(Y) = 0\)</span></p>
+<p>故<span class="math inline">\(E(XY) = E(X)E(Y)\)</span>，<span
+class="math inline">\(X,Y\)</span>不相关。</p></li>
+<li><p><span class="math inline">\(X,Y\)</span>独立吗？ <span
+class="math inline">\(Y =
+ZX\)</span>欸，怎么可能独立？显然不独立啊！</p></li>
+</ol>
+<p>所以，即使<span
+class="math inline">\(X,Y\)</span>都是高斯的，其不相关仍然不能推导出独立。</p>
+<p>怎样的条件下，独立和不相关才能是等价的呢？答案是联合高斯分布，即
+<span class="math display">\[
+X,Y:\ \left.
+\begin{array}{rcl}
+\text{joint Gaussian} \\
+\text{uncorrelated}
+\end{array}
+\right\}
+\Rightarrow \text{independent}
+\]</span> 一般地，如果多维随机变量<span class="math inline">\(\mathbb{X}
+= (X_1, X_2, \cdots, X_n)^\mathrm{T}\in
+\mathbb{R}^n\)</span>是<strong>联合高斯分布</strong>的，那么<span
+class="math inline">\(\mathbb{X}\)</span>各分量<strong>不相关<span
+class="math inline">\(\Leftrightarrow\)</span>独立</strong>。</p>
+<p>下面给出二维<span
+class="math inline">\(n=2\)</span>情况下的证明。</p>
+<p><strong>必要性<span
+class="math inline">\(\Leftarrow\)</span></strong>不需要多说，这是显然的。</p>
+<p>只需要证明<strong>充分性<span
+class="math inline">\(\Rightarrow\)</span></strong></p>
+<p>要说明独立性，首先计算<span class="math inline">\(\mathbb{X} =
+\left(X_1, X_2\right)^\mathrm{T}\)</span>的联合密度分布函数 <span
+class="math display">\[
+f_\mathbb{X}(x_1,x_2) = \cfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
+\exp\left(-\cfrac{1}{2(1-\rho^2)}\left( \cfrac{(x_1-\mu_1)^2}{\sigma_1
+^2} - \cfrac{2\rho(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} +
+\cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2} \right) \right)
+\]</span> 其中，<span class="math inline">\(\mu_k,
+\sigma_k\)</span>是<span
+class="math inline">\(X_k\)</span>的均值和方差<span
+class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
+= E\left( (X_1-\mu_1)(X_2-\mu_2) \right)\)</span>。</p>
+<p>现在我们来看<span class="math inline">\(\exp\)</span>指数上的交叉项：
+<span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\rho &amp; = E\left( (X_1-\mu_1)(X_2-\mu_2) \right) \\
+&amp; = E(X_1X_2) - E(X_1)\mu_2 - E(X_2)\mu_1 + \mu_1\mu_2 \\
+&amp; = E(X_1X_2) - \mu_1\mu_2
+\end{aligned}
+\end{equation*}
+\]</span> 由已知条件，<span
+class="math inline">\(X_1,X_2\)</span>不相关，即<span
+class="math inline">\(E(X_1X_2) = E(X_1)E(X_2) =
+\mu_1\mu_2\)</span>，故<span class="math inline">\(\rho =
+0\)</span>。因此有 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+f_\mathbb{X}(x_1,x_2) &amp; =
+\cfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
+\exp\left(-\cfrac{1}{2(1-\rho^2)}\left( \cfrac{(x_1-\mu_1)^2}{\sigma_1
+^2} - \cfrac{2\rho(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} +
+\cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2} \right) \right)\\
+&amp; = \cfrac{1}{2\pi\sigma_1\sigma_2} \exp\left(-\cfrac{1}{2}\left(
+\cfrac{(x_1-\mu_1)^2}{\sigma_1 ^2} + \cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2}
+\right) \right)\\
+&amp; = \cfrac{1}{\sqrt{2\pi}\sigma_1}
+\exp\left(-\cfrac{1}{2}\cfrac{(x_1-\mu_1)^2}{\sigma_1 ^2}\right) \cdot
+\cfrac{1}{\sqrt{2\pi}\sigma_2}
+\exp\left(-\cfrac{1}{2}\cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2}\right)\\
+&amp; = f_{X_1}(x_1)\cdot f_{X_2}(x_2)
+\end{aligned}
+\end{equation*}
+\]</span> 即<span class="math inline">\(X_1,
+X_2\)</span>相互独立。至此，二维<span
+class="math inline">\(n=2\)</span>情况下，随机变量<span
+class="math inline">\(\mathbb{X} = (X_1, X_2)^\mathrm{T}\in
+\mathbb{R}^n\)</span>是联合高斯分布的，那么<span
+class="math inline">\(\mathbb{X}\)</span>各分量<span
+class="math inline">\(X_1,X_2\)</span>不相关与独立的等价性便证明出来了。</p>
+<p>还有一个比较显然的结论：</p>
+<p>给定一多元随机变量<span class="math inline">\(\mathbb{X} = \left(X_1,
+X_2, \cdots , X_n\right)^\mathrm{T} \in
+\mathbb{R}^n\)</span>，如果其各分量独立，且都服从高斯分布，则<span
+class="math inline">\(\mathbb{X}\)</span>是服从联合高斯分布的。</p>
+<blockquote>
+<p>这个结论过于显而易见了，这里不需要给出证明。</p>
+</blockquote>
+<h2 id="cochran-定理">Cochran 定理</h2>
+<p>设一多维随机变量<span class="math inline">\(\mathbb{X} = \left(X_1,
+X_2, \cdots , X_n\right)^\mathrm{T} \in
+\mathbb{R}^n\)</span>。定义样本均值(sample mean) <span
+class="math display">\[
+\bar{X} = \cfrac{1}{n}\sum_{k=1}^{n} X_k
+\]</span> 和样本方差<span
+class="math inline">\(\bar{S^2}\)</span>(sample variance) <span
+class="math display">\[
+\bar{S^2} = \cfrac{1}{n-1}\sum_{k=1}^{n}\left( X_k
+-  \cfrac{1}{n}\sum_{k=1}^{n} X_k \right)^2
+\]</span></p>
+<blockquote>
+<p>假设每一个<span
+class="math inline">\(X_k\)</span>都有相同的均值和方差，则有<span
+class="math inline">\(E(\bar{X}) = E(X_k),\ E(\bar{S^2}) =
+var(X_K)\)</span>。至于这里前面的分母为什么是<span
+class="math inline">\(n-1\)</span>而不是<span
+class="math inline">\(n\)</span>，将在附章中说明。</p>
+<p>补充说明一点，不妨设<span class="math inline">\(E(\mathbb{X}) =
+E\left(\cfrac{1}{n}\sum_{k=1}^{n} X_k\right) = E(X_1)\)</span>。</p>
+<p>假设<span class="math inline">\(X_k = A + N_k\)</span>，其中<span
+class="math inline">\(A\)</span>是实际值，<span
+class="math inline">\(N_k\)</span>是噪声，有<span
+class="math inline">\(E(X_k)=A\)</span>。</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+var(\mathbb{X}) &amp; = E\left(\left(\cfrac{1}{n} \sum_{k=1}^n (X_k -
+A)\right)^2\right) \\
+&amp; = \cfrac{1}{n^2} E\left(\left(\sum_{k=1}^n (X_k -
+A)\right)^2\right) \\
+&amp; = \cfrac{1}{n^2} \left(\sum_{k=1}^nE\left( (X_k - A)^2\right) +
+\sum_{i \neq j}E\left( (X_i-A)(X_j-A)\right)\right)
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>其中，由于<span
+class="math inline">\(X_k\)</span>之间独立同分布，故交叉项<span
+class="math inline">\(E((X_i - A)(X_j - A)) = 0, \forall i \neq
+j\)</span>。所以 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+var(\mathbb{X}) &amp; = \cfrac{1}{n^2} \sum_{k=1}^nE\left( (X_k -
+A)^2\right) \\
+&amp; = \cfrac{1}{n^2} n E\left( (X_1 - A)^2\right) \\
+&amp; = \cfrac{1}{n}var(X_1)
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>于是可以看出，在每次试验结果独立同分布的前提下，多次试验取平均可以使得结果方差有所下降。</p>
+</blockquote>
+<p><strong>Cochran定理</strong>是指，如果，且<span
+class="math inline">\(\mathbb{X}\)</span>各分类独立同分布，且服从高斯分布，则<span
+class="math inline">\(\bar{X}, \bar{S^2}\)</span>是独立的。</p>
+<p>证明：</p>
+<p>构造一个矩阵 <span class="math display">\[
+Q = \left[
+\begin{array}{}
+\cfrac{1}{\sqrt{n}} &amp; \cfrac{1}{\sqrt{n}} &amp; \cdots &amp;
+\cfrac{1}{\sqrt{n}} \\
+\text{*} &amp; \text{*} &amp; \cdots &amp; \text{*} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\text{*} &amp; \text{*} &amp; \cdots &amp; \text{*}
+\end{array}
+\right]_{(n\times n)}
+\]</span></p>
+<p>这里<span class="math inline">\(Q\)</span>第一行确定，且满足<span
+class="math inline">\(Q\)</span>是正交的<span
+class="math inline">\(QQ^\mathrm{T} = I\)</span>。将<span
+class="math inline">\(Q\)</span>作用于<span
+class="math inline">\(\mathbb{X}\)</span> <span class="math display">\[
+\mathbb{Y} = Q\mathbb{X} = \left[
+\begin{array}{}
+\cfrac{1}{\sqrt{n}}\sum_{k=1}^n X_k \\
+\text{*} \\
+\vdots\\
+\text{*}
+\end{array}
+\right]
+\]</span></p>
+<ol type="1">
+<li><p>由高斯线性性质，<span class="math inline">\(\mathbb{Y} \sim
+N(Q\mu, Q\Sigma Q^\mathrm{T})\)</span></p></li>
+<li><p>计算<span class="math inline">\(\bar{S^2}\)</span> <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\sum_{k=1}^{n}\left( X_k -  \cfrac{1}{n}\sum_{k=1}^{n} X_k \right)^2
+&amp; = \sum_{k=1}^{n}\left( X_k -  \bar{X} \right)^2 \\
+&amp; = \sum_{k=1}^{n}\left( X_k ^ 2- 2X_k\bar{X} + \bar{X}^2\right) \\
+&amp; = \sum_{k=1}^{n}X_k ^ 2- 2\bar{X}\sum_{k=1}^{n}X_k + n\bar{X}^2 \\
+&amp; = \sum_{k=1}^{n}X_k ^ 2-  n\bar{X}^2
+\end{aligned}
+\end{equation*}
+\]</span> 由于<span class="math inline">\(Q\)</span>正交，<span
+class="math inline">\(Y=QX\)</span>，故<span
+class="math inline">\(Y^{\mathrm{T}} Y = X^{\mathrm{T}} Q^{\mathrm{T}} Q
+X = X^{\mathrm{T}} X\)</span>。于是，(2.)中， <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\sum_{k=1}^{n}\left( X_k -  \cfrac{1}{n}\sum_{k=1}^{n} X_k \right)^2
+&amp; = \sum_{k=1}^{n}X_k ^ 2-  n\bar{X}^2 \\
+&amp; = \sum_{k=1}^{n}Y_k ^ 2-  n\bar{X}^2 \\
+&amp; = \left(\cfrac{1}{\sqrt{n}}\sum_{k=1}^n X_k\right)^2 +
+\sum_{k=2}^{n}Y_k ^ 2-  n\bar{X}^2 \\
+&amp; = \cfrac{1}{n} (n\bar{X})^2 +  \sum_{k=2}^{n}Y_k ^ 2-  n\bar{X}^2
+\\
+&amp; = \sum_{k=2}^{n}Y_k ^ 2
+\end{aligned}
+\end{equation*}
+\]</span> 故 <span class="math display">\[
+\bar{S^2} = \cfrac{1}{n-1} \sum_{k=2}^{n}Y_k ^ 2
+\]</span></p></li>
+<li><p>计算<span class="math inline">\(\bar{X}\)</span>
+根本就不用计算了。 <span class="math display">\[
+\bar{X} =\cfrac{1}{\sqrt{n}} Y_1
+\]</span></p></li>
+</ol>
+<p>至此，可以看出，<span
+class="math inline">\(\bar{X}\)</span>是取决于<span
+class="math inline">\(Y_1\)</span>的，而<span
+class="math inline">\(\bar{S^2}\)</span>是取决于<span
+class="math inline">\(Y_2, Y_3, \cdots, Y_n\)</span>的，故<span
+class="math inline">\(\mathbb{X}\)</span>的样本均值和样本方差是独立的。</p>
+<h2 id="条件分布condition-distribution">条件分布(Condition
+Distribution)</h2>
+<p>设<span class="math inline">\(\mathbb{X} = \left[ \begin{array}{}
+\mathbb{X}_1 \\ \mathbb{X}_2 \end{array} \right]\in
+\mathbb{R}^{m+n}\)</span>，其中<span class="math inline">\(\mathbb{X}_1
+\in \mathbb{R}^m, \mathbb{X}_2 \in \mathbb{R}^n\)</span>。 <span
+class="math display">\[
+\mathbb{X} \sim N \left(
+\left(
+\begin{array}{}
+\mu_1 \\ \mu_2
+\end{array}
+\right),
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}
+\right)
+\right)
+\]</span> 其中<span class="math inline">\(\mu_k,
+\Sigma_{kl}\)</span>相应的均值和协方差矩阵。</p>
+<p>那么在条件<span
+class="math inline">\(\mathbb{X}_2\)</span>的约束下，<span
+class="math inline">\(\mathbb{X}_1\)</span>的分布如何？</p>
+<p>写出条件概率密度分布函数 <span class="math display">\[
+f_{\mathbb{X}_1|\mathbb{X}_2}(x_1|x_2) =
+\cfrac{f_{\mathbb{X}_1,\mathbb{X}_2}(x_1, x_2)}{f_{\mathbb{X}_2}(x_2)} =
+\cfrac{c_1
+\exp\left(
+-\cfrac{1}{2}
+\left(
+\begin{array}{}
+x_1^\mathrm{T} - \mu_1^\mathrm{T} &amp; x_2^\mathrm{T} -
+\mu_2^\mathrm{T}
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}
+\right)^{-1}
+\left(
+\begin{array}{}
+x_1 - \mu_1 \\ x_2 - \mu_2
+\end{array}
+\right)
+\right)
+}
+{c_2
+\exp\left(
+-\cfrac{1}{2}
+\left(
+\begin{array}{}
+x_2^\mathrm{T} - \mu_2^\mathrm{T}
+\end{array}
+\right)
+\Sigma_{22}^{-1}
+\left(
+\begin{array}{}
+x_2 - \mu_2
+\end{array}
+\right)
+\right)
+}
+\]</span></p>
+<p>忽略常数项，指数部分是 <span class="math display">\[
+-\cfrac{1}{2}
+\left(
+\begin{array}{}
+x_1^\mathrm{T} - \mu_1^\mathrm{T} &amp; x_2^\mathrm{T} -
+\mu_2^\mathrm{T}
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}
+\right)^{-1}
+\left(
+\begin{array}{}
+x_1 - \mu_1 \\ x_2 - \mu_2
+\end{array}
+\right)
++\cfrac{1}{2}
+\left(
+\begin{array}{}
+x_2^\mathrm{T} - \mu_2^\mathrm{T}
+\end{array}
+\right)
+\Sigma_{22}^{-1}
+\left(
+\begin{array}{}
+x_2 - \mu_2
+\end{array}
+\right)
+\]</span> 这里比较棘手的部分是<span class="math inline">\(\left(
+\begin{array}{} \Sigma_{11} &amp; \Sigma_{12}\\ \Sigma_{21} &amp;
+\Sigma_{22} \end{array}
+\right)^{-1}\)</span>，要求出这个逆，最好把原矩阵对角化 <span
+class="math display">\[
+\left(
+\begin{array}{}
+I &amp; -\Sigma_{12}\Sigma_{22}^{-1}\\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}
+\right)
+\left(
+\begin{array}{}
+I &amp; 0\\
+-\Sigma_{22}^{-1}\Sigma_{21} &amp; I
+\end{array}
+\right) =
+\left(
+\begin{array}{}
+\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21} &amp; 0\\
+0 &amp; \Sigma_{22}
+\end{array}
+\right)
+\]</span></p>
+<p>故 <span class="math display">\[
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array} \right) ^ {-1} =
+\left(
+\begin{array}{}
+I &amp; 0\\
+-\Sigma_{22}^{-1}\Sigma_{21} &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21} &amp; 0\\
+0 &amp; \Sigma_{22}
+\end{array}
+\right)^{-1}
+\left(
+\begin{array}{}
+I &amp; -\Sigma_{12}\Sigma_{22}^{-1}\\
+0 &amp; I
+\end{array}
+\right)
+\]</span> 进一步地， <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+&amp;\left(
+\begin{array}{}
+x_1^\mathrm{T} - \mu_1^\mathrm{T} &amp; x_2^\mathrm{T} -
+\mu_2^\mathrm{T}
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}
+\right)^{-1}
+\left(
+\begin{array}{}
+x_1 - \mu_1 \\ x_2 - \mu_2
+\end{array}
+\right)\\
+=&amp;
+\left(
+\begin{array}{}
+x_1^\mathrm{T} - \mu_1^\mathrm{T} &amp; x_2^\mathrm{T} -
+\mu_2^\mathrm{T}
+\end{array}
+\right)
+\left(
+\begin{array}{}
+I &amp; 0\\
+-\Sigma_{22}^{-1}\Sigma_{21} &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21} &amp; 0\\
+0 &amp; \Sigma_{22}
+\end{array}
+\right)^{-1}
+\left(
+\begin{array}{}
+I &amp; -\Sigma_{12}\Sigma_{22}^{-1}\\
+0 &amp; I
+\end{array}
+\right)
+\left(
+\begin{array}{}
+x_1 - \mu_1 \\ x_2 - \mu_2
+\end{array}
+\right)\\
+= &amp;
+\left(
+x_1^{\mathrm{T}} - \mu_1^{\mathrm{T}} - (x_2^{\mathrm{T}} -
+\mu_2^{\mathrm{T}}) \Sigma_{22}^{-1}\Sigma_{21}
+\right)
+\left(
+\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}
+\right)^{-1}
+\left(
+x_1 - \mu_1 - \Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2)
+\right) \\
+&amp; + (x_2^{\mathrm{T}} - \mu_2^{\mathrm{T}})\Sigma_{22}^{-1} (x_2 -
+\mu_2)
+\end{aligned}
+\end{equation*}
+\]</span> 故指数部分 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}&amp;-\cfrac{1}{2}
+\left(
+\begin{array}{}
+x_1^\mathrm{T} - \mu_1^\mathrm{T} &amp; x_2^\mathrm{T} -
+\mu_2^\mathrm{T}
+\end{array}
+\right)
+\left(
+\begin{array}{}
+\Sigma_{11} &amp; \Sigma_{12}\\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}
+\right)^{-1}
+\left(
+\begin{array}{}
+x_1 - \mu_1 \\ x_2 - \mu_2
+\end{array}
+\right)
++\cfrac{1}{2}
+\left(
+\begin{array}{}
+x_2^\mathrm{T} - \mu_2^\mathrm{T}
+\end{array}
+\right)
+\Sigma_{22}^{-1}
+\left(
+\begin{array}{}
+x_2 - \mu_2
+\end{array}
+\right)\\
+=&amp;
+-\cfrac{1}{2}
+\left(
+x_1^{\mathrm{T}} - \mu_1^{\mathrm{T}} - (x_2^{\mathrm{T}} -
+\mu_2^{\mathrm{T}}) \Sigma_{22}^{-1}\Sigma_{21}
+\right)
+\left(
+\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}
+\right)^{-1}
+\left(
+x_1 - \mu_1 - \Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2)
+\right)\\
+=&amp;
+-\cfrac{1}{2}
+\left(
+x_1 - \mu_{1|2}
+\right)^{\mathrm{T}}
+\Sigma_{1|2}^{-1}
+\left(
+x_1 - \mu_{1|2}
+\right)
+\end{aligned}
+\end{equation*}
+\]</span> 即 <span class="math display">\[
+f_{\mathbb{X}_1|\mathbb{X}_2}(x_1|x_2) =
+\cfrac{f_{\mathbb{X}_1,\mathbb{X}_2}(x_1, x_2)}{f_{\mathbb{X}_2}(x_2)} =
+c\exp\left( -\cfrac{1}{2}
+\left(
+x_1 - \mu_{1|2}
+\right)^{\mathrm{T}}
+\Sigma_{1|2}^{-1}
+\left(
+x_1 - \mu_{1|2}
+\right)\right)
+\]</span> 其中 <span class="math display">\[
+c=\cfrac{c_1}{c_2}, \\
+\mu_{1|2} = \mu_1 + \Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2) =
+E(X_1|X_2),\\
+\Sigma_{1|2} = \Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}
+\]</span></p>
+<p>现在我们来看看这有什么含义。</p>
+<ol type="1">
+<li><p>常数项<span class="math inline">\(c\)</span>不用说了。</p></li>
+<li><p><span class="math inline">\(\mu_{1|2} = \mu_1 +
+\Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2) =
+E(X_1|X_2)\)</span>指的是，本来在没有已知条件的情况下，对<span
+class="math inline">\(X_1\)</span>的期望估计就是纯纯的<span
+class="math inline">\(\mu_1\)</span>，现加入估计<span
+class="math inline">\(X_2\)</span>，代表我们有一定的先验信息，那么第二项<span
+class="math inline">\(\Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2) =
+E(X_1|X_2)\)</span>代表的是这一信息对<span
+class="math inline">\(\mu_1\)</span>的调整，其可以认为是随机变量<span
+class="math inline">\(X_1\)</span>在<span
+class="math inline">\(X_2\)</span>方向的投影。<span
+class="math inline">\(\Sigma_{12}\Sigma_{22}^{-1}\)</span>则可以认为是两个随机变量的夹角，意味着两个随机变量的相关，如果这个相关性越强，那么先验信息<span
+class="math inline">\(X_2\)</span>对结果的影响就越大。在高斯分布的前提下，这样的调整实际上是一种最优的调整。下面我们来说明其为何最优。
+现在我们有先验信息<span
+class="math inline">\(X_2\)</span>，我们要估计在这样的先验信息下<span
+class="math inline">\(X_1\)</span>的最优估计。为简化计算，我们假设它们都是均值为<span
+class="math inline">\(0\)</span>的高斯分布。</p>
+<ul>
+<li><p>最优线性估计<span class="math inline">\(X_1\leftarrow
+X_2\)</span> <span class="math display">\[
+\min_\alpha E\left((X_1 - \alpha X_2)^2\right)
+\]</span> 得到的<span class="math inline">\(\alpha =
+\cfrac{E(X_1X_2)}{E(X_2^2)}\)</span>就是投影。这里不用证明了，各个学科都证明太多次了。</p></li>
+<li><p>最优估计<span class="math inline">\(X_1\leftarrow X_2\)</span>
+<span class="math display">\[
+\min_gE\left( (X_1 - g(X_2))^2 \right)
+\]</span>
+实际上，在高斯分布的前提下，上面的最优线性估计就是最优估计了，即<span
+class="math inline">\(g\)</span>就是概率期望函数，<span
+class="math inline">\(g(X_2) = E(X_1|X_2)\)</span>。这是因为 <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+E\left( (X_1 - g(X_2))^2 \right) &amp; = E\left( (X_1 -E(X_1|X_2) +
+E(X_1|X_2) - g(X_2))^2 \right) \\
+&amp; = E\left( ((X_1 -E(X_1|X_2))^2 \right) + E\left((E(X_1|X_2) -
+g(X_2))^2 \right)\\
+&amp; + 2E\left( (X_1 -E(X_1|X_2)) (E(X_1|X_2) - g(X_2)) \right)
+\end{aligned}
+\end{equation*}
+\]</span> 得到的第三项 <span class="math display">\[
+E\left( (X_1 -E(X_1|X_2)) (E(X_1|X_2) - g(X_2)) \right) = E_{X_2}
+\left(E_{X_1}\left(  
+(X_1 - E(X_1|X_2) ) ( E(X_1|X_2) - g(X_2) ) |X_2
+\right)\right)
+\]</span> 其中 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}E_{X_1}\left((X_1 - E(X_1|X_2) ) ( E(X_1|X_2) - g(X_2) )
+|X_2 \right) &amp; = ( E(X_1|X_2) - g(X_2) )E_{X_1}\left((X_1 -
+E(X_1|X_2) ) |X_2 \right) \\
+&amp; = ( E(X_1|X_2) - g(X_2) )(E(X_1 |X_2) - E(X_1|X_2) )\\
+&amp; = 0
+\end{aligned}
+\end{equation*}
+\]</span> 这意味着， <span class="math display">\[
+E\left( (X_1 - g(X_2))^2 \right) = E\left( ((X_1 -E(X_1|X_2))^2 \right)
++ E\left((E(X_1|X_2) - g(X_2))^2 \right)
+\]</span> 而第二项作为平方项的期望是非负的，故对于任意的<span
+class="math inline">\(g\)</span>，都有 <span class="math display">\[
+E\left( (X_1 - g(X_2))^2 \right) \geq E\left( ((X_1 -E(X_1|X_2))^2
+\right)
+\]</span> 至此，上面的结论得证了。</p></li>
+</ul></li>
+<li><p><span class="math inline">\(\Sigma_{1|2} = \Sigma_{11} -
+\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}\)</span>表示的是加入先验信息后新估计的协方差矩阵，是大于零（正定）的。这是显然的，因为是协方差矩阵嘛，不过同时这可以直接从Cauthy-Schwarz不等式直接导出。另外不难看出第二项也是正定的，也就是说，新的协方差矩阵一定会比有先验信息之前的<span
+class="math inline">\(\Sigma_{11}\)</span>更小。从信息的角度上来讲，这是因为引入先验信息后，随机变量的熵一定是减小的，这也是符合直觉的。</p></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/" rel="tag"># 随机过程</a>
+              <a href="/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/" rel="tag"># 高斯过程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B1/" rel="prev" title="随机过程笔记：高斯过程(1)">
+      <i class="fa fa-chevron-left"></i> 随机过程笔记：高斯过程(1)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B3%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F/" rel="next" title="随机过程笔记：高斯过程(3)">
+      随机过程笔记：高斯过程(3) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">1.</span> <span class="nav-text">高斯过程的性质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B4%A8%E9%AA%8C%E8%AF%81%E6%A6%82%E7%8E%87%E7%9A%84%E9%9D%9E%E8%B4%9F%E6%80%A7%E5%92%8C%E5%BD%92%E4%B8%80%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">基本性质验证：概率的非负性和归一性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E4%B8%8D%E5%8F%98%E6%80%A7linearity-invariance"><span class="nav-number">1.2.</span> <span class="nav-text">线性不变性(Linearity
+Invariance)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88%E5%88%86%E5%B8%83joint-distribution%E4%B8%8E%E8%BE%B9%E7%BC%98%E5%88%86%E5%B8%83marginal-distribution"><span class="nav-number">1.3.</span> <span class="nav-text">联合分布(Joint
+Distribution)与边缘分布(Marginal Distribution)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%80%A7correlation%E4%B8%8E%E7%8B%AC%E7%AB%8B%E6%80%A7independence"><span class="nav-number">1.4.</span> <span class="nav-text">相关性(Correlation)与独立性(Independence)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cochran-%E5%AE%9A%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">Cochran 定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B8%83condition-distribution"><span class="nav-number">1.6.</span> <span class="nav-text">条件分布(Condition
+Distribution)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘书豪</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiuSH1997" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiuSH1997" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liushuhao@hust.edu.cn" title="E-Mail → mailto:liushuhao@hust.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘书豪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

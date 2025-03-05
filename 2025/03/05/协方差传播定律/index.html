@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在实际工作中，往往会遇到某些量的大小并不是直接测定的，而是由观测值通过一定的函数关系间接计算出来的。那么，观测值的函数的中误差与观测值的中误差之间存在着怎样的关系？实际上，这样的关系可以通过协方差的运算规则得到，因此被称作协方差传播定律，又称误差传播定率。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="误差理论：协方差传播定律">
+<meta property="og:url" content="http://example.com/2025/03/05/%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%BC%A0%E6%92%AD%E5%AE%9A%E5%BE%8B/index.html">
+<meta property="og:site_name" content="三天打鱼">
+<meta property="og:description" content="在实际工作中，往往会遇到某些量的大小并不是直接测定的，而是由观测值通过一定的函数关系间接计算出来的。那么，观测值的函数的中误差与观测值的中误差之间存在着怎样的关系？实际上，这样的关系可以通过协方差的运算规则得到，因此被称作协方差传播定律，又称误差传播定率。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T08:30:12.950Z">
+<meta property="article:modified_time" content="2022-06-09T02:57:26.000Z">
+<meta property="article:author" content="刘书豪">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="误差理论">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/05/%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%BC%A0%E6%92%AD%E5%AE%9A%E5%BE%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>误差理论：协方差传播定律 | 三天打鱼</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">三天打鱼</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/05/%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%BC%A0%E6%92%AD%E5%AE%9A%E5%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘书豪">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三天打鱼">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          误差理论：协方差传播定律
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-03-05 16:30:12" itemprop="dateCreated datePublished" datetime="2025-03-05T16:30:12+08:00">2025-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-09 10:57:26" itemprop="dateModified" datetime="2022-06-09T10:57:26+08:00">2022-06-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在实际工作中，往往会遇到某些量的大小并不是直接测定的，而是由观测值通过一定的函数关系间接计算出来的。那么，观测值的函数的中误差与观测值的中误差之间存在着怎样的关系？实际上，这样的关系可以通过协方差的运算规则得到，因此被称作<strong>协方差传播定律</strong>，又称误差传播定率。
+<span id="more"></span></p>
+<h1 id="观测值线性函数的方差">观测值线性函数的方差</h1>
+<p>设有观测值<span
+class="math inline">\(X\in\mathbb{R}^n\)</span>，其均值为<span
+class="math inline">\(\mu_X\in\mathbb{R}^n\)</span>，协方差矩阵为<span
+class="math inline">\(\Sigma_{XX}\in\mathbb{R}^{n\times
+n}\)</span>，又设有<span class="math inline">\(X\)</span>的线性函数
+<span class="math display">\[
+Z = K^{\mathrm{T}}X+k_0
+\]</span> 其中<span class="math inline">\(Z\in\mathbb{R}\)</span>，<span
+class="math inline">\(K\in\mathbb{R}^n\)</span>是常量，<span
+class="math inline">\(k_0\)</span>是常数。</p>
+<p>现求<span class="math inline">\(Z\)</span>的方差<span
+class="math inline">\(\sigma_Z^2\in\mathbb{R}\)</span>。</p>
+<p>根据上述的线性关系，可求得 <span class="math display">\[
+\begin{eqnarray}
+E(Z) &amp; = &amp; E(K^\mathrm{T}X+k_0) \\
+&amp; = &amp; K^{\mathrm{T}} E(X) + k_0 \\
+&amp; = &amp; K^{\mathrm{T}} \mu_X + k_0
+\end{eqnarray}
+\]</span> 于是， <span class="math display">\[
+\begin{eqnarray}
+\sigma_Z^2 &amp; = &amp; E((Z - E(Z))^2) \\
+&amp; = &amp; E((K^{\mathrm{T}}X + k_0 - K^{\mathrm{T}} \mu_X - k_0)^2)
+\\
+&amp; = &amp; E((K^{\mathrm{T}}X- K^{\mathrm{T}} \mu_X)
+(K^{\mathrm{T}}X- K^{\mathrm{T}} \mu_X)^{\mathrm{T}}) \\
+&amp; = &amp; K^{\mathrm{T}} E((X - \mu_X)(X - \mu_X)^{\mathrm{T}}) K \\
+&amp; = &amp; K^{\mathrm{T}} \Sigma_{XX} K
+\end{eqnarray}
+\]</span> 即 <span class="math display">\[
+\sigma_Z^2 =  K^{\mathrm{T}} \Sigma_{XX} K
+\]</span> 上式就是<strong>协方差传播定律</strong>。当<span
+class="math inline">\(X\)</span>各分量线性无关时，<span
+class="math inline">\(\Sigma_{XX}\)</span>是对角的，即 <span
+class="math display">\[
+\left( \Sigma_{XX} \right)_{ij} = \left\{
+\begin{eqnarray}
+\sigma_i^2, &amp; \; &amp;i=j \\
+\\
+0,&amp; \; &amp; i\neq j
+\end{eqnarray}
+\right.
+\]</span> 此时<span
+class="math inline">\(\sigma_Z^2\)</span>可以表示为<span
+class="math inline">\(X\)</span>各分量方差的加权和： <span
+class="math display">\[
+\begin{eqnarray}
+\sigma_Z^2 &amp; = &amp; k_1^2 \sigma_1^2 + k_2^2 \sigma_2^2 + \cdots +
+k_n^2 \sigma_n^2 \\
+&amp; = &amp; \sum_{i=1}^n k_i^2 \sigma_i^2
+\end{eqnarray}
+\]</span></p>
+<h1
+id="多个观测值线性函数的协方差矩阵">多个观测值线性函数的协方差矩阵</h1>
+<p>设有观测值<span
+class="math inline">\(X\in\mathbb{R}^n\)</span>，其均值为<span
+class="math inline">\(\mu_X\in\mathbb{R}^n\)</span>，协方差矩阵为<span
+class="math inline">\(\Sigma_{XX}\in\mathbb{R}^{n\times
+n}\)</span>，又设有<span class="math inline">\(X\)</span>的<span
+class="math inline">\(t\)</span>个线性函数 <span class="math display">\[
+\begin{eqnarray}
+Z_1 &amp; = &amp; k_{11}X_1 + k_{12}X_2 + k_{1n}X_n + k_{10} \\
+Z_2 &amp; = &amp; k_{21}X_1 + k_{22}X_2 + k_{2n}X_n + k_{20} \\
+&amp; \cdots &amp;  \\
+Z_t &amp; = &amp; k_{t1}X_1 + k_{t2}X_2 + k_{tn}X_n + k_{t0}
+\end{eqnarray}
+\]</span> 令<span class="math inline">\(Z = (Z_1, Z_2,
+\cdots,Z_t)^\mathrm{T}\)</span>，则上式可写作 <span
+class="math display">\[
+Z = K^\mathrm{T}X + K_0^\mathrm{T}
+\]</span> 其中， <span class="math display">\[
+K^\mathrm{T} = \left(
+\begin{array}{}
+k_{11} &amp; k_{12} &amp; \cdots &amp; k_{1n} \\
+k_{21} &amp; k_{22} &amp; \cdots &amp; k_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+k_{t1} &amp; k_{t2} &amp; \cdots &amp; k_{tn} \\
+\end{array}
+\right)
+\in \mathbb{R}^{t\times n}, \\
+K_0^\mathrm{T} = \left( k_{10},\ k_{20},\ \cdots,\ k_{t0}
+\right)^\mathrm{T} \in \mathbb{R}^t
+\]</span> 按照上一节中的推导，<span
+class="math inline">\(Z\)</span>的协方差矩阵为 <span
+class="math display">\[
+\Sigma_{ZZ} = K^\mathrm{T} \Sigma_{XX} K^\mathrm{T}
+\]</span>
+这与上一节得到的协方差具有一致的形式。实际上，该式是协方差传播定律的一般形式。</p>
+<h1 id="非线性函数的情况">非线性函数的情况</h1>
+<p>设有观测值<span class="math inline">\(X\)</span>的非线性函数 <span
+class="math display">\[
+Z = f(X) = f(X_1, X_2, \cdots, X_n)
+\]</span> 已知观测值<span class="math inline">\(X\)</span>的近似值<span
+class="math inline">\(X^0 = (X_1^0, X_2^0, \cdots,
+X_n^0)^\mathrm{T}\)</span>和<span
+class="math inline">\(X\)</span>的协方差矩阵<span
+class="math inline">\(\Sigma_{XX}\)</span>，现求<span
+class="math inline">\(Z\)</span>的方差<span
+class="math inline">\(\sigma_Z^2\)</span>。</p>
+<p>利用泰勒展开将<span class="math inline">\(f(X)\)</span>在<span
+class="math inline">\(X^0\)</span>处线性化：将其在<span
+class="math inline">\(X^0\)</span>处展开 <span class="math display">\[
+Z = f(X_1^0, X_2^0, \cdots, X_n^0) + \left.\cfrac{\partial f}{\partial
+X_1}\right|_0 (X_1 - X_1^0) + \left.\cfrac{\partial f}{\partial
+X_2}\right|_0 (X_2 - X_2^0) + \cdots + \left.\cfrac{\partial f}{\partial
+X_n}\right|_0 (X_n - X_n^0) + o(X-X^0)
+\]</span> 由于<span class="math inline">\(X^0\)</span>是对<span
+class="math inline">\(X\)</span>的近似估计，因此可以认为其差的高阶项是小量，故忽略之，于是上式可写为
+<span class="math display">\[
+Z = \left.\cfrac{\partial f}{\partial X_1}\right|_0 X_1 +
+\left.\cfrac{\partial f}{\partial X_2}\right|_0 X_2 + \cdots +
+\left.\cfrac{\partial f}{\partial X_n}\right|_0 X_n + f(X_1^0, X_2^0,
+\cdots, X_n^0) - \sum_{i=1}^{n} \left.\cfrac{\partial f}{\partial
+X_i}\right|_0 X_i^0
+\]</span> 令 <span class="math display">\[
+\begin{eqnarray}
+K^\mathrm{T} = \left[
+\begin{array}{}
+k_1 &amp; k_2 &amp; \cdots\ &amp; k_n
+\end{array}
+\right]
+=
+\left[
+\begin{array}{}
+\left.\cfrac{\partial f}{\partial X_1}\right|_0 &amp;
+\left.\cfrac{\partial f}{\partial X_2}\right|_0 &amp; \cdots &amp;
+\left.\cfrac{\partial f}{\partial X_n}\right|_0
+\end{array}
+\right]
+\\
+k_0 = f(X_1^0, X_2^0, \cdots, X_n^0) - \sum_{i=1}^{n}
+\left.\cfrac{\partial f}{\partial X_i}\right|_0 X_i^0
+\end{eqnarray}
+\]</span> 那么<span
+class="math inline">\(Z\)</span>则表示为与第一节中一致的形式 <span
+class="math display">\[
+Z = K^\mathrm{T}X + k_0
+\]</span> 于是可以求得<span class="math inline">\(Z\)</span>的方差<span
+class="math inline">\(\sigma_Z^2\)</span>为 <span
+class="math display">\[
+\sigma_Z^2 = K^\mathrm{T} \Sigma_{XX} K
+\]</span> 类似地，如果有<span
+class="math inline">\(t\)</span>个非线性函数 <span
+class="math display">\[
+\begin{eqnarray}
+Z_1 &amp; = &amp; f_1(X_1, X_2, \cdots, X_n) \\
+Z_2 &amp; = &amp; f_2(X_1, X_2, \cdots, X_n) \\
+&amp; \cdots &amp; \\
+Z_t &amp; = &amp; f_t(X_1, X_2, \cdots, X_n) \\
+\end{eqnarray}
+\]</span> 此时</p>
+<p><span class="math display">\[
+K^\mathrm{T} =
+\left[
+\begin{array}{}
+\left.\cfrac{\partial f_1}{\partial X_1}\right|_0 &amp;
+\left.\cfrac{\partial f_1}{\partial X_n}\right|_0 &amp; \cdots &amp;
+\left.\cfrac{\partial f_1}{\partial X_n}\right|_0 \\
+\left.\cfrac{\partial f_2}{\partial X_1}\right|_0 &amp;
+\left.\cfrac{\partial f_2}{\partial X_n}\right|_0 &amp; \cdots &amp;
+\left.\cfrac{\partial f_2}{\partial X_n}\right|_0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+\left.\cfrac{\partial f_t}{\partial X_1}\right|_0 &amp;
+\left.\cfrac{\partial f_t}{\partial X_n}\right|_0 &amp; \cdots &amp;
+\left.\cfrac{\partial f_t}{\partial X_n}\right|_0 \\
+\end{array}
+\right]
+\in \mathbb{R}^{t\times n}
+\]</span></p>
+<p>进而有 <span class="math display">\[
+\Sigma_{ZZ} = K^\mathrm{T}\Sigma_{XX}K
+\]</span></p>
+<h1
+id="应用举例时间序列的最小二乘拟合">应用举例：时间序列的最小二乘拟合</h1>
+<p>现考虑一个关于时间序列拟合的例子，使用普通最小二乘的方法拟合出一个时间序列线性趋势、三角周期的振幅和初始相位，即<span
+class="math inline">\(f(t) = a + bt + Asin(2\pi t +
+\phi)\)</span>，以及相应的标准差。</p>
+<p>由于最小二乘解决问题须要模型是线性的，不能直接拟合模型中的<span
+class="math inline">\(A, \phi\)</span>及相应的标准差<span
+class="math inline">\(\sigma_A,
+\sigma_\phi\)</span>，因此我们考虑的模型应该是 <span
+class="math display">\[
+f(t) = a + bt + c\sin (2\pi t) + d\cos (2\pi t)
+\]</span> 进而计算振幅和初始相位 <span class="math display">\[
+\begin{eqnarray}
+A=\sqrt{c^2 + d^2} \\
+\phi = \arctan{\cfrac{d}{c}}
+\end{eqnarray}
+\]</span> 现已知最小二乘的结果 <span class="math display">\[
+\hat{f} (t) = \hat{a} + \hat{b}t + \hat{c}\sin (2\pi t) + \hat{d}\cos
+(2\pi t)
+\]</span> 协方差矩阵是 <span class="math display">\[
+\Sigma =
+\left[
+\begin{array}{}
+\sigma_a^2 &amp; \sigma_{ab} &amp; \sigma_{ac} &amp; \sigma_{ad} \\
+\sigma_{ba} &amp; \sigma_b^2 &amp; \sigma_{bc} &amp; \sigma_{bd} \\
+\sigma_{ca} &amp; \sigma_{cb} &amp; \sigma_c^2 &amp; \sigma_{cd} \\
+\sigma_{da} &amp; \sigma_{db} &amp; \sigma_{dc} &amp; \sigma_d^2
+\end{array}
+\right]
+\]</span> 其中<span class="math inline">\(\sigma_{ij} = \sigma_{ji},\
+i,j \in \set{a,b,c,d}\)</span>。</p>
+<p>线性项及相应不确定度至此可以直接得到答案了。同时可以求得振幅和相位<span
+class="math inline">\(\hat{A}=\sqrt{\hat{c}^2 + \hat{d}^2},\ \hat{\phi}
+=
+\arctan{\cfrac{\hat{d}}{\hat{c}}}\)</span>，现在我们关注它们的标准差：</p>
+<p><span class="math inline">\(A,\phi\)</span>都是<span
+class="math inline">\(c,d\)</span>的非线性函数，先求对应的矩阵<span
+class="math inline">\(K\)</span>：</p>
+<p><span class="math display">\[
+K^\mathrm{T} =
+\left.\left[
+\begin{array}{}
+\cfrac{\partial A}{\partial c} &amp; \cfrac{\partial A}{\partial d} \\
+\cfrac{\partial \phi}{\partial c} &amp; \cfrac{\partial \phi}{\partial
+d}
+\end{array}
+\right] \right|_{(c=\hat{c}, d=\hat{d})}
+=
+\left[
+\begin{array}{}
+\cfrac{\hat{c}}{\sqrt{\hat{c}^2 + \hat{d}^2}} &amp;
+\cfrac{\hat{d}}{\sqrt{\hat{c}^2 + \hat{d}^2}} \\
+\cfrac{-\hat{d}}{\hat{c}^2 + \hat{d}^2} &amp; \cfrac{\hat{c}}{\hat{c}^2
++ \hat{d}^2}
+\end{array}
+\right]
+\]</span></p>
+<p>进一步可以求得</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+\Sigma_{A\phi} &amp; = &amp;
+\left[
+\begin{array}{}
+\sigma_{A}^2 &amp; \sigma_{A\phi} \\
+\sigma_{\phi A} &amp; \sigma_{\phi}^2
+\end{array}
+\right] \\
+&amp; = &amp; K^\mathrm{T} \Sigma_{cd} K \\
+&amp; = &amp; \left[
+\begin{array}{}
+\cfrac{\hat{c}}{\sqrt{\hat{c}^2 + \hat{d}^2}} &amp;
+\cfrac{\hat{d}}{\sqrt{\hat{c}^2 + \hat{d}^2}} \\
+\cfrac{-\hat{d}}{\hat{c}^2 + \hat{d}^2} &amp; \cfrac{\hat{c}}{\hat{c}^2
++ \hat{d}^2}
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\sigma_{c}^2 &amp; \sigma_{cd}\\
+\sigma_{dc} &amp; \sigma_{d}^2
+\end{array}
+\right]
+\left[
+\begin{array}{}
+\cfrac{\hat{c}}{\sqrt{\hat{c}^2 + \hat{d}^2}} &amp;
+\cfrac{-\hat{d}}{\hat{c}^2 + \hat{d}^2} \\
+\cfrac{\hat{d}}{\sqrt{\hat{c}^2 + \hat{d}^2}} &amp;
+\cfrac{\hat{c}}{\hat{c}^2 + \hat{d}^2}
+\end{array}
+\right] \\
+&amp; = &amp;
+\left[
+\begin{array}{}
+\cfrac{1}{\hat{c}^2 + \hat{d}^2} \left( \hat{c}^2 \sigma_c^2 +
+2\hat{c}\hat{d}\sigma_{cd} + \hat{d}^2 \sigma_d^2 \right) &amp; * \\
+* &amp; \cfrac{1}{\left(\hat{c}^2 + \hat{d}^2\right)^2 } \left(
+\hat{d}^2 \sigma_c^2 - 2\hat{c}\hat{d}\sigma_{cd} + \hat{c}^2
+\sigma_d^2\right)
+\end{array}
+\right]
+\end{eqnarray}
+\]</span></p>
+<p>至此得到相应的方差，开方即得相应的标准差。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E8%AF%AF%E5%B7%AE%E7%90%86%E8%AE%BA/" rel="tag"># 误差理论</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/" rel="prev" title="随机过程笔记：宽平稳过程(1)">
+      <i class="fa fa-chevron-left"></i> 随机过程笔记：宽平稳过程(1)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%82%E6%B5%8B%E5%80%BC%E7%BA%BF%E6%80%A7%E5%87%BD%E6%95%B0%E7%9A%84%E6%96%B9%E5%B7%AE"><span class="nav-number">1.</span> <span class="nav-text">观测值线性函数的方差</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E8%A7%82%E6%B5%8B%E5%80%BC%E7%BA%BF%E6%80%A7%E5%87%BD%E6%95%B0%E7%9A%84%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5"><span class="nav-number">2.</span> <span class="nav-text">多个观测值线性函数的协方差矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%87%BD%E6%95%B0%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">3.</span> <span class="nav-text">非线性函数的情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%8B%9F%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">应用举例：时间序列的最小二乘拟合</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘书豪</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiuSH1997" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiuSH1997" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liushuhao@hust.edu.cn" title="E-Mail → mailto:liushuhao@hust.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘书豪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

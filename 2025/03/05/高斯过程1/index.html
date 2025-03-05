@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的定义，并通过几个例子说明了高斯过程在不同学科领域的重要地位。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机过程笔记：高斯过程(1)">
+<meta property="og:url" content="http://example.com/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B1/index.html">
+<meta property="og:site_name" content="三天打鱼">
+<meta property="og:description" content="高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的定义，并通过几个例子说明了高斯过程在不同学科领域的重要地位。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T08:30:07.170Z">
+<meta property="article:modified_time" content="2022-06-07T07:45:48.000Z">
+<meta property="article:author" content="刘书豪">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="随机过程">
+<meta property="article:tag" content="高斯过程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>随机过程笔记：高斯过程(1) | 三天打鱼</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">三天打鱼</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘书豪">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三天打鱼">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          随机过程笔记：高斯过程(1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-03-05 16:30:07" itemprop="dateCreated datePublished" datetime="2025-03-05T16:30:07+08:00">2025-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-07 15:45:48" itemprop="dateModified" datetime="2022-06-07T15:45:48+08:00">2022-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的定义，并通过几个例子说明了高斯过程在不同学科领域的重要地位。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+<span id="more"></span>
+<h1 id="高斯过程的定义">高斯过程的定义</h1>
+<p>对于随机过程<span class="math inline">\(X(t)\)</span>，如果有 <span
+class="math display">\[
+\forall n,\ \forall t_1\leq t_2\leq \cdots\leq t_n, \\s.t.\ \mathbb{X} =
+(X(t_1), X(t_2), \cdots,X(t_n))^\mathrm{T} \sim N(\mu, \Sigma)
+\]</span> 则称<span class="math inline">\(X(t)\)</span>是高斯过程。</p>
+<p>举例：</p>
+<ol type="1">
+<li><p><span class="math inline">\(n=1\)</span>时， <span
+class="math display">\[
+f_X(x) = \cfrac{1}{\sqrt{2\pi}\sigma}
+\exp\left(-\cfrac{(x-\mu)^2}{2\sigma ^2}\right)
+\]</span></p></li>
+<li><p><span class="math inline">\(n=2\)</span>时， <span
+class="math display">\[
+f_\mathbb{X}(x_1,x_2) = \cfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
+\exp\left(-\cfrac{1}{2(1-\rho^2)}\left( \cfrac{(x_1-\mu_1)^2}{\sigma_1
+^2} - \cfrac{2\rho(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} +
+\cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2} \right) \right)
+\]</span> 其中，<span class="math inline">\(\mu_k,
+\sigma_k\)</span>是<span
+class="math inline">\(X_k\)</span>的均值和方差<span
+class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
+= E\left( (X_1-\mu_1)(X_2-\mu_2) \right)\)</span>。</p></li>
+<li><p>一般化的<span
+class="math inline">\(n\)</span>时，需要用到矩阵-向量的语言来描述问题：
+<span class="math display">\[
+f_\mathbb{X}(x) = \cfrac{1}{(2\pi) ^ \frac{n}{2} (\det\Sigma) ^
+\frac{1}{2}} \exp \left( -\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1}
+(x-\mu) \right)
+\]</span> 其中，<span class="math inline">\(x,\mu \in
+\mathbb{R}^n\)</span>是<span
+class="math inline">\(n\)</span>维向量，<span
+class="math inline">\(\mu\)</span>代表均值；<span
+class="math inline">\(\Sigma \in \mathbb{R}^{n\times
+n}\)</span>是协方差矩阵，<span class="math inline">\(\Sigma =
+E\left((x-\mu)(x-\mu)^\mathrm{T}\right)\)</span></p></li>
+</ol>
+<h1 id="高斯过程的意义">高斯过程的意义</h1>
+<p>高斯过程是自然界中最为常见、最为普遍的一类随机过程。接下来将用三个例子说明其重要意义。</p>
+<h2
+id="中心极限定理central-limit-theorem-clt与大数定律law-of-large-numbers-lln">中心极限定理(Central
+Limit Theorem, CLT)与大数定律(Law of Large Numbers, LLN)</h2>
+<p><strong>中心极限定理</strong>表述为：</p>
+<blockquote>
+<p>有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span
+class="math inline">\(X_1, X_2, \cdots,
+X_n\)</span>，假定他们均值和方差都是<span class="math inline">\(E(X_k) =
+0,\ Var(X_k) = 1\)</span>，那么当<span
+class="math inline">\(n\)</span>趋于<span
+class="math inline">\(\infty\)</span>时，这些随机变量之和与<span
+class="math inline">\(\sqrt{n}\)</span>的比值是趋于高斯分布的。即 <span
+class="math display">\[
+\lim_{n\rightarrow \infty} \cfrac{X_1 + X_2 + \cdots +X_n}{\sqrt{n}}
+\sim N(0,1)
+\]</span></p>
+</blockquote>
+<p>要验证这个定理，我们首先介绍一个非常常用的工具：<strong>特征函数</strong></p>
+<blockquote>
+<p>定义随机变量<span class="math inline">\(X\)</span>的特征函数 <span
+class="math display">\[
+\Phi_X(\omega) = E\left((\exp(i\omega X)\right)
+\]</span></p>
+</blockquote>
+<p>忽略系数而言，显然，特征函数<span
+class="math inline">\(\Phi_X(\omega) = E(\exp(i\omega X)) = \int
+_{-\infty}^{+\infty}\exp(i\omega x)f_X(x)\mathrm{d}x\)</span>是<span
+class="math inline">\(f_X\)</span>的傅里叶逆变换。因此，同分布的随机变量与其特征函数是一一对应的。同时，由于傅里叶变换的性质我们可以得到，由于<span
+class="math inline">\(f_X \geq 0\)</span>，特征函数<span
+class="math inline">\(\Phi_X\)</span>是正定的。</p>
+<p>有了特征函数这样一个工具，我们可以来验证中心极限定理了。现有<span
+class="math inline">\(n\)</span>个独立同分布的随机变量<span
+class="math inline">\(X_1, X_2, \cdots,
+X_n\)</span>，假定他们均值和方差都是<span class="math inline">\(E(X_k) =
+0,\ Var(X_k) =
+1\)</span>（这里的假定只是为了简化后面的书写，并不影响该问题的本质），又有随机变量<span
+class="math inline">\(Y=X_1 + X_2 + \cdots + X_n =
+\sum_{k=1}^{n}X_k\)</span>，于是<span
+class="math inline">\(Y\)</span>的特征函数为</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_Y(\omega)  &amp; =  E\left(\exp\left( i\omega Y \right)\right) \\
+&amp; = E\left(\exp\left( i\omega \sum_{k=1}^{n} X_k \right)\right) \\
+&amp; \overset{\text{(i.i.d)}}{=} E\left(\prod_{k=1}^{n} \exp\left(
+i\omega X_k \right) \right) \\
+&amp; = \prod_{k=1}^n \Phi_{X_k}\left(\omega \right) \\
+&amp; =  \left(\Phi_X(\omega)\right) ^n
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>其中，由于<span class="math inline">\(X_k,\
+k=1,2,\cdots,n\)</span>独立同分布，他们的特征函数一样，<span
+class="math inline">\(\Phi_{X_k}(\omega) = \Phi_X(\omega),\
+x=1,2,\cdots, n\)</span>，又有 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_{\frac{Y}{\sqrt{n}}}(\omega) &amp;  =  E\left(\exp\left( i\omega
+\cfrac{Y}{\sqrt{n}} \right)\right) \\
+&amp; =  E\left(\exp\left( i \cfrac{\omega}{\sqrt{n}} Y \right)\right)
+\\
+&amp; =  \Phi_Y \left(\cfrac{\omega}{\sqrt{n}} \right) \\
+&amp; =  \left(\Phi_X(\cfrac{\omega}{\sqrt{n}})\right) ^n
+\end{aligned}
+\end{equation*}
+\]</span> 其中 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_X(\cfrac{\omega}{\sqrt{n}}) &amp;  =  E\left(\exp\left( i\omega
+\cfrac{X}{\sqrt{n}} \right)\right) \\
+&amp; \overset{\text{(taylor)}}{=}  E\left( 1 +
+i\omega\cfrac{X}{\sqrt{n}} + \cfrac{1}{2} \left( i\omega
+\cfrac{X}{\sqrt{n}} \right)^2 +o\left(\cfrac{1}{n}\right)\right) \\
+&amp; =  1 + i\omega\cfrac{E(X)}{\sqrt{n}} - \cfrac{1}{2}  \omega^2
+\cfrac{E(X^2)}{n} + o\left(\cfrac{1}{n}\right) \\
+&amp; =  1 - \cfrac{\omega^2}{2n} + o\left(\cfrac{1}{n}\right)
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<blockquote>
+<p>复习一个重要极限： <span class="math display">\[
+\lim_{n\rightarrow \infty} \left( 1 + \cfrac{a}{n} +
+o\left(\cfrac{1}{n}\right) \right)^n = \exp(a)
+\]</span></p>
+</blockquote>
+<p>现在将<span class="math inline">\(n\)</span>趋于<span
+class="math inline">\(\infty\)</span>，有 <span class="math display">\[
+\lim_{n\rightarrow\infty}
+\Phi_{\frac{Y}{\sqrt{n}}}(\omega)  =  \lim_{n\rightarrow\infty}
+\left(\Phi_X(\cfrac{\omega}{\sqrt{n}})\right) ^n
+=  \lim_{n\rightarrow\infty} \left(1 - \cfrac{\omega^2}{2n} +
+o\left(\cfrac{1}{n}\right)\right)^n
+=  \exp\left(-\cfrac{\omega^2}{2} \right)
+\]</span> 那么高斯分布的特征函数是怎样的呢？下面进一步分析。</p>
+<p>对于均值为<span class="math inline">\(m\)</span>，方差为<span
+class="math inline">\(\sigma^2\)</span>的高斯分布<span
+class="math inline">\(X\)</span>，其概率密度函数为</p>
+<p><span class="math display">\[
+f_X (x)= \cfrac{1}{\sqrt{2\pi} \sigma} \exp\left(
+-\cfrac{(x-m)^2}{2\sigma^2} \right)
+\]</span></p>
+<p>于是，根据定义，<span class="math inline">\(X\)</span>的特征函数为
+<span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_X(\omega) &amp; =  \int_{-\infty}^{+\infty} \exp(i\omega
+x)f_X(x)\mathrm{d}x \\
+&amp; =  \int_{-\infty}^{+\infty} \cfrac{1}{\sqrt{2\pi} \sigma}
+\exp\left( -\cfrac{(x-m)^2}{2\sigma^2} + i\omega x \right) \mathrm{d}x
+\\
+&amp; =  \int_{-\infty}^{+\infty} \cfrac{1}{\sqrt{2\pi} \sigma}
+\exp\left( -\cfrac{1}{2\sigma ^2} \left(x - i\omega \sigma ^2 -
+m\right)^2 + im\omega - \cfrac{1}{2} \omega^2\sigma^2 \right)
+\mathrm{d}x \\
+&amp; =  \exp\left(im\omega - \cfrac{1}{2} \omega^2\sigma^2 \right)
+\cfrac{1}{\sqrt{2\pi} \sigma} \int_{-\infty}^{+\infty} \exp\left(
+-\cfrac{1}{2\sigma ^2} \left(x - i\omega \sigma ^2 - m\right)^2 \right)
+\mathrm{d}x \\
+&amp; =  \exp\left(im\omega - \cfrac{1}{2} \omega^2\sigma^2 \right)
+\end{aligned}
+\end{equation*}
+\]</span> 可以看出，高斯分布的特征函数仍是高斯的形状。令均值<span
+class="math inline">\(m=0\)</span>，方差<span
+class="math inline">\(\sigma ^2=1\)</span>，就得到<span
+class="math inline">\(\Phi_X(\omega) = \exp\left( -\cfrac{\omega^2}{2}
+\right)\)</span>。因此，刚才得到的<span
+class="math inline">\(\lim\Phi_Y\)</span>是标标准准的高斯分布的特征函数。至此，中心极限定理就证明出来了。</p>
+<p>进一步地，我们看看大数定律。<strong>大数定律</strong>表述为</p>
+<blockquote>
+<p>有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span
+class="math inline">\(X_1, X_2, \cdots,
+X_n\)</span>，假定他们均值都是<span class="math inline">\(E(X_k) =
+m\)</span>，那么当<span class="math inline">\(n\)</span>趋于<span
+class="math inline">\(\infty\)</span>时，这些随机变量之和与<span
+class="math inline">\(n\)</span>的比值趋于一个确定的值，这个值就是均值<span
+class="math inline">\(m\)</span>。即 <span class="math display">\[
+\lim_{n\rightarrow \infty} \cfrac{X_1 + X_2 + \cdots +X_n}{n} = m
+\]</span></p>
+</blockquote>
+<p>这个定律的验证与中心极限定理类似，不过由于分母是<span
+class="math inline">\(n\)</span>，后续的泰勒展开就只需要展开到一阶即可
+<span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\Phi_X(\cfrac{\omega}{n}) &amp; =  E\left(\exp\left( i\omega
+\cfrac{X}{n} \right)\right) \\
+&amp; \overset{\text{(taylor)}}{=}  E\left( 1 + i\omega\cfrac{X}{n} +
+o\left(\cfrac{1}{n}\right)\right) \\
+&amp; =  1 + i\omega\cfrac{E(X)}{n} + o\left(\cfrac{1}{n}\right) \\
+&amp; =  1 + \cfrac{i\omega m}{n} + o\left(\cfrac{1}{n}\right)
+\end{aligned}
+\end{equation*}
+\]</span> 进而 <span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\lim_{n\rightarrow\infty} \Phi_{\frac{Y}{n}}(\omega) &amp;
+=  \lim_{n\rightarrow\infty} \left(\Phi_X(\cfrac{\omega}{n})\right) ^n
+\\
+&amp; =  \lim_{n\rightarrow\infty} \left(1 + \cfrac{i\omega m}{n} +
+o\left(\cfrac{1}{n}\right)\right)^n \\
+&amp; =  \exp\left(i\omega m \right) \\
+&amp; =  \Phi_m(\omega)
+\end{aligned}
+\end{equation*}
+\]</span> 得到的是常函数m的特征函数，至此，大数定律就证明结束了。</p>
+<h2 id="随机扩散random-diffusion模型">随机扩散(Random
+Diffusion)模型</h2>
+<p>为简化计算，考虑一维情况。现有一维随机扩散模型，用<span
+class="math inline">\(f(x,t)\)</span>表示在<span
+class="math inline">\(t\)</span>时刻，<span
+class="math inline">\(x\)</span>处粒子出现的概率密度。初始化条件为<span
+class="math inline">\(f(0,0)=1\)</span>，求<span
+class="math inline">\(f(x,t)\)</span>的一般表达式。</p>
+<p>首先建立模型，用<span
+class="math inline">\(\rho(y)\)</span>表示在<span
+class="math inline">\(t=\tau\)</span>时位置<span
+class="math inline">\(y\)</span>处的粒子出现的概率密度，即<span
+class="math inline">\(\rho(y) = f(y,\tau)\)</span>，显然，<span
+class="math inline">\(\rho(y)\geq0,\ \int_{-\infty}^{+\infty}
+\rho(y)\mathrm{d}y = 1\)</span>。自然地，还可以有这样两个假设：</p>
+<ol type="1">
+<li><span class="math inline">\(\rho(-y) = \rho(y)\)</span></li>
+<li><span class="math inline">\(\int_{-\infty}^{+\infty}
+y\rho(y)\mathrm{d}y = 0\)</span></li>
+</ol>
+<p>于是，不难理解， <span class="math display">\[
+f(x,t+\tau) = \int_{-\infty}^{+\infty} f(x-y, t)\rho(y)\mathrm{d}y
+\]</span> 方程左右的<span class="math inline">\(f\)</span>在<span
+class="math inline">\((x,t)\)</span>处分别对<span
+class="math inline">\(x,\ t\)</span>展开，于是 <span
+class="math display">\[
+f(x,t) + \cfrac{\partial{f}}{\partial{t}} \tau =
+\int_{-\infty}^{+\infty} \left( f(x,t) -
+\cfrac{\partial{f}}{\partial{x}} y +
+\cfrac{1}{2}\cfrac{\partial^2{f}}{\partial{x^2}} y^2 \right)
+\rho(y)\mathrm{d}y
+\]</span> 带入上面条件，积分化简得 <span class="math display">\[
+\cfrac{\partial{f}}{\partial{t}} \tau = \cfrac{1}{2}
+\cfrac{\partial^2{f}}{\partial{x^2}}
+\int_{-\infty}^{+\infty}y^2\rho(y)\mathrm{d}y
+\]</span> 令 <span class="math display">\[
+c = \cfrac{1}{2\tau}\int_{-\infty}^{+\infty}y^2\rho(y)\mathrm{d}y
+\]</span> 上面方程则写作 <span class="math display">\[
+\cfrac{\partial{f}}{\partial{t}} = c
+\cfrac{\partial^2{f}}{\partial{x^2}}
+\]</span> 这个偏微分方程被称为<strong>扩散方程</strong>(diffusion
+equation)，其解（解法略，很常见的一类微分方程）为 <span
+class="math display">\[
+f(x,t) = \cfrac{1}{\sqrt{2\pi ct}} \exp(-\cfrac{x^2}{2ct})
+\]</span> 回到模型，可以看出，对于任一时间<span
+class="math inline">\(t\)</span>，粒子在全空间（模型假设是一维空间，无伤大雅）上密度是标标准准的高斯分布。</p>
+<h2 id="最大熵maximum-entropy">最大熵(Maximum Entropy)</h2>
+<p>对于随机过程<span
+class="math inline">\(X\)</span>，其概率密度分布函数为<span
+class="math inline">\(f_X(x)\)</span>，定义<span
+class="math inline">\(X\)</span>的熵函数<span
+class="math inline">\(H(X)\)</span>：</p>
+<blockquote>
+<p><span class="math display">\[
+H(X) = -\int_{-\infty}^{+\infty} f_X(x) \log f_X(x) \mathrm{d}x
+\]</span></p>
+</blockquote>
+<p>熵<span class="math inline">\(H(X)\)</span>反映的是随机过程<span
+class="math inline">\(X\)</span>的“无序度”，通俗地说，就是这个随机过程究竟有多“随机”。</p>
+<p>现在我们考察，定义在<span class="math inline">\((-\infty,
++\infty)\)</span>上的，确定一阶矩<span
+class="math inline">\(E(X)=\mu\)</span>，二阶矩<span
+class="math inline">\(E(X^2) = \sigma^2\)</span>的随机过程<span
+class="math inline">\(X\)</span>，要满足怎样的分布才能让自己是最“随机”的，即熵最大。</p>
+<p><span class="math inline">\(X\)</span>的概率密度函数显然满足 <span
+class="math display">\[
+\int_{-\infty}^{+\infty}f_X(x)\mathrm{d}x - 1 = 0 \\
+\int_{-\infty}^{+\infty}xf_X(x)\mathrm{d}x - \mu  = 0 \\
+\int_{-\infty}^{+\infty}x^2f_X(x)\mathrm{d}x - \sigma^2 =0 \\
+\]</span> 将这些等式视为约束条件，构建拉格朗日函数 <span
+class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\mathscr{L}(f_X(x)) = &amp; -\int_{-\infty}^{+\infty} f_X(x) \log f_X(x)
+\mathrm{d}x \\
+&amp; + \lambda_1\left(\int_{-\infty}^{+\infty}f_X(x)\mathrm{d}x -
+1\right) \\
+&amp; + \lambda_2\left(\int_{-\infty}^{+\infty}xf_X(x)\mathrm{d}x -
+\mu\right) \\
+&amp; + \lambda_3\left(\int_{-\infty}^{+\infty}x^2f_X(x)\mathrm{d}x -
+\sigma^2\right)
+\end{aligned}
+\end{equation*}
+\]</span> 现在要求得一个<span
+class="math inline">\(f_X\)</span>，使得<span
+class="math inline">\(\mathscr{L}\)</span>取极大值。注意，不同于普通的拉格朗日乘子法，这里待求得是一个函数<span
+class="math inline">\(f\)</span>而非自变量<span
+class="math inline">\(x\)</span>，普通得求导显然不可用，那么要如何做到呢？这里我们利用泛函分析里一个重要工具：变分法(funtional
+variational method)。</p>
+<p>我们假定待求<span class="math inline">\(f\)</span>的最优解是<span
+class="math inline">\(f_0\)</span>，并且构造一元函数</p>
+<p><span class="math display">\[
+G(t) = \mathscr{L}(f_0 + tg)
+\]</span></p>
+<p>其中<span class="math inline">\(g\)</span>是与<span
+class="math inline">\(f\)</span>自变量一致的任意函数。由于<span
+class="math inline">\(f_0\)</span>是待求<span
+class="math inline">\(f\)</span>的最优解，有 <span
+class="math display">\[
+G(0) = \mathscr{L}(f_0) \geq \mathscr{L}(f_0 + tg) = G(t)
+\]</span></p>
+<p>即<span class="math inline">\(G(0)\)</span>是<span
+class="math inline">\(G(t)\)</span>的最大值，故有</p>
+<p><span class="math display">\[
+\left.\cfrac{\partial}{\partial{t}}G(t)\right|_{t=0} = 0
+\]</span></p>
+<p>代入<span class="math inline">\(G(t) = \mathscr{L}(f_0 +
+tg)\)</span>得</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+\left.\cfrac{\partial}{\partial{t}}G(t)\right|_{t=0} =
+&amp;  \cfrac{\partial}{\partial{t}}\left(-\int_{-\infty}^{+\infty}
+(f+tg) \log (f+tg) \mathrm{d}x \right.\\
+&amp; + \left.\lambda_1\left(\int_{-\infty}^{+\infty}(f+tg)\mathrm{d}x -
+1\right) \right.\\
+&amp; + \left.\lambda_2\left(\int_{-\infty}^{+\infty}x(f+tg)\mathrm{d}x
+- \mu\right) \right.\\
+&amp; +
+\left.\left.\lambda_3\left(\int_{-\infty}^{+\infty}x^2(f+tg)\mathrm{d}x
+- \sigma^2\right) \right)\right|_{t=0} \\
+= &amp;  \int_{-\infty}^{+\infty} g\left( -\log{f} + (\lambda_1 - 1) +
+\lambda_2x + \lambda_3x^2 \right) \mathrm{d}x\\
+= &amp; 0
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>由于<span
+class="math inline">\(g\)</span>是任意的函数，因此被积函数中，必然有
+<span class="math display">\[
+-\log{f} + (\lambda_1 - 1) + \lambda_2x + \lambda_3x^2 \equiv 0
+\]</span> 于是 <span class="math display">\[
+f = f_X(x) = \exp\left( \lambda_3 x^2 + \lambda_2 x + \lambda_1 - 1
+\right)
+\]</span> 这是标标准准的高斯概率密度函数，因此随机过程<span
+class="math inline">\(X\)</span>是高斯过程时，其熵最大。</p>
+<p>实际上，<span
+class="math inline">\(\lambda_1,\lambda_2,\lambda_3\)</span>显然是可以解的，虽然过程有点复杂，但结果确确实实是
+<span class="math display">\[
+f_X(x) = \cfrac{1}{\sqrt{2\pi}\sigma}\exp\left(
+-\cfrac{(x-\mu)^2}{2\sigma^2} \right)
+\]</span></p>
+<blockquote>
+<p>上面考虑的是双边无界条件。实际上，如果我们考虑单边无解或者双边有界情况的话，情况会有所不同。</p>
+<ol type="1">
+<li><p><span class="math inline">\(x\in
+[0,+\infty)\)</span>，此时只需要约束一阶矩<span
+class="math inline">\(\int_{-\infty}^{+\infty}xf_X(x)\mathrm{d}x - \mu =
+0\)</span>，最大熵的<span class="math inline">\(f\)</span>为指数分布：
+<span class="math display">\[
+f_X(x) = \lambda \exp\left( -\lambda x \right) I_{[0,+\infty)}(x)
+\]</span></p></li>
+<li><p><span
+class="math inline">\(x\in[a,b]\)</span>，此时不需要对矩有所约束，最大熵的<span
+class="math inline">\(f\)</span>为均匀分布： <span
+class="math display">\[
+f_X(x) = \cfrac{1}{b-a}
+\]</span></p></li>
+</ol>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/" rel="tag"># 随机过程</a>
+              <a href="/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/" rel="tag"># 高斯过程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/05/SAGEA%EF%BC%9A%E4%BA%A7%E5%93%81%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96/" rel="prev" title="SAGEA卫星重力数据处理：产品数据读取和初步使用(编辑中)">
+      <i class="fa fa-chevron-left"></i> SAGEA卫星重力数据处理：产品数据读取和初步使用(编辑中)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B2/" rel="next" title="随机过程笔记：高斯过程(2)">
+      随机过程笔记：高斯过程(2) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">高斯过程的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">高斯过程的意义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86central-limit-theorem-clt%E4%B8%8E%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8Blaw-of-large-numbers-lln"><span class="nav-number">2.1.</span> <span class="nav-text">中心极限定理(Central
+Limit Theorem, CLT)与大数定律(Law of Large Numbers, LLN)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%89%A9%E6%95%A3random-diffusion%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">随机扩散(Random
+Diffusion)模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E7%86%B5maximum-entropy"><span class="nav-number">2.3.</span> <span class="nav-text">最大熵(Maximum Entropy)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘书豪</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiuSH1997" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiuSH1997" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liushuhao@hust.edu.cn" title="E-Mail → mailto:liushuhao@hust.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘书豪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

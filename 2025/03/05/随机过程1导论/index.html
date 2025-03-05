@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="随机过程着眼于随机变量之间的相互关联，本文作为随机过程课程的导论部分，简单概述了随机变量之间“关联”的意义，引入了随机过程的定义，同时引入了相关函数这一概念。相关函数是研究随机过程的一个有力工具，对我们深入认识随机过程有“管中窥豹”的作用。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机过程笔记：导论">
+<meta property="og:url" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/index.html">
+<meta property="og:site_name" content="三天打鱼">
+<meta property="og:description" content="随机过程着眼于随机变量之间的相互关联，本文作为随机过程课程的导论部分，简单概述了随机变量之间“关联”的意义，引入了随机过程的定义，同时引入了相关函数这一概念。相关函数是研究随机过程的一个有力工具，对我们深入认识随机过程有“管中窥豹”的作用。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/1_1.png">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/1_2.png">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/1_3.png">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/1_4.png">
+<meta property="article:published_time" content="2025-03-05T08:30:10.800Z">
+<meta property="article:modified_time" content="2025-02-13T06:24:06.000Z">
+<meta property="article:author" content="刘书豪">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="随机过程">
+<meta property="article:tag" content="相关函数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/1_1.png">
+
+<link rel="canonical" href="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>随机过程笔记：导论 | 三天打鱼</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">三天打鱼</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘书豪">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三天打鱼">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          随机过程笔记：导论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-03-05 16:30:10" itemprop="dateCreated datePublished" datetime="2025-03-05T16:30:10+08:00">2025-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-13 14:24:06" itemprop="dateModified" datetime="2025-02-13T14:24:06+08:00">2025-02-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>随机过程着眼于随机变量之间的相互关联，本文作为随机过程课程的导论部分，简单概述了随机变量之间“关联”的意义，引入了随机过程的定义，同时引入了相关函数这一概念。相关函数是研究随机过程的一个有力工具，对我们深入认识随机过程有“管中窥豹”的作用。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+<span id="more"></span>
+<h1 id="随机变量"><strong>随机变量</strong></h1>
+<p>随机过程着眼于随机变量之间的相互关联。</p>
+<p><span class="math inline">\(X,Y\)</span>是随机变量（后均称<span
+class="math inline">\(r.v.\)</span>）</p>
+<p>它们的联合概率密度函数是 <span class="math display">\[
+f_{X,Y}(x,y) = \cfrac{\partial^2}{\partial x\partial y} F_{X,Y}(x,y)
+\]</span> 其中，<span
+class="math inline">\(F_{X,Y}(x,y)\)</span>是联合分布函数： <span
+class="math display">\[
+F_{X,Y}(x,y) = P(X\leq x, Y\leq y)
+\]</span></p>
+<p>举例：</p>
+<blockquote>
+<ol type="1">
+<li><p><span class="math display">\[
+  \begin{equation}
+  f_{X,Y} (x,y) = \left\{
+  \begin{aligned}
+  \cfrac{1}{4}, &amp;&amp; \lvert x \rvert \leq 1, \lvert y \rvert \leq
+1 \\
+  0, &amp;&amp; \mathrm{elsewhere}
+  \end{aligned}
+  \right.
+  \end{equation}
+  \]</span></p>
+<p><img src="1_1.png" /></p>
+<p>此时，随机变量<span
+class="math inline">\(X,Y\)</span><strong>独立</strong>(independent)：其中一个随机变量的变化不导致另一个随机变量统计性质的变化。</p></li>
+<li><p><span class="math display">\[
+\begin{equation}
+f_{X,Y} (x,y) = \left\{
+\begin{aligned}
+\cfrac{1}{\pi}, &amp;&amp; x^2 + y^2 \leq 1 \\
+0, &amp;&amp; \mathrm{elsewhere}
+\end{aligned}
+\right.
+\end{equation}
+\]</span></p>
+<p><img src="1_2.png" /> 此时当随机变量<span
+class="math inline">\(X\)</span>改变时，<span
+class="math inline">\(Y\)</span>的统计性质（如方差)也发生相应的改变，随机变量<span
+class="math inline">\(X,Y\)</span>不再独立。</p></li>
+<li><p><span class="math display">\[
+\begin{equation}
+f_{X,Y} (x,y) = \left\{
+\begin{aligned}
+\cfrac{1}{\lvert \Omega \rvert}, &amp;&amp; (x,y) \in \Omega \\
+0, &amp;&amp; \mathrm{elsewhere}
+\end{aligned}
+\right.
+\end{equation}
+  \]</span></p></li>
+</ol>
+<p><img src="1_3.png" /> 此时可以看出，当随机变量<span
+class="math inline">\(X\)</span>改变时<span
+class="math inline">\(Y\)</span>的均值这一统计性质也发生相应的“线性变化”，随机变量<span
+class="math inline">\(X,Y\)</span>存在着某种“线性关系”。这一“线性关系”可以用相关系数表示，这里的相关，指的是<strong>线性相关</strong>(linear
+correlation)。</p>
+</blockquote>
+<p>上面例3中的线性相关，可以用<strong>均方误差</strong>(mean square
+error)来表示： <span class="math display">\[
+E\left(\left( Y-\alpha X \right)^2\right)
+\]</span> 其反映了“纺锤”的“宽度”，<span
+class="math inline">\(\alpha\)</span>代表的是“斜率”，用图例3中的虚线表示：
+<span class="math display">\[
+\min_\alpha E\left( Y-\alpha X \right)^2 \Rightarrow \alpha
+_{\mathrm{optimal}} = \cfrac{E(XY)}{E(X^2)}
+\]</span></p>
+<blockquote>
+<p>有些地方的相关定义为<span class="math inline">\(E\left(
+(X-E(X))(Y-E(Y))
+\right)\)</span>，实际上，经过一通计算，这个定义等于<span
+class="math inline">\(E(XY) - E(X)E(Y)\)</span>，这与<span
+class="math inline">\(E(XY)\)</span>相差一个常数，不需要太在意。因此这两种定义在本课程中不加以区分。</p>
+</blockquote>
+<p>上式中，我们一般更关注的是<span
+class="math inline">\(E(XY)\)</span>这一项，其可以称为<strong>相关</strong>(correlation)。而两个随机变量<strong>不相关</strong>(uncorrelated)指的是<span
+class="math inline">\(E(XY)=EXEY(=0)\)</span>。注意：不相关并不意味着独立，实际上，两变量独立的要求更为苛刻，它是不相关的充分条件，即独立<span
+class="math inline">\(\Rightarrow\)</span>不相关。举例：</p>
+<blockquote>
+<p><span class="math inline">\(\theta\)</span>服从在<span
+class="math inline">\(\left( 0,2\pi \right)\)</span>上的均匀分布： <span
+class="math display">\[
+\theta \sim U(0,2\pi)
+\]</span> 且有随机变量： <span class="math display">\[
+X=\cos{\theta}, \\Y=\sin{\theta}
+\]</span> 显然二者并不独立，但是 <span class="math display">\[
+\begin{eqnarray}
+E(X) &amp; = &amp; \int_{-\infty}^{\infty} \cos{\theta}
+f_\theta(\theta)\mathrm{d}\theta = \int_{0}^{2\pi} \cos{\theta}
+\cfrac{1}{2\pi}\mathrm{d}\theta = 0 \\
+E(Y) &amp; = &amp; \int_{-\infty}^{\infty} \sin{\theta}
+f_\theta(\theta)\mathrm{d}\theta = \int_{0}^{2\pi} \sin{\theta}
+\cfrac{1}{2\pi}\mathrm{d}\theta = 0 \\
+\\
+E(XY) &amp; = &amp; \int_{-\infty}^{\infty} \cos{\theta} \sin{\theta}
+f_\theta(\theta)\mathrm{d}\theta = 0
+\end{eqnarray}
+\]</span> 即 <span class="math display">\[
+E(XY)=E(X)E(Y)=0
+\]</span> 此时，随机变量<span
+class="math inline">\(X,Y\)</span>不相关。</p>
+</blockquote>
+<h1 id="随机变量的几何观点"><strong>随机变量的几何观点</strong></h1>
+<p>实际上，可以将随机变量<span
+class="math inline">\(X,Y\)</span>的相关<span
+class="math inline">\(E(XY)\)</span>理解为某种<strong>内积</strong>(inner
+product)。关于内积，需要回顾一下：</p>
+<blockquote>
+<p>内积是一个二元操作<span class="math inline">\(\langle x,y \rangle : H
+\times H \rightarrow \mathbb{R}\)</span>，其满足以下三个条件：</p>
+<ol type="1">
+<li><p>对称性：<span class="math inline">\(\langle x,y \rangle = \langle
+y,x \rangle\)</span></p></li>
+<li><p>非负性：<span class="math inline">\(\langle x,x \rangle \geq
+0\)</span>，且<span class="math inline">\(\langle x,x \rangle = 0
+\Leftrightarrow x=0\)</span></p></li>
+<li><p><strong>双线性</strong>(bilinear)： <span class="math display">\[
+\langle x,\alpha y + \beta z \rangle = \alpha \langle x,y \rangle +
+\beta \langle x,z \rangle,\\
+\langle \alpha x + \beta y, z \rangle = \alpha \langle x,z \rangle +
+\beta \langle y,z \rangle
+\]</span></p></li>
+</ol>
+</blockquote>
+<p>而相关的定义是符合以上三个条件的。</p>
+<p>几何上，内积对应的是角度： <span class="math display">\[
+\cos \angle(x,y) = \cfrac{\langle x,y \rangle}{\left( \langle x,x
+\rangle \langle y,y \rangle  \right)^\frac{1}{2}}
+\]</span> 而一个随机变量<span
+class="math inline">\(r.v.\)</span>实际上可以理解为是线性空间中的一个向量，于是也可以算随机变量之间的“夹角”：</p>
+<p><img src="1_4.png" /></p>
+<p><span class="math display">\[
+\begin{eqnarray}
+\left| \left| Y \right| \right| \cos\theta \cdot \cfrac{X}{\left| \left|
+X \right| \right|} &amp; = &amp; \alpha X \\
+\Rightarrow \alpha &amp; = &amp; \cfrac{\left| \left| Y \right|
+\right|}{\left| \left| X \right| \right|} \cos \theta \\
+&amp; = &amp; \cfrac{\left| \left| Y \right| \right|}{\left| \left| X
+\right| \right|} \cfrac{E(XY)}{\left( E(X^2)E(Y^2)\right)^\frac{1}{2}}
+\\
+&amp; = &amp; \cfrac{\left| \left| Y \right| \right|}{\left| \left| X
+\right| \right|} \cfrac{E(XY)}{\left| \left| X \right| \right| \left|
+\left| Y \right| \right|} \\
+&amp; = &amp; \cfrac{E(XY)}{E(X^2)}
+\end{eqnarray}
+\]</span></p>
+<p>其中，<span class="math inline">\(\theta = \angle(X,Y),\ \cos \theta
+= \cfrac{E(XY)}{\left(
+EX^2EY^2\right)^\frac{1}{2}}\)</span>。既然相关能够理解为向量内积，其自然满足<strong>Cauchy-Schwarz不等式</strong>：
+<span class="math display">\[
+-1 \leq \cos \angle(X,Y) = \cfrac{E(XY)}{\left(
+EX^2EY^2\right)^\frac{1}{2}} \leq 1
+\]</span></p>
+<blockquote>
+<p>Cauchy-Schwarz不等式： <span class="math display">\[
+\left| \langle x,y \rangle \right| \leq \left( \langle x,x \rangle
+\langle y,y \rangle \right) ^{\frac{1}{2}}
+\]</span> 证明：</p>
+<p>构造<span class="math inline">\(g(\lambda) = \langle \lambda x + y,
+\lambda x + y \rangle\)</span></p>
+<p>根据对称性和双线性，有 <span class="math display">\[
+g(\lambda) = \lambda ^2 \langle x,x \rangle + 2\lambda\langle x,y
+\rangle + \langle y,y \rangle
+\]</span> 由于<span class="math inline">\(\langle x,x \rangle \geq
+0\)</span>，因此关于<span
+class="math inline">\(\lambda\)</span>的二次函数<span
+class="math inline">\(g(\lambda)\)</span>是开口向上的。又由于<span
+class="math inline">\(g(\lambda) = \langle \lambda x + y, \lambda x + y
+\rangle \geq 0\)</span>，可知其判别式是非正的，即 <span
+class="math display">\[
+\Delta = \left( 2\langle x,y \rangle \right) ^2 - 4\langle x,x
+\rangle\langle y,y \rangle \leq 0
+\]</span> 即 <span class="math display">\[
+\langle x,y \rangle ^2 \leq \langle x,x \rangle\langle y,y \rangle
+\]</span> 证毕。</p>
+</blockquote>
+<h1 id="相关函数">相关函数</h1>
+<p>首先引入随机过程这一概念<span
+class="math inline">\(\mathbb{X}(t)\)</span>，这里的<span
+class="math inline">\(t\)</span>是一个标记，可以是时间，也可以是别的什么东西，为方便说明问题，以后若有需要都称为“时间”。对不同的<span
+class="math inline">\(t_i\)</span>，<span
+class="math inline">\(\mathbb{X}(t_i)\)</span>都是一个随机变量。简单来说，随机过程实际上就是一组随机变量。如无特别说明，本课程讨论的这个下标<span
+class="math inline">\(t\)</span>是一维的；<span
+class="math inline">\(t\)</span>二维时<span
+class="math inline">\(\mathbb{X}(t)\)</span>称作随机场(random
+field)。</p>
+<p>定义<strong>(自)相关函数</strong>(auto correlation function)： <span
+class="math display">\[
+R_{\mathbb{X}} (t,s) = E(\mathbb{X}(t)\mathbb{X}(s))
+\]</span>
+其反映了随机过程在两个不同时间处的相关性。显然有这样的性质：</p>
+<ol type="1">
+<li><p>相关函数是对称的 <span class="math display">\[
+R_{\mathbb{X}} (t,s) = R_{\mathbb{X}} (s,t)
+\]</span></p></li>
+<li><p>Cauchy-Schwarz不等式 <span class="math display">\[
+\left| R_{\mathbb{X}} (t,s) \right| \leq \left( R_{\mathbb{X}} (t,t)
+R_{\mathbb{X}} (s,s) \right) ^ \frac{1}{2}
+\]</span></p></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/" rel="tag"># 随机过程</a>
+              <a href="/tags/%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/" rel="tag"># 相关函数</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B3%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F/" rel="prev" title="随机过程笔记：高斯过程(3)">
+      <i class="fa fa-chevron-left"></i> 随机过程笔记：高斯过程(3)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/" rel="next" title="随机过程笔记：宽平稳过程(1)">
+      随机过程笔记：宽平稳过程(1) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">随机变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E7%9A%84%E5%87%A0%E4%BD%95%E8%A7%82%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">随机变量的几何观点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">相关函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘书豪</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiuSH1997" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiuSH1997" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liushuhao@hust.edu.cn" title="E-Mail → mailto:liushuhao@hust.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘书豪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

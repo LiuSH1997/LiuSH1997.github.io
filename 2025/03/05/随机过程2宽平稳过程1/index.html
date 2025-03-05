@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="平稳是随机过程中一个非常重要的概念，而宽平稳则属于其中一种类型。宽平稳过程具有良好的性质，本文首先介绍了其定义，然后研究了宽平稳过程在时域中的性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机过程笔记：宽平稳过程(1)">
+<meta property="og:url" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/index.html">
+<meta property="og:site_name" content="三天打鱼">
+<meta property="og:description" content="平稳是随机过程中一个非常重要的概念，而宽平稳则属于其中一种类型。宽平稳过程具有良好的性质，本文首先介绍了其定义，然后研究了宽平稳过程在时域中的性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，这是课程链接。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_1.png">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_2.png">
+<meta property="og:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_3.png">
+<meta property="article:published_time" content="2025-03-05T08:30:11.820Z">
+<meta property="article:modified_time" content="2022-09-10T08:26:40.000Z">
+<meta property="article:author" content="刘书豪">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="随机过程">
+<meta property="article:tag" content="宽平稳过程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_1.png">
+
+<link rel="canonical" href="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>随机过程笔记：宽平稳过程(1) | 三天打鱼</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">三天打鱼</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘书豪">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三天打鱼">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          随机过程笔记：宽平稳过程(1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-03-05 16:30:11" itemprop="dateCreated datePublished" datetime="2025-03-05T16:30:11+08:00">2025-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-10 16:26:40" itemprop="dateModified" datetime="2022-09-10T16:26:40+08:00">2022-09-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>平稳是随机过程中一个非常重要的概念，而宽平稳则属于其中一种类型。宽平稳过程具有良好的性质，本文首先介绍了其定义，然后研究了宽平稳过程在时域中的性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+<span id="more"></span>
+<h1 id="宽平稳过程的概念">宽平稳过程的概念</h1>
+<p>随机过程有中一个非常重要的概念：<strong>平稳</strong>(Stationary)。指随机过程的某一类统计性质随时间变化保持不变，具体是怎样的性质，就需要具体案例具体分析了。</p>
+<p>现在介绍<strong>宽平稳过程</strong>(wide-sense stationary process,
+W.S.S.)这样一个案例。</p>
+<p>定义：若随机过程<span
+class="math inline">\(\mathbb{X}(t)\)</span>满足：</p>
+<ol type="1">
+<li><p>不同的时刻<span class="math inline">\(t\)</span>下，<span
+class="math inline">\(\mathbb{X}(t)\)</span>的均值保持不变，即 <span
+class="math display">\[
+E\left( \mathbb{X}(t) \right) =m(t) \equiv m
+\]</span></p></li>
+<li><p>对于任意的平移时间<span class="math inline">\(D\)</span>，都有
+<span class="math display">\[
+R_{\mathbb{X}} (t+D,s+D) = R_{\mathbb{X}} (t,s)
+\]</span></p></li>
+</ol>
+<p>则称<span
+class="math inline">\(\mathbb{X}(t)\)</span>是宽平稳过程。</p>
+<p>根据定义的第二条，宽平稳下的随机过程相关函数实际上可以退化成一元函数：
+<span class="math display">\[
+\begin{eqnarray}
+R_\mathbb{X}(t, s) &amp; = &amp; R_\mathbb{X}(t-s, s-s)\\
+&amp; = &amp; R_\mathbb{X}(t-s, 0)\\
+&amp; \overset{\Delta}{=} &amp; R_\mathbb{X}(\tau)
+\end{eqnarray}
+\]</span> 其中，<span class="math inline">\(\tau =
+t-s\)</span>，即函数值只于<span
+class="math inline">\(t,s\)</span>的间距有关，与它们的具体值无关。</p>
+<p>下面我们看两个例子。</p>
+<p><strong>调制信号 Modulated Signal</strong></p>
+<p>设有一随机过程<span class="math inline">\(\mathbb{X}(t) =
+A(t)\cos\left( 2\pi f_0 t +\theta\right)\)</span>，其中<span
+class="math inline">\(A\)</span>是随机过程，<span
+class="math inline">\(\theta\)</span>满足均匀分布<span
+class="math inline">\(\theta \sim U(0,2\pi)\)</span>，并且<span
+class="math inline">\(A, \theta\)</span>独立。那么<span
+class="math inline">\(\mathbb{X}\)</span>宽平稳吗？</p>
+<p>首先考察宽平稳定义的第一条， <span class="math display">\[
+\begin{eqnarray}
+E\left(\mathbb{X}(t)\right) &amp; = &amp; E\left(A(t)\right)
+E\left(\cos\left( 2\pi f_0 t +\theta\right)\right) \\
+&amp; = &amp; E\left(A(t)\right) \int_0^{2\pi} \cos\left( 2\pi f_0 t
++\theta\right) \mathrm{d}\theta \\
+&amp; \equiv &amp; 0
+\end{eqnarray}
+\]</span> 第一条满足；现考察定义的第二条， <span class="math display">\[
+\begin{eqnarray}
+R_{\mathbb{X}} (t+D,s+D) &amp; = &amp;
+E\left(\mathbb{X}(t+D)\mathbb{X}(s+D)\right) \\
+&amp; = &amp; E\left(A(t+D)A(s+D)\right) \cdot E\left(\cos\left( 2\pi
+f_0 (t+D) +\theta\right) \cos\left( 2\pi f_0 (s+D) +\theta\right)
+\right) \\
+&amp; = &amp; E\left(A(t+D)A(s+D)\right) \cdot
+\cfrac{1}{2}E\left(\cos\left( 2\pi f_0 (t-s)\right)\right) \\
+&amp; = &amp; E\left(A(t+D)A(s+D)\right) \cdot
+\cfrac{1}{2}E\left(\cos\left( 2\pi f_0 \tau \right)\right)
+\end{eqnarray}
+\]</span> 因此，若振幅调制<span
+class="math inline">\(A(t)\)</span>是宽平稳的，则整体<span
+class="math inline">\(\mathbb{X}(t)\)</span>是宽平稳的。</p>
+<p><strong>随机电报信号 Random Telegraph Signal</strong></p>
+<p>随机过程<span
+class="math inline">\(\mathbb{X}\)</span>于每一时间<span
+class="math inline">\(t\)</span>上<span
+class="math inline">\(\mathbb{X}(t)\)</span>都在<span
+class="math inline">\(\set{1,-1}\)</span>中任意取值，现考察其是否宽平稳。设在<span
+class="math inline">\(\left[ s,t \right]\)</span>时间段内，信号切变<span
+class="math inline">\(k\)</span>次的概率为 <span class="math display">\[
+\rho = \cfrac{(\lambda(t-s))^k}{k!}\exp(-\lambda(t-s))
+\]</span></p>
+<blockquote>
+<p>这实际上就是<strong>泊松分布</strong>(Poisson distribution)。另有
+<span class="math display">\[
+\sum_{k=0}^{\infty} \cfrac{(\lambda(t-s))^k}{k!} = \exp(\lambda(t-s))
+\]</span></p>
+</blockquote>
+<p>定义第一条，即一阶矩略了。</p>
+<p>现计算<span class="math inline">\(E\left( \mathbb{X}(t) \mathbb{X(s)}
+\right)\)</span>，设<span class="math inline">\(P_1=P(\left[ s,t
+\right],
+\text{even})\)</span>是信号在两个时刻之间切变偶数次的概率，<span
+class="math inline">\(P_{-1}=P(\left[ s,t \right],
+\text{odd})\)</span>是信号在两个时刻之间切变奇数次的概率，则 <span
+class="math display">\[
+E\left( \mathbb{X}(t) \mathbb{X(s)} \right) = 1\cdot P_1 + (-1) \cdot
+P_{-1}
+\]</span> 显然，<span class="math inline">\(P_{-1} =
+1-P_1\)</span>，因此计算其中一个就行了。现计算 <span
+class="math display">\[
+P_1 = \sum_{k:\text{even}}
+\cfrac{(\lambda(t-s))^k}{k!}\exp(-\lambda(t-s))
+\]</span> 利用<span class="math inline">\(\sum_{k=0}^{\infty}
+\cfrac{(\lambda(t-s))^k}{k!} =
+\exp(\lambda(t-s))\)</span>这一关系，注意到，当<span
+class="math inline">\(\lambda\)</span>变为<span
+class="math inline">\(-\lambda\)</span>时，左边级数中，偶数项值不变，奇数项会变号，右边结果变为<span
+class="math inline">\(\exp(-\lambda(t-s))\)</span>，于是 <span
+class="math display">\[
+\begin{eqnarray}
+\sum_{k: \text{even}}^{\infty} \cfrac{(\lambda(t-s))^k}{k!} &amp; =
+&amp; \cfrac{1}{2} \left(\sum_{k=0}^{\infty}
+\cfrac{(\lambda(t-s))^k}{k!} + \sum_{k=0}^{\infty}
+\cfrac{(-\lambda(t-s))^k}{k!}\right) \\
+&amp; = &amp; \cfrac{1}{2} \left( \exp(\lambda(t-s)) +
+\exp(-\lambda(t-s)) \right)
+\end{eqnarray}
+\]</span> 故 <span class="math display">\[
+\begin{eqnarray}
+P_1 &amp; = &amp; \sum_{k:\text{even}}
+\cfrac{(\lambda(t-s))^k}{k!}\exp(-\lambda(t-s)) \\
+&amp; = &amp; \cfrac{1}{2} \left( \exp(\lambda(t-s)) +
+\exp(-\lambda(t-s)) \right) \exp(-\lambda(t-s)) \\
+&amp; = &amp; \cfrac{1}{2} \left( 1 + \exp(-2\lambda(t-s)) \right) \\ \\
+P_{-1} &amp; = &amp; \cfrac{1}{2} \left( 1 - \exp(-2\lambda(t-s))
+\right)
+\end{eqnarray}
+\]</span> 于是 <span class="math display">\[
+\begin{eqnarray}
+R_\mathbb{X} (t,s) &amp; = &amp; E\left( \mathbb{X}(t) \mathbb{X(s)}
+\right)\\
+&amp; = &amp; \exp(-2\lambda(t-s))\\
+&amp; = &amp; \exp(-2\lambda \tau))
+\end{eqnarray}
+\]</span></p>
+<p>因此，随机过程<span
+class="math inline">\(\mathbb{X}\)</span>是宽平稳的。</p>
+<h1 id="正定性">正定性</h1>
+<p>一般情况下，相关函数有这样的性质：</p>
+<ol type="1">
+<li>对称性：<span class="math inline">\(R_\mathbb{X}(t,s) =
+R_\mathbb{X}(s, t)\)</span></li>
+<li>柯西不等式：<span class="math inline">\(\left| R_\mathbb{X}(t,s)
+\right| \leq \left(R_\mathbb{X}(t,t)
+R_\mathbb{X}(s,s)\right)^\frac{1}{2}\)</span></li>
+</ol>
+<p>对于宽平稳过程<span
+class="math inline">\(\mathbb{X}\)</span>，由于<span
+class="math inline">\(R_\mathbb{X}(s,t) = R_\mathbb{X}(\tau),\ \tau =
+t-s\)</span>，上面两条性质则以表述为：</p>
+<ol type="1">
+<li>偶函数：<span class="math inline">\(R_\mathbb{X}(\tau) =
+R_\mathbb{X}(-\tau)\)</span></li>
+<li><span class="math inline">\(\tau = 0\)</span>为极大值点：<span
+class="math inline">\(\left| R_\mathbb{X}(\tau) \right| \leq
+R_\mathbb{X}(0)\)</span></li>
+</ol>
+<p>除此之外，宽平稳过程的相关函数还有一个非常重要的性质，那就是<strong>正定性</strong>(positive
+definite)。首先介绍正定性的概念：</p>
+<p>若函数<span class="math inline">\(f(x)\)</span>满足：</p>
+<p><span class="math inline">\(\forall n, \forall x_1, x_2, \cdots
+x_n\)</span>，构成矩阵 <span class="math display">\[
+A_{n\times n} = \left(f(x_i - x_j)\right)_{ij}
+\]</span> 且这样的<span class="math inline">\(A_{n\times
+n}\)</span>是正定的。</p>
+<p>则称函数<span class="math inline">\(f(x)\)</span>是正定的。</p>
+<blockquote>
+<p>矩阵正定有很多种表述，其中一种就是：</p>
+<p>矩阵<span class="math inline">\(A\in \mathbb{R}^{n\times n} \geq0
+\Leftrightarrow \forall \alpha \in \mathbb{R}^n, \alpha ^
+\mathrm{T}A\alpha \geq 0\)</span></p>
+</blockquote>
+<p>下面证明宽平稳的相关函数是正定的：</p>
+<p>对于宽平稳过程<span
+class="math inline">\(\mathbb{X}(t)\)</span>，按照定义给出的构造<span
+class="math inline">\(R_{n\times n} = \left(R_\mathbb{X}(\tau_i -
+\tau_j)\right)_{ij}\)</span>，任取向量<span
+class="math inline">\(\alpha\in\mathbb{R}^n, \alpha = (\alpha_1,
+\alpha_2, \cdots \alpha_n)^\mathrm{T}\)</span>，有</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+\alpha^\mathrm{T} R \alpha &amp; = &amp;
+\left(
+\begin{array}{}
+\alpha_1 &amp; \alpha_2 &amp; \cdots &amp;\alpha_n
+\end{array}
+\right)
+\left[
+\begin{array}{}
+R_\mathbb{X}(\tau_1-\tau_1) &amp; R_\mathbb{X}(\tau_1-\tau_2) &amp;
+\cdots &amp; R_\mathbb{X}(\tau_1-\tau_n) \\
+R_\mathbb{X}(\tau_2-\tau_1) &amp; R_\mathbb{X}(\tau_2-\tau_2) &amp;
+\cdots &amp; R_\mathbb{X}(\tau_2-\tau_n) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+R_\mathbb{X}(\tau_n-\tau_1) &amp; R_\mathbb{X}(\tau_n-\tau_2) &amp;
+\cdots &amp; R_\mathbb{X}(\tau_n-\tau_n) \\
+\end{array}
+\right]
+\left(
+\begin{array}{}
+\alpha_1 \\ \alpha_2 \\ \vdots \\ \alpha_n
+\end{array}
+\right)
+\\
+&amp; = &amp; \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j
+R_\mathbb{X}(\tau_i - \tau_j) \\
+&amp; = &amp; \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j E\left(
+\mathbb{X}(\tau_i) \mathbb{X}(\tau_j) \right) \\
+&amp; = &amp;  E\left( \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j
+\mathbb{X}(\tau_i) \mathbb{X}(\tau_j) \right) \\
+&amp; = &amp;  E\left( \left( \sum_{i=1}^n \alpha_i \mathbb{X}(\tau_i)
+\right)^2 \right) \\
+&amp; \geq &amp; 0
+\end{eqnarray}
+\]</span></p>
+<p>即<span class="math inline">\(R\)</span>是正定的，因此宽平稳过程<span
+class="math inline">\(\mathbb{X}(t)\)</span>是正定的。</p>
+<blockquote>
+<p>这里的计算过程也可以用矩阵-向量语言来更简洁地表述： 令<span
+class="math inline">\(\mathbb{X} = (\mathbb{X}(\tau_1),
+\mathbb{X}(\tau_2), \cdots
+\mathbb{X}(\tau_n))^\mathrm{T}\)</span>，则<span class="math inline">\(R
+= \left(R_\mathbb{X}(\tau_i - \tau_j)\right)_{ij} =
+E(\mathbb{X}\mathbb{X}^\mathrm{T})\)</span>，进而 <span
+class="math display">\[
+\begin{eqnarray}
+\alpha^\mathrm{T} R \alpha &amp;=&amp; \alpha^\mathrm{T}
+E(\mathbb{X}\mathbb{X}^\mathrm{T}) \alpha \\
+&amp;=&amp; E\left(\alpha^\mathrm{T} \mathbb{X}\mathbb{X}^\mathrm{T}
+\alpha\right) \\
+&amp;=&amp; E\left((\alpha^\mathrm{T} \mathbb{X})^2 \right) \\
+&amp;\geq&amp; 0
+\end{eqnarray}
+\]</span> 这里的<span
+class="math inline">\(E(\mathbb{X}\mathbb{X}^\mathrm{T})\)</span>称作相关矩阵(correlation
+matrix)。</p>
+</blockquote>
+<p>实际上，正定函数<span
+class="math inline">\(f(x)\)</span>本身就有非常良好的性质，如</p>
+<ol type="1">
+<li><p><span class="math inline">\(f(0)\geq 0\)</span></p>
+<blockquote>
+<p>证明： 取<span class="math inline">\(n=1, \forall
+x_1\)</span>，按照定义给出的矩阵： <span class="math display">\[
+A_{1\times 1} = f(x_1 - x_1) = f(0)
+\]</span> 由定义可知，<span
+class="math inline">\(A\)</span>是正定的，此时即<span
+class="math inline">\(f(0)\geq0\)</span>，证毕。</p>
+</blockquote></li>
+<li><p><span class="math inline">\(\forall x, f(0)\geq f(x)\)</span></p>
+<blockquote>
+<p>证明： 取<span class="math inline">\(n=2, x_1=0, \forall
+x_2=x\)</span>，按照定义给出的矩阵： <span class="math display">\[
+A_{2\times 2}  =
+\left[
+\begin{array}{}
+f(0 - 0) &amp; f(0 - x) \\
+f(x - 0) &amp; f(x - x)
+\end{array}
+\right] = \left[
+\begin{array}{}
+f(0) &amp; f(-x) \\
+f(x) &amp; f(0)
+\end{array}
+\right]
+\]</span> 由定义可知，<span
+class="math inline">\(A\)</span>是正定的，因此有</p>
+<ul>
+<li><p><span class="math inline">\(A\)</span>是对称的，即<span
+class="math inline">\(f(-x_2) = f(x_2)\)</span>，即<span
+class="math inline">\(f\)</span>是偶函数；</p></li>
+<li><p><span class="math inline">\(\det A \geq 0\)</span>，即<span
+class="math inline">\(\left(f(0)\right)^2 - \left(f(x)\right)^2 \geq
+0\)</span>，又根据上一条性质<span
+class="math inline">\(f(x)\geq0\)</span>，有<span
+class="math inline">\(f(0) \geq f(x)\)</span>，证毕。</p></li>
+</ul>
+</blockquote></li>
+</ol>
+<p>可以看出，对于宽平稳过程的相关函数，正定性这一性质实际上包含了上面说明的两条宽平稳过程相关函数的前两条性质。</p>
+<p>实际上，正定性是宽平稳过程相关函数的特征性质(characteristic
+property)，也就是说它们是充分必要的关系。</p>
+<p>不仅如此，由于正定性，宽平稳过程相关函数<span
+class="math inline">\(R_\mathbb{X}(\tau)\)</span>还有其他不平凡的性质，下面我们举几个例子。</p>
+<h2 id="周期震荡">周期震荡</h2>
+<p>前面说到，<span class="math inline">\(R_\mathbb{X}(0) \geq \left|
+R_\mathbb{X}(\tau) \right|\)</span>，其图像可以感性地表示为：</p>
+<p><img src="2_1.png" /></p>
+<p>在这样地前提下，若<span class="math inline">\(\exists
+T\)</span>，满足<span class="math inline">\(R_\mathbb{X}(T) =
+R_\mathbb{X}(0)\)</span>，则一定有<span
+class="math inline">\(R_\mathbb{X}(\tau) =
+R_\mathbb{X}(\tau+T)\)</span>，即<span
+class="math inline">\(R_\mathbb{X}\)</span>一定是周期为<span
+class="math inline">\(T\)</span>的周期函数。</p>
+<p><img src="2_2.png" /></p>
+<p>要证明这一结论，我们想到 <span class="math display">\[
+\begin{eqnarray}
+R_\mathbb{X}(\tau) - R_\mathbb{X}(\tau+T) &amp;=&amp; E\left(
+\mathbb{X}(0)\mathbb{X}(\tau) \right) - E\left(
+\mathbb{X}(0)\mathbb{X}(\tau + T) \right) \\
+&amp;=&amp; E\left( \mathbb{X}(0) \left( \mathbb{X}(\tau) -
+\mathbb{X}(\tau + T) \right)\right)
+\end{eqnarray}
+\]</span> 联系到柯西不等式， <span class="math display">\[
+\left| E\left( \mathbb{X}(0) \left( \mathbb{X}(\tau) - \mathbb{X}(\tau +
+T) \right)\right)
+\right| \leq
+\left(E\left( \mathbb{X}(0) ^2\right) E\left( \left(\mathbb{X}(\tau) -
+\mathbb{X}(\tau + T)\right)^2 \right)\right)^\frac{1}{2}
+\]</span> 如果不等式右边可以证明为<span
+class="math inline">\(0\)</span>，那么该命题便成立了。按照这样的思路，要证明上面的结论，可以先证明这样的结论：</p>
+<ul>
+<li>若<span class="math inline">\(\exists T\)</span>，满足<span
+class="math inline">\(R_\mathbb{X}(T) =
+R_\mathbb{X}(0)\)</span>，则<span class="math inline">\(E\left(
+\left|\mathbb{X}(\tau) - \mathbb{X}(\tau + T)\right|^2
+\right)\)</span>。实际上，这一结论称均方周期性。</li>
+</ul>
+<p>进而根据柯西不等式得到我们所要的结论。</p>
+<p>证明： <span class="math display">\[
+\begin{eqnarray}
+E\left( \left|\mathbb{X}(\tau) - \mathbb{X}(\tau + T)\right|^2 \right)
+&amp;=&amp; E\left( \mathbb{X}(\tau)^2 \right) - 2E\left(
+\mathbb{X}(\tau) \mathbb{X}(\tau + T) \right) + E\left( \mathbb{X}(\tau
++ T)^2 \right) \\
+&amp;=&amp; E\left( R_\mathbb{X}(0) \right) - 2E\left( R_\mathbb{X}(T)
+\right) + E\left( R_\mathbb{X}(0) \right) \\
+&amp;=&amp;  2\left( R_\mathbb{X}(0) -  R_\mathbb{X}(T) \right) \\
+&amp;=&amp; 0
+\end{eqnarray}
+\]</span> 故有 <span class="math display">\[
+\begin{eqnarray}
+\left| R_\mathbb{X}(\tau) - R_\mathbb{X}(\tau+T) \right|
+&amp;=&amp; \left| E\left( \mathbb{X}(0) \left( \mathbb{X}(\tau) -
+\mathbb{X}(\tau + T) \right)\right) \right| \\
+&amp;\leq&amp; \left|E\left( \mathbb{X}(0) ^2\right) E\left(
+\left(\mathbb{X}(\tau) - \mathbb{X}(\tau + T)\right)^2
+\right)\right|^\frac{1}{2} \\
+&amp;=&amp; 0
+\end{eqnarray}
+\]</span> 因此，<span class="math inline">\(R_\mathbb{X}(\tau + T) =
+R_\mathbb{X}(\tau)\)</span>，证毕。</p>
+<h2 id="bochner定理">Bochner定理</h2>
+<p>仔细思考上面一节的内容，可以发现是一个“局部性质导出全局性质”的过程。本节继续介绍另一种同样是“局部性质导出全局性质”的过程。</p>
+<p>先思考是否存在这样一种矩形窗宽平稳相关函数： <span
+class="math display">\[
+R_{\mathbb{X}}(\tau) =
+\left\{
+\begin{eqnarray}
+a &amp;&amp; ,\left| \tau \right| &lt;\tau_0 \\
+0 &amp;&amp; ,\text{elsewhere}
+\end{eqnarray}
+\right.
+(a&gt;0)
+\]</span> <img src="2_3.png" /></p>
+<p>先给出这样命题：</p>
+<blockquote>
+<p><span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>是宽平稳过程的相关函数，若<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
+class="math inline">\(\tau=0\)</span>处连续，则<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
+class="math inline">\(\tau=t, \forall t\)</span>处连续。</p>
+</blockquote>
+<p>若上述命题成立，则显然不存在那样的矩形窗宽平稳相关函数。现在我们就来证明这个命题。</p>
+<p>按照上一小节的经验，我们同样把证明过程分解为两部分：</p>
+<blockquote>
+<ol type="1">
+<li><p><strong>均方连续性</strong>：<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>是宽平稳过程的相关函数，若<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
+class="math inline">\(\tau=0\)</span>处连续，则有 <span
+class="math display">\[
+\lim_{\Delta\rightarrow0}E\left( \mathbb{X}(t+\Delta) - \mathbb{X}(t)
+\right)^2 = 0
+\]</span></p></li>
+<li><p>若一宽平稳随机过程<span
+class="math inline">\(\mathbb{X}(t)\)</span>满足上述均方连续性，则其相关函数<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
+class="math inline">\(\tau=t, \forall t\)</span>处连续。</p></li>
+</ol>
+</blockquote>
+<p>证明：</p>
+<ol type="1">
+<li><span class="math display">\[
+E\left( \mathbb{X}(t+\Delta) - \mathbb{X}(t) \right)^2 =
+2R_{\mathbb{X}}(0) - 2R_{\mathbb{X}}(\Delta)
+\]</span> 由于<span
+class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
+class="math inline">\(\tau =0\)</span>处连续，故<span
+class="math inline">\(\lim_{\Delta \rightarrow 0}\)</span></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/" rel="tag"># 随机过程</a>
+              <a href="/tags/%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B/" rel="tag"># 宽平稳过程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B1%E5%AF%BC%E8%AE%BA/" rel="prev" title="随机过程笔记：导论">
+      <i class="fa fa-chevron-left"></i> 随机过程笔记：导论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%BC%A0%E6%92%AD%E5%AE%9A%E5%BE%8B/" rel="next" title="误差理论：协方差传播定律">
+      误差理论：协方差传播定律 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">宽平稳过程的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%AE%9A%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">正定性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E9%9C%87%E8%8D%A1"><span class="nav-number">2.1.</span> <span class="nav-text">周期震荡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bochner%E5%AE%9A%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">Bochner定理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘书豪</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiuSH1997" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiuSH1997" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liushuhao@hust.edu.cn" title="E-Mail → mailto:liushuhao@hust.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘书豪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
