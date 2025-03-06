@@ -139,6 +139,11 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
         <li class="menu-item menu-item-resources">
 
     <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
@@ -225,19 +230,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>平稳是随机过程中一个非常重要的概念，而宽平稳则属于其中一种类型。宽平稳过程具有良好的性质，本文首先介绍了其定义，然后研究了宽平稳过程在时域中的性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+        <p>平稳是随机过程中一个非常重要的概念，而宽平稳则属于其中一种类型。宽平稳过程具有良好的性质，本文首先介绍了其定义，然后研究了宽平稳过程在时域中的性质。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
 <span id="more"></span>
 <h1 id="宽平稳过程的概念">宽平稳过程的概念</h1>
 <p>随机过程有中一个非常重要的概念：<strong>平稳</strong>(Stationary)。指随机过程的某一类统计性质随时间变化保持不变，具体是怎样的性质，就需要具体案例具体分析了。</p>
 <p>现在介绍<strong>宽平稳过程</strong>(wide-sense stationary process,
 W.S.S.)这样一个案例。</p>
-<p>定义：若随机过程<span
-class="math inline">\(\mathbb{X}(t)\)</span>满足：</p>
+<p>定义：若随机过程<span class="math inline">\(\mathbb{X}(t)\)</span>满足：</p>
 <ol type="1">
-<li><p>不同的时刻<span class="math inline">\(t\)</span>下，<span
-class="math inline">\(\mathbb{X}(t)\)</span>的均值保持不变，即 <span
-class="math display">\[
+<li><p>不同的时刻<span class="math inline">\(t\)</span>下，<span class="math inline">\(\mathbb{X}(t)\)</span>的均值保持不变，即 <span class="math display">\[
 E\left( \mathbb{X}(t) \right) =m(t) \equiv m
 \]</span></p></li>
 <li><p>对于任意的平移时间<span class="math inline">\(D\)</span>，都有
@@ -245,8 +246,7 @@ E\left( \mathbb{X}(t) \right) =m(t) \equiv m
 R_{\mathbb{X}} (t+D,s+D) = R_{\mathbb{X}} (t,s)
 \]</span></p></li>
 </ol>
-<p>则称<span
-class="math inline">\(\mathbb{X}(t)\)</span>是宽平稳过程。</p>
+<p>则称<span class="math inline">\(\mathbb{X}(t)\)</span>是宽平稳过程。</p>
 <p>根据定义的第二条，宽平稳下的随机过程相关函数实际上可以退化成一元函数：
 <span class="math display">\[
 \begin{eqnarray}
@@ -255,17 +255,11 @@ R_\mathbb{X}(t, s) &amp; = &amp; R_\mathbb{X}(t-s, s-s)\\
 &amp; \overset{\Delta}{=} &amp; R_\mathbb{X}(\tau)
 \end{eqnarray}
 \]</span> 其中，<span class="math inline">\(\tau =
-t-s\)</span>，即函数值只于<span
-class="math inline">\(t,s\)</span>的间距有关，与它们的具体值无关。</p>
+t-s\)</span>，即函数值只于<span class="math inline">\(t,s\)</span>的间距有关，与它们的具体值无关。</p>
 <p>下面我们看两个例子。</p>
 <p><strong>调制信号 Modulated Signal</strong></p>
 <p>设有一随机过程<span class="math inline">\(\mathbb{X}(t) =
-A(t)\cos\left( 2\pi f_0 t +\theta\right)\)</span>，其中<span
-class="math inline">\(A\)</span>是随机过程，<span
-class="math inline">\(\theta\)</span>满足均匀分布<span
-class="math inline">\(\theta \sim U(0,2\pi)\)</span>，并且<span
-class="math inline">\(A, \theta\)</span>独立。那么<span
-class="math inline">\(\mathbb{X}\)</span>宽平稳吗？</p>
+A(t)\cos\left( 2\pi f_0 t +\theta\right)\)</span>，其中<span class="math inline">\(A\)</span>是随机过程，<span class="math inline">\(\theta\)</span>满足均匀分布<span class="math inline">\(\theta \sim U(0,2\pi)\)</span>，并且<span class="math inline">\(A, \theta\)</span>独立。那么<span class="math inline">\(\mathbb{X}\)</span>宽平稳吗？</p>
 <p>首先考察宽平稳定义的第一条， <span class="math display">\[
 \begin{eqnarray}
 E\left(\mathbb{X}(t)\right) &amp; = &amp; E\left(A(t)\right)
@@ -286,17 +280,9 @@ f_0 (t+D) +\theta\right) \cos\left( 2\pi f_0 (s+D) +\theta\right)
 &amp; = &amp; E\left(A(t+D)A(s+D)\right) \cdot
 \cfrac{1}{2}E\left(\cos\left( 2\pi f_0 \tau \right)\right)
 \end{eqnarray}
-\]</span> 因此，若振幅调制<span
-class="math inline">\(A(t)\)</span>是宽平稳的，则整体<span
-class="math inline">\(\mathbb{X}(t)\)</span>是宽平稳的。</p>
+\]</span> 因此，若振幅调制<span class="math inline">\(A(t)\)</span>是宽平稳的，则整体<span class="math inline">\(\mathbb{X}(t)\)</span>是宽平稳的。</p>
 <p><strong>随机电报信号 Random Telegraph Signal</strong></p>
-<p>随机过程<span
-class="math inline">\(\mathbb{X}\)</span>于每一时间<span
-class="math inline">\(t\)</span>上<span
-class="math inline">\(\mathbb{X}(t)\)</span>都在<span
-class="math inline">\(\set{1,-1}\)</span>中任意取值，现考察其是否宽平稳。设在<span
-class="math inline">\(\left[ s,t \right]\)</span>时间段内，信号切变<span
-class="math inline">\(k\)</span>次的概率为 <span class="math display">\[
+<p>随机过程<span class="math inline">\(\mathbb{X}\)</span>于每一时间<span class="math inline">\(t\)</span>上<span class="math inline">\(\mathbb{X}(t)\)</span>都在<span class="math inline">\(\set{1,-1}\)</span>中任意取值，现考察其是否宽平稳。设在<span class="math inline">\(\left[ s,t \right]\)</span>时间段内，信号切变<span class="math inline">\(k\)</span>次的概率为 <span class="math display">\[
 \rho = \cfrac{(\lambda(t-s))^k}{k!}\exp(-\lambda(t-s))
 \]</span></p>
 <blockquote>
@@ -309,24 +295,17 @@ class="math inline">\(k\)</span>次的概率为 <span class="math display">\[
 <p>现计算<span class="math inline">\(E\left( \mathbb{X}(t) \mathbb{X(s)}
 \right)\)</span>，设<span class="math inline">\(P_1=P(\left[ s,t
 \right],
-\text{even})\)</span>是信号在两个时刻之间切变偶数次的概率，<span
-class="math inline">\(P_{-1}=P(\left[ s,t \right],
-\text{odd})\)</span>是信号在两个时刻之间切变奇数次的概率，则 <span
-class="math display">\[
+\text{even})\)</span>是信号在两个时刻之间切变偶数次的概率，<span class="math inline">\(P_{-1}=P(\left[ s,t \right],
+\text{odd})\)</span>是信号在两个时刻之间切变奇数次的概率，则 <span class="math display">\[
 E\left( \mathbb{X}(t) \mathbb{X(s)} \right) = 1\cdot P_1 + (-1) \cdot
 P_{-1}
 \]</span> 显然，<span class="math inline">\(P_{-1} =
-1-P_1\)</span>，因此计算其中一个就行了。现计算 <span
-class="math display">\[
+1-P_1\)</span>，因此计算其中一个就行了。现计算 <span class="math display">\[
 P_1 = \sum_{k:\text{even}}
 \cfrac{(\lambda(t-s))^k}{k!}\exp(-\lambda(t-s))
 \]</span> 利用<span class="math inline">\(\sum_{k=0}^{\infty}
 \cfrac{(\lambda(t-s))^k}{k!} =
-\exp(\lambda(t-s))\)</span>这一关系，注意到，当<span
-class="math inline">\(\lambda\)</span>变为<span
-class="math inline">\(-\lambda\)</span>时，左边级数中，偶数项值不变，奇数项会变号，右边结果变为<span
-class="math inline">\(\exp(-\lambda(t-s))\)</span>，于是 <span
-class="math display">\[
+\exp(\lambda(t-s))\)</span>这一关系，注意到，当<span class="math inline">\(\lambda\)</span>变为<span class="math inline">\(-\lambda\)</span>时，左边级数中，偶数项值不变，奇数项会变号，右边结果变为<span class="math inline">\(\exp(-\lambda(t-s))\)</span>，于是 <span class="math display">\[
 \begin{eqnarray}
 \sum_{k: \text{even}}^{\infty} \cfrac{(\lambda(t-s))^k}{k!} &amp; =
 &amp; \cfrac{1}{2} \left(\sum_{k=0}^{\infty}
@@ -353,8 +332,7 @@ R_\mathbb{X} (t,s) &amp; = &amp; E\left( \mathbb{X}(t) \mathbb{X(s)}
 &amp; = &amp; \exp(-2\lambda \tau))
 \end{eqnarray}
 \]</span></p>
-<p>因此，随机过程<span
-class="math inline">\(\mathbb{X}\)</span>是宽平稳的。</p>
+<p>因此，随机过程<span class="math inline">\(\mathbb{X}\)</span>是宽平稳的。</p>
 <h1 id="正定性">正定性</h1>
 <p>一般情况下，相关函数有这样的性质：</p>
 <ol type="1">
@@ -364,15 +342,12 @@ R_\mathbb{X}(s, t)\)</span></li>
 \right| \leq \left(R_\mathbb{X}(t,t)
 R_\mathbb{X}(s,s)\right)^\frac{1}{2}\)</span></li>
 </ol>
-<p>对于宽平稳过程<span
-class="math inline">\(\mathbb{X}\)</span>，由于<span
-class="math inline">\(R_\mathbb{X}(s,t) = R_\mathbb{X}(\tau),\ \tau =
+<p>对于宽平稳过程<span class="math inline">\(\mathbb{X}\)</span>，由于<span class="math inline">\(R_\mathbb{X}(s,t) = R_\mathbb{X}(\tau),\ \tau =
 t-s\)</span>，上面两条性质则以表述为：</p>
 <ol type="1">
 <li>偶函数：<span class="math inline">\(R_\mathbb{X}(\tau) =
 R_\mathbb{X}(-\tau)\)</span></li>
-<li><span class="math inline">\(\tau = 0\)</span>为极大值点：<span
-class="math inline">\(\left| R_\mathbb{X}(\tau) \right| \leq
+<li><span class="math inline">\(\tau = 0\)</span>为极大值点：<span class="math inline">\(\left| R_\mathbb{X}(\tau) \right| \leq
 R_\mathbb{X}(0)\)</span></li>
 </ol>
 <p>除此之外，宽平稳过程的相关函数还有一个非常重要的性质，那就是<strong>正定性</strong>(positive
@@ -391,11 +366,8 @@ n}\)</span>是正定的。</p>
 \mathrm{T}A\alpha \geq 0\)</span></p>
 </blockquote>
 <p>下面证明宽平稳的相关函数是正定的：</p>
-<p>对于宽平稳过程<span
-class="math inline">\(\mathbb{X}(t)\)</span>，按照定义给出的构造<span
-class="math inline">\(R_{n\times n} = \left(R_\mathbb{X}(\tau_i -
-\tau_j)\right)_{ij}\)</span>，任取向量<span
-class="math inline">\(\alpha\in\mathbb{R}^n, \alpha = (\alpha_1,
+<p>对于宽平稳过程<span class="math inline">\(\mathbb{X}(t)\)</span>，按照定义给出的构造<span class="math inline">\(R_{n\times n} = \left(R_\mathbb{X}(\tau_i -
+\tau_j)\right)_{ij}\)</span>，任取向量<span class="math inline">\(\alpha\in\mathbb{R}^n, \alpha = (\alpha_1,
 \alpha_2, \cdots \alpha_n)^\mathrm{T}\)</span>，有</p>
 <p><span class="math display">\[
 \begin{eqnarray}
@@ -433,16 +405,13 @@ R_\mathbb{X}(\tau_i - \tau_j) \\
 &amp; \geq &amp; 0
 \end{eqnarray}
 \]</span></p>
-<p>即<span class="math inline">\(R\)</span>是正定的，因此宽平稳过程<span
-class="math inline">\(\mathbb{X}(t)\)</span>是正定的。</p>
+<p>即<span class="math inline">\(R\)</span>是正定的，因此宽平稳过程<span class="math inline">\(\mathbb{X}(t)\)</span>是正定的。</p>
 <blockquote>
-<p>这里的计算过程也可以用矩阵-向量语言来更简洁地表述： 令<span
-class="math inline">\(\mathbb{X} = (\mathbb{X}(\tau_1),
+<p>这里的计算过程也可以用矩阵-向量语言来更简洁地表述： 令<span class="math inline">\(\mathbb{X} = (\mathbb{X}(\tau_1),
 \mathbb{X}(\tau_2), \cdots
 \mathbb{X}(\tau_n))^\mathrm{T}\)</span>，则<span class="math inline">\(R
 = \left(R_\mathbb{X}(\tau_i - \tau_j)\right)_{ij} =
-E(\mathbb{X}\mathbb{X}^\mathrm{T})\)</span>，进而 <span
-class="math display">\[
+E(\mathbb{X}\mathbb{X}^\mathrm{T})\)</span>，进而 <span class="math display">\[
 \begin{eqnarray}
 \alpha^\mathrm{T} R \alpha &amp;=&amp; \alpha^\mathrm{T}
 E(\mathbb{X}\mathbb{X}^\mathrm{T}) \alpha \\
@@ -451,21 +420,17 @@ E(\mathbb{X}\mathbb{X}^\mathrm{T}) \alpha \\
 &amp;=&amp; E\left((\alpha^\mathrm{T} \mathbb{X})^2 \right) \\
 &amp;\geq&amp; 0
 \end{eqnarray}
-\]</span> 这里的<span
-class="math inline">\(E(\mathbb{X}\mathbb{X}^\mathrm{T})\)</span>称作相关矩阵(correlation
+\]</span> 这里的<span class="math inline">\(E(\mathbb{X}\mathbb{X}^\mathrm{T})\)</span>称作相关矩阵(correlation
 matrix)。</p>
 </blockquote>
-<p>实际上，正定函数<span
-class="math inline">\(f(x)\)</span>本身就有非常良好的性质，如</p>
+<p>实际上，正定函数<span class="math inline">\(f(x)\)</span>本身就有非常良好的性质，如</p>
 <ol type="1">
 <li><p><span class="math inline">\(f(0)\geq 0\)</span></p>
 <blockquote>
 <p>证明： 取<span class="math inline">\(n=1, \forall
 x_1\)</span>，按照定义给出的矩阵： <span class="math display">\[
 A_{1\times 1} = f(x_1 - x_1) = f(0)
-\]</span> 由定义可知，<span
-class="math inline">\(A\)</span>是正定的，此时即<span
-class="math inline">\(f(0)\geq0\)</span>，证毕。</p>
+\]</span> 由定义可知，<span class="math inline">\(A\)</span>是正定的，此时即<span class="math inline">\(f(0)\geq0\)</span>，证毕。</p>
 </blockquote></li>
 <li><p><span class="math inline">\(\forall x, f(0)\geq f(x)\)</span></p>
 <blockquote>
@@ -483,37 +448,27 @@ f(0) &amp; f(-x) \\
 f(x) &amp; f(0)
 \end{array}
 \right]
-\]</span> 由定义可知，<span
-class="math inline">\(A\)</span>是正定的，因此有</p>
+\]</span> 由定义可知，<span class="math inline">\(A\)</span>是正定的，因此有</p>
 <ul>
-<li><p><span class="math inline">\(A\)</span>是对称的，即<span
-class="math inline">\(f(-x_2) = f(x_2)\)</span>，即<span
-class="math inline">\(f\)</span>是偶函数；</p></li>
-<li><p><span class="math inline">\(\det A \geq 0\)</span>，即<span
-class="math inline">\(\left(f(0)\right)^2 - \left(f(x)\right)^2 \geq
-0\)</span>，又根据上一条性质<span
-class="math inline">\(f(x)\geq0\)</span>，有<span
-class="math inline">\(f(0) \geq f(x)\)</span>，证毕。</p></li>
+<li><p><span class="math inline">\(A\)</span>是对称的，即<span class="math inline">\(f(-x_2) = f(x_2)\)</span>，即<span class="math inline">\(f\)</span>是偶函数；</p></li>
+<li><p><span class="math inline">\(\det A \geq 0\)</span>，即<span class="math inline">\(\left(f(0)\right)^2 - \left(f(x)\right)^2 \geq
+0\)</span>，又根据上一条性质<span class="math inline">\(f(x)\geq0\)</span>，有<span class="math inline">\(f(0) \geq f(x)\)</span>，证毕。</p></li>
 </ul>
 </blockquote></li>
 </ol>
 <p>可以看出，对于宽平稳过程的相关函数，正定性这一性质实际上包含了上面说明的两条宽平稳过程相关函数的前两条性质。</p>
 <p>实际上，正定性是宽平稳过程相关函数的特征性质(characteristic
 property)，也就是说它们是充分必要的关系。</p>
-<p>不仅如此，由于正定性，宽平稳过程相关函数<span
-class="math inline">\(R_\mathbb{X}(\tau)\)</span>还有其他不平凡的性质，下面我们举几个例子。</p>
+<p>不仅如此，由于正定性，宽平稳过程相关函数<span class="math inline">\(R_\mathbb{X}(\tau)\)</span>还有其他不平凡的性质，下面我们举几个例子。</p>
 <h2 id="周期震荡">周期震荡</h2>
 <p>前面说到，<span class="math inline">\(R_\mathbb{X}(0) \geq \left|
 R_\mathbb{X}(\tau) \right|\)</span>，其图像可以感性地表示为：</p>
-<p><img src="2_1.png" /></p>
+<p><img src="/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_1.png"></p>
 <p>在这样地前提下，若<span class="math inline">\(\exists
 T\)</span>，满足<span class="math inline">\(R_\mathbb{X}(T) =
-R_\mathbb{X}(0)\)</span>，则一定有<span
-class="math inline">\(R_\mathbb{X}(\tau) =
-R_\mathbb{X}(\tau+T)\)</span>，即<span
-class="math inline">\(R_\mathbb{X}\)</span>一定是周期为<span
-class="math inline">\(T\)</span>的周期函数。</p>
-<p><img src="2_2.png" /></p>
+R_\mathbb{X}(0)\)</span>，则一定有<span class="math inline">\(R_\mathbb{X}(\tau) =
+R_\mathbb{X}(\tau+T)\)</span>，即<span class="math inline">\(R_\mathbb{X}\)</span>一定是周期为<span class="math inline">\(T\)</span>的周期函数。</p>
+<p><img src="/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_2.png"></p>
 <p>要证明这一结论，我们想到 <span class="math display">\[
 \begin{eqnarray}
 R_\mathbb{X}(\tau) - R_\mathbb{X}(\tau+T) &amp;=&amp; E\left(
@@ -528,11 +483,9 @@ T) \right)\right)
 \right| \leq
 \left(E\left( \mathbb{X}(0) ^2\right) E\left( \left(\mathbb{X}(\tau) -
 \mathbb{X}(\tau + T)\right)^2 \right)\right)^\frac{1}{2}
-\]</span> 如果不等式右边可以证明为<span
-class="math inline">\(0\)</span>，那么该命题便成立了。按照这样的思路，要证明上面的结论，可以先证明这样的结论：</p>
+\]</span> 如果不等式右边可以证明为<span class="math inline">\(0\)</span>，那么该命题便成立了。按照这样的思路，要证明上面的结论，可以先证明这样的结论：</p>
 <ul>
-<li>若<span class="math inline">\(\exists T\)</span>，满足<span
-class="math inline">\(R_\mathbb{X}(T) =
+<li>若<span class="math inline">\(\exists T\)</span>，满足<span class="math inline">\(R_\mathbb{X}(T) =
 R_\mathbb{X}(0)\)</span>，则<span class="math inline">\(E\left(
 \left|\mathbb{X}(\tau) - \mathbb{X}(\tau + T)\right|^2
 \right)\)</span>。实际上，这一结论称均方周期性。</li>
@@ -563,8 +516,7 @@ E\left( \left|\mathbb{X}(\tau) - \mathbb{X}(\tau + T)\right|^2 \right)
 R_\mathbb{X}(\tau)\)</span>，证毕。</p>
 <h2 id="bochner定理">Bochner定理</h2>
 <p>仔细思考上面一节的内容，可以发现是一个“局部性质导出全局性质”的过程。本节继续介绍另一种同样是“局部性质导出全局性质”的过程。</p>
-<p>先思考是否存在这样一种矩形窗宽平稳相关函数： <span
-class="math display">\[
+<p>先思考是否存在这样一种矩形窗宽平稳相关函数： <span class="math display">\[
 R_{\mathbb{X}}(\tau) =
 \left\{
 \begin{eqnarray}
@@ -573,32 +525,20 @@ a &amp;&amp; ,\left| \tau \right| &lt;\tau_0 \\
 \end{eqnarray}
 \right.
 (a&gt;0)
-\]</span> <img src="2_3.png" /></p>
+\]</span> <img src="/2025/03/05/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2%E5%AE%BD%E5%B9%B3%E7%A8%B3%E8%BF%87%E7%A8%8B1/2_3.png"></p>
 <p>先给出这样命题：</p>
 <blockquote>
-<p><span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>是宽平稳过程的相关函数，若<span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
-class="math inline">\(\tau=0\)</span>处连续，则<span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
-class="math inline">\(\tau=t, \forall t\)</span>处连续。</p>
+<p><span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>是宽平稳过程的相关函数，若<span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span class="math inline">\(\tau=0\)</span>处连续，则<span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span class="math inline">\(\tau=t, \forall t\)</span>处连续。</p>
 </blockquote>
 <p>若上述命题成立，则显然不存在那样的矩形窗宽平稳相关函数。现在我们就来证明这个命题。</p>
 <p>按照上一小节的经验，我们同样把证明过程分解为两部分：</p>
 <blockquote>
 <ol type="1">
-<li><p><strong>均方连续性</strong>：<span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>是宽平稳过程的相关函数，若<span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
-class="math inline">\(\tau=0\)</span>处连续，则有 <span
-class="math display">\[
+<li><p><strong>均方连续性</strong>：<span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>是宽平稳过程的相关函数，若<span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span class="math inline">\(\tau=0\)</span>处连续，则有 <span class="math display">\[
 \lim_{\Delta\rightarrow0}E\left( \mathbb{X}(t+\Delta) - \mathbb{X}(t)
 \right)^2 = 0
 \]</span></p></li>
-<li><p>若一宽平稳随机过程<span
-class="math inline">\(\mathbb{X}(t)\)</span>满足上述均方连续性，则其相关函数<span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
-class="math inline">\(\tau=t, \forall t\)</span>处连续。</p></li>
+<li><p>若一宽平稳随机过程<span class="math inline">\(\mathbb{X}(t)\)</span>满足上述均方连续性，则其相关函数<span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span class="math inline">\(\tau=t, \forall t\)</span>处连续。</p></li>
 </ol>
 </blockquote>
 <p>证明：</p>
@@ -606,10 +546,7 @@ class="math inline">\(\tau=t, \forall t\)</span>处连续。</p></li>
 <li><span class="math display">\[
 E\left( \mathbb{X}(t+\Delta) - \mathbb{X}(t) \right)^2 =
 2R_{\mathbb{X}}(0) - 2R_{\mathbb{X}}(\Delta)
-\]</span> 由于<span
-class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span
-class="math inline">\(\tau =0\)</span>处连续，故<span
-class="math inline">\(\lim_{\Delta \rightarrow 0}\)</span></li>
+\]</span> 由于<span class="math inline">\(R_{\mathbb{X}}(\tau)\)</span>在<span class="math inline">\(\tau =0\)</span>处连续，故<span class="math inline">\(\lim_{\Delta \rightarrow 0}\)</span></li>
 </ol>
 
     </div>
@@ -708,7 +645,8 @@ class="math inline">\(\lim_{\Delta \rightarrow 0}\)</span></li>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>

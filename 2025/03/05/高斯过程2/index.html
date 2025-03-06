@@ -135,6 +135,11 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
         <li class="menu-item menu-item-resources">
 
     <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
@@ -221,12 +226,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的一些重要性质，简单说明了高斯过程的应用场景。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的一些重要性质，简单说明了高斯过程的应用场景。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
 <span id="more"></span>
 <h1 id="高斯过程的性质">高斯过程的性质</h1>
-<h2
-id="基本性质验证概率的非负性和归一性">基本性质验证：概率的非负性和归一性</h2>
+<h2 id="基本性质验证概率的非负性和归一性">基本性质验证：概率的非负性和归一性</h2>
 <p>在研究高斯过程的性质之前，我们先来验证多元高斯分布概率密度函数是合法的（当然不得不合法，不过我们据此可以熟悉一下矩阵-向量的运算）。</p>
 <p>概率密度函数最基本地满足两点要求：</p>
 <ol type="1">
@@ -241,12 +244,8 @@ f\geq0
 <p><span class="math display">\[
 f_\mathbb{X}(x)=\cfrac{1}{(2\pi)^\frac{n}{2}(\det\Sigma)^\frac{1}{2}}\exp\left(-\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1}(x-\mu)\right)
 \]</span></p>
-<p>对于非负性，<span
-class="math inline">\(e\)</span>指数部分显然非负。而协方差矩阵<span
-class="math inline">\(\Sigma=E((x-\mu)(x-\mu)^\mathrm{T})\)</span>是实对称的，且所有主元<span
-class="math inline">\(\Sigma_{ii} =
-E((x_i-\mu_i)^2)\)</span>都是非负的，故<span
-class="math inline">\(\Sigma\)</span>是正定的。</p>
+<p>对于非负性，<span class="math inline">\(e\)</span>指数部分显然非负。而协方差矩阵<span class="math inline">\(\Sigma=E((x-\mu)(x-\mu)^\mathrm{T})\)</span>是实对称的，且所有主元<span class="math inline">\(\Sigma_{ii} =
+E((x_i-\mu_i)^2)\)</span>都是非负的，故<span class="math inline">\(\Sigma\)</span>是正定的。</p>
 <blockquote>
 <p>不妨回头看看实对称矩阵正定的几个等价充要条件。</p>
 </blockquote>
@@ -257,16 +256,10 @@ class="math inline">\(\Sigma\)</span>是正定的。</p>
 -\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1} (x-\mu) \right)
 \mathrm{d}x_1\mathrm{d}x_2\cdots\mathrm{d}x_n
 \]</span></p>
-<p>这个积分中，可以认为最难搞的就是被积函数中<span
-class="math inline">\(e\)</span>指数上的<span
-class="math inline">\(\Sigma^{-1}\)</span>了。稍加思考，<span
-class="math inline">\(\Sigma\)</span>是对称且正定的，因此可以将其对角化，写作这样的形式
+<p>这个积分中，可以认为最难搞的就是被积函数中<span class="math inline">\(e\)</span>指数上的<span class="math inline">\(\Sigma^{-1}\)</span>了。稍加思考，<span class="math inline">\(\Sigma\)</span>是对称且正定的，因此可以将其对角化，写作这样的形式
 <span class="math display">\[
 \Sigma = U^\mathrm{T}\Lambda U
-\]</span> 其中，<span class="math inline">\(U\)</span>是正交的，<span
-class="math inline">\(U^\mathrm{T}U=UU^\mathrm{T}=I\)</span>；<span
-class="math inline">\(\Lambda\)</span>是对角阵，<span
-class="math inline">\(\Lambda = \mathrm{diag}(\lambda_1, \lambda_2,
+\]</span> 其中，<span class="math inline">\(U\)</span>是正交的，<span class="math inline">\(U^\mathrm{T}U=UU^\mathrm{T}=I\)</span>；<span class="math inline">\(\Lambda\)</span>是对角阵，<span class="math inline">\(\Lambda = \mathrm{diag}(\lambda_1, \lambda_2,
 \cdots, \lambda_n)\)</span>。进一步地，有 <span class="math display">\[
 \Sigma = U^\mathrm{T} \Lambda^{\frac{1}{2}}U U^\mathrm{T}
 \Lambda^{\frac{1}{2}}U, \\
@@ -280,8 +273,7 @@ class="math inline">\(\Lambda = \mathrm{diag}(\lambda_1, \lambda_2,
 \mathrm{d}x_1\mathrm{d}x_2\cdots\mathrm{d}x_n  =  \int_{\mathbb{R}^n}
 \exp \left( -\cfrac{1}{2}(x-\mu)^\mathrm{T}B^{\mathrm{T}} B (x-\mu)
 \right) \mathrm{d}x_1\mathrm{d}x_2\cdots\mathrm{d}x_n \\
-\]</span> 令<span class="math inline">\(y=B(x-\mu)\)</span>，则有<span
-class="math inline">\(y^\mathrm{T}=(x-\mu)^\mathrm{T}B^\mathrm{T}\)</span>，积分元
+\]</span> 令<span class="math inline">\(y=B(x-\mu)\)</span>，则有<span class="math inline">\(y^\mathrm{T}=(x-\mu)^\mathrm{T}B^\mathrm{T}\)</span>，积分元
 <span class="math display">\[
 \left( \cfrac{\mathrm{d}y}{\mathrm{d}x} \right) = B \Rightarrow
 \mathrm{d}x = (\det B)^{-1}\mathrm{d}y
@@ -294,16 +286,12 @@ class="math inline">\(y^\mathrm{T}=(x-\mu)^\mathrm{T}B^\mathrm{T}\)</span>，积
 (\det B)^{-1}\mathrm{d}y
 \]</span></p>
 <p>其中，<span class="math inline">\((\det B)^{-1} = (\det
-\Sigma)^{\frac{1}{2}}\)</span>，故积分可以继续写作 <span
-class="math display">\[
+\Sigma)^{\frac{1}{2}}\)</span>，故积分可以继续写作 <span class="math display">\[
 \int_{\mathbb{R}^n} \exp \left( -\cfrac{1}{2}y^{\mathrm{T}} y \right)
 (\det \Sigma)^{\frac{1}{2}}\mathrm{d}y = (\det \Sigma)^{\frac{1}{2}}
 \int_{\mathbb{R}^n} \exp \left( -\cfrac{1}{2}y^{\mathrm{T}} y \right)
 \mathrm{d}y
-\]</span> 注意这里<span
-class="math inline">\(y^{\mathrm{T}}y=\sum_{k=1}^{n}y_k^2\)</span>，再将前面的系数代回，计算<span
-class="math inline">\(f_X\)</span>在全空间的积分，有 <span
-class="math display">\[
+\]</span> 注意这里<span class="math inline">\(y^{\mathrm{T}}y=\sum_{k=1}^{n}y_k^2\)</span>，再将前面的系数代回，计算<span class="math inline">\(f_X\)</span>在全空间的积分，有 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 \int_{\mathbb{R}^n} f_X(x)\mathrm{d}x &amp; =  \int_{\mathbb{R}^n}
@@ -320,26 +308,17 @@ class="math display">\[
 \right) \\
 \end{aligned}
 \end{equation*}
-\]</span> 括号内积分项可以转换在极坐标下进行很同意得到结果为<span
-class="math inline">\(\sqrt{2\pi}\)</span>。至此我们可以得到最终结果
+\]</span> 括号内积分项可以转换在极坐标下进行很同意得到结果为<span class="math inline">\(\sqrt{2\pi}\)</span>。至此我们可以得到最终结果
 <span class="math display">\[
 \int_{\mathbb{R}^n}f_X(x)\mathrm{d}x = 1
-\]</span> 即多元高斯分布的概率密度函数在整个定义空间上的积分确实是<span
-class="math inline">\(1\)</span>。</p>
+\]</span> 即多元高斯分布的概率密度函数在整个定义空间上的积分确实是<span class="math inline">\(1\)</span>。</p>
 <h2 id="线性不变性linearity-invariance">线性不变性(Linearity
 Invariance)</h2>
-<p>定义<span
-class="math inline">\(\mathbb{X}\in\mathbb{R}^n\)</span>是<span
-class="math inline">\(n\)</span>维高斯随机变量，<span
-class="math inline">\(\mathbb{X}\sim N(\mu,\Sigma)\)</span>；<span
-class="math inline">\(A\in \mathbb{R}^{m\times n}\)</span>是<span
-class="math inline">\(m\times n\)</span>的线性变换矩阵，且<span
-class="math inline">\(\mathbb{Y} = A\mathbb{X}\)</span>。那么一定有
+<p>定义<span class="math inline">\(\mathbb{X}\in\mathbb{R}^n\)</span>是<span class="math inline">\(n\)</span>维高斯随机变量，<span class="math inline">\(\mathbb{X}\sim N(\mu,\Sigma)\)</span>；<span class="math inline">\(A\in \mathbb{R}^{m\times n}\)</span>是<span class="math inline">\(m\times n\)</span>的线性变换矩阵，且<span class="math inline">\(\mathbb{Y} = A\mathbb{X}\)</span>。那么一定有
 <span class="math display">\[
 \mathbb{Y} \sim (A\mu, A\Sigma A^{\mathrm{T}})
 \]</span>
-通俗地讲，高斯分布的经过线性变换后仍然是高斯分布的。验证这个结论很简单，不过需要一个前提工作，也就是要得到<span
-class="math inline">\(\mathbb{X}\)</span>的特征函数</p>
+通俗地讲，高斯分布的经过线性变换后仍然是高斯分布的。验证这个结论很简单，不过需要一个前提工作，也就是要得到<span class="math inline">\(\mathbb{X}\)</span>的特征函数</p>
 <blockquote>
 <p><span class="math display">\[
 \Phi_\mathbb{X}(\omega) = E \left( \exp(i\omega^\mathrm{T}\mathbb{X})
@@ -359,10 +338,7 @@ class="math inline">\(\mathbb{X}\)</span>的特征函数</p>
 \right)
 \end{aligned}
 \end{equation*}
-\]</span> 这实际上就是<span
-class="math inline">\(\mathbb{X}\)</span>的特征函数<span
-class="math inline">\(\Phi_\mathbb{X}(\omega^\prime)\)</span>在<span
-class="math inline">\(\omega^\prime = A^\mathrm{T}
+\]</span> 这实际上就是<span class="math inline">\(\mathbb{X}\)</span>的特征函数<span class="math inline">\(\Phi_\mathbb{X}(\omega^\prime)\)</span>在<span class="math inline">\(\omega^\prime = A^\mathrm{T}
 \omega\)</span>处的取值，故 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -373,52 +349,33 @@ class="math inline">\(\omega^\prime = A^\mathrm{T}
 \cfrac{1}{2}\omega^\mathrm{T}A\Sigma A^\mathrm{T} \omega \right)
 \end{aligned}
 \end{equation*}
-\]</span> 观察这里结果的形式，特征函数<span
-class="math inline">\(\Phi_\mathbb{Y}(\omega)\)</span>实际上就是高斯分布<span
-class="math inline">\(N(A\mu, A\Sigma
-A^\mathrm{T})\)</span>所对应的特征函数。至此，<span
-class="math inline">\(\mathbb{Y} \sim (A\mu, A\Sigma
+\]</span> 观察这里结果的形式，特征函数<span class="math inline">\(\Phi_\mathbb{Y}(\omega)\)</span>实际上就是高斯分布<span class="math inline">\(N(A\mu, A\Sigma
+A^\mathrm{T})\)</span>所对应的特征函数。至此，<span class="math inline">\(\mathbb{Y} \sim (A\mu, A\Sigma
 A^{\mathrm{T}})\)</span>得证。</p>
-<h2
-id="联合分布joint-distribution与边缘分布marginal-distribution">联合分布(Joint
+<h2 id="联合分布joint-distribution与边缘分布marginal-distribution">联合分布(Joint
 Distribution)与边缘分布(Marginal Distribution)</h2>
 <p>现在来考察多维随机变量联合高斯分布和边缘高斯分布的关系。</p>
 <p>现有<span class="math inline">\(\mathbb{X} = \left( X_1, X_2, \cdots
-, X_n\right)^\mathrm{T}\)</span>，另<span
-class="math inline">\(\widetilde{\mathbb{X}} = \left( X_{n_1}, X_{n_2},
-\cdots , X_{n_k}\right)^\mathrm{T}\)</span>，其中， <span
-class="math inline">\(n_1, n_2, \cdots , n_k \in
-\left(1,2,\cdots,n\right)\)</span>。根据前面的线性不变性，<span
-class="math inline">\(\widetilde{\mathbb{X}}\)</span>显然也是高斯的。即，联合高斯分布是能充分说明其边缘分布也是高斯的。</p>
+, X_n\right)^\mathrm{T}\)</span>，另<span class="math inline">\(\widetilde{\mathbb{X}} = \left( X_{n_1}, X_{n_2},
+\cdots , X_{n_k}\right)^\mathrm{T}\)</span>，其中， <span class="math inline">\(n_1, n_2, \cdots , n_k \in
+\left(1,2,\cdots,n\right)\)</span>。根据前面的线性不变性，<span class="math inline">\(\widetilde{\mathbb{X}}\)</span>显然也是高斯的。即，联合高斯分布是能充分说明其边缘分布也是高斯的。</p>
 <p>这个结论反过来成立吗？答案是未必的。那么要如何判断多维随机变量的高斯性呢？这里给出一个判据：</p>
 <blockquote>
 <p>对随机变量<span class="math inline">\(\mathbb{X} \in
-\mathbb{R}^n,\forall \alpha \in \mathbb{R}^n\)</span>，都有<span
-class="math inline">\(\alpha^{\mathrm{T}} \mathbb{X} \sim N\)</span>
+\mathbb{R}^n,\forall \alpha \in \mathbb{R}^n\)</span>，都有<span class="math inline">\(\alpha^{\mathrm{T}} \mathbb{X} \sim N\)</span>
 是（一维）高斯分布的，则<span class="math inline">\(\mathbb{X}\sim
 N\)</span>是多元高斯分布的。</p>
 </blockquote>
 <p>实际上这是一个充分必要条件。下面来证明。</p>
-<p><strong>必要性“<span
-class="math inline">\(\Leftarrow\)</span>”</strong></p>
+<p><strong>必要性“<span class="math inline">\(\Leftarrow\)</span>”</strong></p>
 <p>这里必要性是显然的，实际上是线性不变性的一种特殊情况而已。</p>
-<p><strong>充分性“<span
-class="math inline">\(\Rightarrow\)</span>”</strong></p>
-<p>证：根据定义，写出随机变量<span
-class="math inline">\(\mathbb{X}\)</span>的特征函数 <span
-class="math display">\[
+<p><strong>充分性“<span class="math inline">\(\Rightarrow\)</span>”</strong></p>
+<p>证：根据定义，写出随机变量<span class="math inline">\(\mathbb{X}\)</span>的特征函数 <span class="math display">\[
 \Phi_\mathbb{X}(\omega) = E\left( \exp\left(
 i\omega^\mathrm{T}\mathbb{X} \right) \right)
-\]</span> 由于目前还不知道<span
-class="math inline">\(\mathbb{X}\)</span>的情况，不太好继续往下写了。然而这里我们已知<span
-class="math inline">\(\forall \alpha \in \mathbb{R}^n\)</span>,
+\]</span> 由于目前还不知道<span class="math inline">\(\mathbb{X}\)</span>的情况，不太好继续往下写了。然而这里我们已知<span class="math inline">\(\forall \alpha \in \mathbb{R}^n\)</span>,
 都有<span class="math inline">\(\alpha^{\mathrm{T}} \mathbb{X} \sim
-N\)</span> ，那么把上面式中<span
-class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>整体看作一个（一维的）随机变量，这个随机变量根据已知条件就可以知道是高斯的了。又根据特征函数的形式，我们可以把上式看作是<span
-class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>的特征函数<span
-class="math inline">\(\Phi_{\omega^\mathrm{T}\mathbb{X}}(\omega^\prime)\)</span>在<span
-class="math inline">\(\omega^\prime = 1\)</span>处的取值，即 <span
-class="math display">\[
+N\)</span> ，那么把上面式中<span class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>整体看作一个（一维的）随机变量，这个随机变量根据已知条件就可以知道是高斯的了。又根据特征函数的形式，我们可以把上式看作是<span class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>的特征函数<span class="math inline">\(\Phi_{\omega^\mathrm{T}\mathbb{X}}(\omega^\prime)\)</span>在<span class="math inline">\(\omega^\prime = 1\)</span>处的取值，即 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 \Phi_\mathbb{X}(\omega) &amp; = \left.
@@ -430,8 +387,7 @@ class="math display">\[
 \end{equation*}
 \]</span></p>
 <p>其中，<span class="math inline">\(\mu_{\omega^\mathrm{T}\mathbb{X}} ,
-\sigma_{\omega^\mathrm{T}\mathbb{X}}^2\)</span>分别是一维随机变量<span
-class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>的均值和方差。现计算之。</p>
+\sigma_{\omega^\mathrm{T}\mathbb{X}}^2\)</span>分别是一维随机变量<span class="math inline">\(\omega^\mathrm{T}\mathbb{X}\)</span>的均值和方差。现计算之。</p>
 <p><span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -464,24 +420,18 @@ E\left(\mathbb{X}\right) = \omega^\mathrm{T}\mu \\
 \end{aligned}
 \end{equation*}
 \]</span></p>
-<p>得到标标准准的高斯分布特征函数。故<span
-class="math inline">\(\mathbb{X} \sim N(\mu,
+<p>得到标标准准的高斯分布特征函数。故<span class="math inline">\(\mathbb{X} \sim N(\mu,
 \Sigma)\)</span>是服从联合高斯分布的。</p>
 <p>至此，上述结论的充分性和必要性都得到了证明。</p>
-<h2
-id="相关性correlation与独立性independence">相关性(Correlation)与独立性(Independence)</h2>
+<h2 id="相关性correlation与独立性independence">相关性(Correlation)与独立性(Independence)</h2>
 <p>首先需要明白的是，相关是描述随机变量在二阶矩上的联系，独立性是以概率密度函数来描述的随机变量之间的联系。</p>
 <blockquote>
 <p>现有随机变量<span class="math inline">\(X, Y\in
-\mathbb{R}^n\)</span>，其概率密度分布函数和联合概率密度分布函数分别是<span
-class="math inline">\(f_X(x), f_Y(y), f_{XY}(x,y)\)</span>，那么</p>
+\mathbb{R}^n\)</span>，其概率密度分布函数和联合概率密度分布函数分别是<span class="math inline">\(f_X(x), f_Y(y), f_{XY}(x,y)\)</span>，那么</p>
 <ol type="1">
-<li>若<span
-class="math inline">\(E(XY)=E(X)E(Y)\)</span>，则称随机变量<span
-class="math inline">\(X,Y\)</span>是不相关的；</li>
+<li>若<span class="math inline">\(E(XY)=E(X)E(Y)\)</span>，则称随机变量<span class="math inline">\(X,Y\)</span>是不相关的；</li>
 <li>若<span class="math inline">\(f_{XY}(x,y) =
-f_X(x)f_Y(y)\)</span>，则称随机变量<span
-class="math inline">\(X,Y\)</span>是独立的。</li>
+f_X(x)f_Y(y)\)</span>，则称随机变量<span class="math inline">\(X,Y\)</span>是独立的。</li>
 </ol>
 </blockquote>
 <p>从定义来看，<strong>独立(Independent)的条件是要强于不相关(Uncorrelated)的</strong>，即
@@ -494,23 +444,15 @@ X, Y \left\{
 \right.
 \]</span> 这随便通过一个例子就能看出：</p>
 <p>设<span class="math inline">\(\theta \sim
-U(0,2\pi)\)</span>满足均匀分布，构建随机变量<span
-class="math inline">\(X=\cos(\theta), Y=\sin(\theta)\)</span>。显然<span
-class="math inline">\(X,Y\)</span>不独立；计算其相关： <span
-class="math display">\[
+U(0,2\pi)\)</span>满足均匀分布，构建随机变量<span class="math inline">\(X=\cos(\theta), Y=\sin(\theta)\)</span>。显然<span class="math inline">\(X,Y\)</span>不独立；计算其相关： <span class="math display">\[
 E(X) = E(\cos \theta) = 0,\\
 E(Y) = E(\sin \theta) = 0,\\
 E(XY) = E(\cos\theta \sin\theta) = \cfrac{1}{2}(\sin 2\theta) = 0
-\]</span> 故<span
-class="math inline">\(E(X)E(Y)=E(XY)\)</span>。尽管<span
-class="math inline">\(X,Y\)</span>不独立，不过也是不相关的。</p>
-<p>那么，如果是高斯分布的随机变量<span
-class="math inline">\(X,Y\)</span>，它们独立就能等价不相关吗？继续来个例子：</p>
+\]</span> 故<span class="math inline">\(E(X)E(Y)=E(XY)\)</span>。尽管<span class="math inline">\(X,Y\)</span>不独立，不过也是不相关的。</p>
+<p>那么，如果是高斯分布的随机变量<span class="math inline">\(X,Y\)</span>，它们独立就能等价不相关吗？继续来个例子：</p>
 <p>设<span class="math inline">\(X\sim
-N(0,1)\)</span>是服从高斯分布的，又有伯努利随机变量<span
-class="math inline">\(Z\sim \left( \begin{array}{} 1 &amp; -1\\
-\cfrac{1}{2} &amp; \cfrac{1}{2} \end{array} \right)\)</span>，构建<span
-class="math inline">\(Y = ZX\)</span></p>
+N(0,1)\)</span>是服从高斯分布的，又有伯努利随机变量<span class="math inline">\(Z\sim \left( \begin{array}{} 1 &amp; -1\\
+\cfrac{1}{2} &amp; \cfrac{1}{2} \end{array} \right)\)</span>，构建<span class="math inline">\(Y = ZX\)</span></p>
 <ol type="1">
 <li><p><span class="math inline">\(Y\)</span>是高斯的吗？看特征函数。
 <span class="math display">\[
@@ -522,12 +464,7 @@ class="math inline">\(Y = ZX\)</span></p>
 \right)
 \end{aligned}
 \end{equation*}
-\]</span> 其中，<span class="math inline">\(E_X\)</span>项在，<span
-class="math inline">\(Z\)</span>被“条件住”了，在此可以看作是常量，这一项可以看作是<span
-class="math inline">\(X\)</span>的特征函数<span
-class="math inline">\(\Phi_X(\omega^\prime)\)</span>在<span
-class="math inline">\(\omega^\prime = \omega Z\)</span>处的取值 <span
-class="math display">\[
+\]</span> 其中，<span class="math inline">\(E_X\)</span>项在，<span class="math inline">\(Z\)</span>被“条件住”了，在此可以看作是常量，这一项可以看作是<span class="math inline">\(X\)</span>的特征函数<span class="math inline">\(\Phi_X(\omega^\prime)\)</span>在<span class="math inline">\(\omega^\prime = \omega Z\)</span>处的取值 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 E_X\left(\left. \exp (i\omega ZX) \right|Z \right) &amp; = \left.
@@ -550,32 +487,20 @@ Z)^2 \right) \right) \\
 \end{equation*}
 \]</span> 由于<span class="math inline">\(Z\sim \left( \begin{array}{} 1
 &amp; -1\\ \cfrac{1}{2} &amp; \cfrac{1}{2} \end{array}
-\right)\)</span>，因此不论取<span
-class="math inline">\(1\)</span>还是<span
-class="math inline">\(-1\)</span>，<span class="math inline">\(Z^2
+\right)\)</span>，因此不论取<span class="math inline">\(1\)</span>还是<span class="math inline">\(-1\)</span>，<span class="math inline">\(Z^2
 \equiv 1\)</span>。故 <span class="math display">\[
 \Phi_Y(\omega) = \exp(-\cfrac{1}{2}\omega ^2)
-\]</span> 因此，<span
-class="math inline">\(Y\)</span>是标标准准的高斯分布<span
-class="math inline">\(Y\sim N(0,1)\)</span>。</p></li>
-<li><p><span class="math inline">\(X,Y\)</span>相关吗？计算<span
-class="math inline">\(E(XY), E(X)E(Y)\)</span>。 <span
-class="math display">\[
+\]</span> 因此，<span class="math inline">\(Y\)</span>是标标准准的高斯分布<span class="math inline">\(Y\sim N(0,1)\)</span>。</p></li>
+<li><p><span class="math inline">\(X,Y\)</span>相关吗？计算<span class="math inline">\(E(XY), E(X)E(Y)\)</span>。 <span class="math display">\[
 E(XY) = E(ZX^2) = E(Z)E(X^2)
 \]</span> 其中，<span class="math inline">\(E(Z) = 1\times \cfrac{1}{2}
-+ (-1) \times \cfrac{1}{2} = 0\)</span>，故<span
-class="math inline">\(E(XY) = 0\)</span>。</p>
-<p>而<span class="math inline">\(X, Y\)</span>都是<span
-class="math inline">\(m=0, \sigma^2 = 1\)</span>的高斯分布，故<span
-class="math inline">\(E(X) = E(Y) = 0\)</span></p>
-<p>故<span class="math inline">\(E(XY) = E(X)E(Y)\)</span>，<span
-class="math inline">\(X,Y\)</span>不相关。</p></li>
-<li><p><span class="math inline">\(X,Y\)</span>独立吗？ <span
-class="math inline">\(Y =
++ (-1) \times \cfrac{1}{2} = 0\)</span>，故<span class="math inline">\(E(XY) = 0\)</span>。</p>
+<p>而<span class="math inline">\(X, Y\)</span>都是<span class="math inline">\(m=0, \sigma^2 = 1\)</span>的高斯分布，故<span class="math inline">\(E(X) = E(Y) = 0\)</span></p>
+<p>故<span class="math inline">\(E(XY) = E(X)E(Y)\)</span>，<span class="math inline">\(X,Y\)</span>不相关。</p></li>
+<li><p><span class="math inline">\(X,Y\)</span>独立吗？ <span class="math inline">\(Y =
 ZX\)</span>欸，怎么可能独立？显然不独立啊！</p></li>
 </ol>
-<p>所以，即使<span
-class="math inline">\(X,Y\)</span>都是高斯的，其不相关仍然不能推导出独立。</p>
+<p>所以，即使<span class="math inline">\(X,Y\)</span>都是高斯的，其不相关仍然不能推导出独立。</p>
 <p>怎样的条件下，独立和不相关才能是等价的呢？答案是联合高斯分布，即
 <span class="math display">\[
 X,Y:\ \left.
@@ -587,26 +512,18 @@ X,Y:\ \left.
 \Rightarrow \text{independent}
 \]</span> 一般地，如果多维随机变量<span class="math inline">\(\mathbb{X}
 = (X_1, X_2, \cdots, X_n)^\mathrm{T}\in
-\mathbb{R}^n\)</span>是<strong>联合高斯分布</strong>的，那么<span
-class="math inline">\(\mathbb{X}\)</span>各分量<strong>不相关<span
-class="math inline">\(\Leftrightarrow\)</span>独立</strong>。</p>
-<p>下面给出二维<span
-class="math inline">\(n=2\)</span>情况下的证明。</p>
-<p><strong>必要性<span
-class="math inline">\(\Leftarrow\)</span></strong>不需要多说，这是显然的。</p>
-<p>只需要证明<strong>充分性<span
-class="math inline">\(\Rightarrow\)</span></strong></p>
+\mathbb{R}^n\)</span>是<strong>联合高斯分布</strong>的，那么<span class="math inline">\(\mathbb{X}\)</span>各分量<strong>不相关<span class="math inline">\(\Leftrightarrow\)</span>独立</strong>。</p>
+<p>下面给出二维<span class="math inline">\(n=2\)</span>情况下的证明。</p>
+<p><strong>必要性<span class="math inline">\(\Leftarrow\)</span></strong>不需要多说，这是显然的。</p>
+<p>只需要证明<strong>充分性<span class="math inline">\(\Rightarrow\)</span></strong></p>
 <p>要说明独立性，首先计算<span class="math inline">\(\mathbb{X} =
-\left(X_1, X_2\right)^\mathrm{T}\)</span>的联合密度分布函数 <span
-class="math display">\[
+\left(X_1, X_2\right)^\mathrm{T}\)</span>的联合密度分布函数 <span class="math display">\[
 f_\mathbb{X}(x_1,x_2) = \cfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
 \exp\left(-\cfrac{1}{2(1-\rho^2)}\left( \cfrac{(x_1-\mu_1)^2}{\sigma_1
 ^2} - \cfrac{2\rho(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} +
 \cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2} \right) \right)
 \]</span> 其中，<span class="math inline">\(\mu_k,
-\sigma_k\)</span>是<span
-class="math inline">\(X_k\)</span>的均值和方差<span
-class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
+\sigma_k\)</span>是<span class="math inline">\(X_k\)</span>的均值和方差<span class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
 = E\left( (X_1-\mu_1)(X_2-\mu_2) \right)\)</span>。</p>
 <p>现在我们来看<span class="math inline">\(\exp\)</span>指数上的交叉项：
 <span class="math display">\[
@@ -617,9 +534,7 @@ class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
 &amp; = E(X_1X_2) - \mu_1\mu_2
 \end{aligned}
 \end{equation*}
-\]</span> 由已知条件，<span
-class="math inline">\(X_1,X_2\)</span>不相关，即<span
-class="math inline">\(E(X_1X_2) = E(X_1)E(X_2) =
+\]</span> 由已知条件，<span class="math inline">\(X_1,X_2\)</span>不相关，即<span class="math inline">\(E(X_1X_2) = E(X_1)E(X_2) =
 \mu_1\mu_2\)</span>，故<span class="math inline">\(\rho =
 0\)</span>。因此有 <span class="math display">\[
 \begin{equation*}
@@ -640,45 +555,30 @@ f_\mathbb{X}(x_1,x_2) &amp; =
 \end{aligned}
 \end{equation*}
 \]</span> 即<span class="math inline">\(X_1,
-X_2\)</span>相互独立。至此，二维<span
-class="math inline">\(n=2\)</span>情况下，随机变量<span
-class="math inline">\(\mathbb{X} = (X_1, X_2)^\mathrm{T}\in
-\mathbb{R}^n\)</span>是联合高斯分布的，那么<span
-class="math inline">\(\mathbb{X}\)</span>各分量<span
-class="math inline">\(X_1,X_2\)</span>不相关与独立的等价性便证明出来了。</p>
+X_2\)</span>相互独立。至此，二维<span class="math inline">\(n=2\)</span>情况下，随机变量<span class="math inline">\(\mathbb{X} = (X_1, X_2)^\mathrm{T}\in
+\mathbb{R}^n\)</span>是联合高斯分布的，那么<span class="math inline">\(\mathbb{X}\)</span>各分量<span class="math inline">\(X_1,X_2\)</span>不相关与独立的等价性便证明出来了。</p>
 <p>还有一个比较显然的结论：</p>
 <p>给定一多元随机变量<span class="math inline">\(\mathbb{X} = \left(X_1,
 X_2, \cdots , X_n\right)^\mathrm{T} \in
-\mathbb{R}^n\)</span>，如果其各分量独立，且都服从高斯分布，则<span
-class="math inline">\(\mathbb{X}\)</span>是服从联合高斯分布的。</p>
+\mathbb{R}^n\)</span>，如果其各分量独立，且都服从高斯分布，则<span class="math inline">\(\mathbb{X}\)</span>是服从联合高斯分布的。</p>
 <blockquote>
 <p>这个结论过于显而易见了，这里不需要给出证明。</p>
 </blockquote>
 <h2 id="cochran-定理">Cochran 定理</h2>
 <p>设一多维随机变量<span class="math inline">\(\mathbb{X} = \left(X_1,
 X_2, \cdots , X_n\right)^\mathrm{T} \in
-\mathbb{R}^n\)</span>。定义样本均值(sample mean) <span
-class="math display">\[
+\mathbb{R}^n\)</span>。定义样本均值(sample mean) <span class="math display">\[
 \bar{X} = \cfrac{1}{n}\sum_{k=1}^{n} X_k
-\]</span> 和样本方差<span
-class="math inline">\(\bar{S^2}\)</span>(sample variance) <span
-class="math display">\[
+\]</span> 和样本方差<span class="math inline">\(\bar{S^2}\)</span>(sample variance) <span class="math display">\[
 \bar{S^2} = \cfrac{1}{n-1}\sum_{k=1}^{n}\left( X_k
 -  \cfrac{1}{n}\sum_{k=1}^{n} X_k \right)^2
 \]</span></p>
 <blockquote>
-<p>假设每一个<span
-class="math inline">\(X_k\)</span>都有相同的均值和方差，则有<span
-class="math inline">\(E(\bar{X}) = E(X_k),\ E(\bar{S^2}) =
-var(X_K)\)</span>。至于这里前面的分母为什么是<span
-class="math inline">\(n-1\)</span>而不是<span
-class="math inline">\(n\)</span>，将在附章中说明。</p>
+<p>假设每一个<span class="math inline">\(X_k\)</span>都有相同的均值和方差，则有<span class="math inline">\(E(\bar{X}) = E(X_k),\ E(\bar{S^2}) =
+var(X_K)\)</span>。至于这里前面的分母为什么是<span class="math inline">\(n-1\)</span>而不是<span class="math inline">\(n\)</span>，将在附章中说明。</p>
 <p>补充说明一点，不妨设<span class="math inline">\(E(\mathbb{X}) =
 E\left(\cfrac{1}{n}\sum_{k=1}^{n} X_k\right) = E(X_1)\)</span>。</p>
-<p>假设<span class="math inline">\(X_k = A + N_k\)</span>，其中<span
-class="math inline">\(A\)</span>是实际值，<span
-class="math inline">\(N_k\)</span>是噪声，有<span
-class="math inline">\(E(X_k)=A\)</span>。</p>
+<p>假设<span class="math inline">\(X_k = A + N_k\)</span>，其中<span class="math inline">\(A\)</span>是实际值，<span class="math inline">\(N_k\)</span>是噪声，有<span class="math inline">\(E(X_k)=A\)</span>。</p>
 <p><span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -691,9 +591,7 @@ A)\right)^2\right) \\
 \end{aligned}
 \end{equation*}
 \]</span></p>
-<p>其中，由于<span
-class="math inline">\(X_k\)</span>之间独立同分布，故交叉项<span
-class="math inline">\(E((X_i - A)(X_j - A)) = 0, \forall i \neq
+<p>其中，由于<span class="math inline">\(X_k\)</span>之间独立同分布，故交叉项<span class="math inline">\(E((X_i - A)(X_j - A)) = 0, \forall i \neq
 j\)</span>。所以 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -706,9 +604,7 @@ A)^2\right) \\
 \]</span></p>
 <p>于是可以看出，在每次试验结果独立同分布的前提下，多次试验取平均可以使得结果方差有所下降。</p>
 </blockquote>
-<p><strong>Cochran定理</strong>是指，如果，且<span
-class="math inline">\(\mathbb{X}\)</span>各分类独立同分布，且服从高斯分布，则<span
-class="math inline">\(\bar{X}, \bar{S^2}\)</span>是独立的。</p>
+<p><strong>Cochran定理</strong>是指，如果，且<span class="math inline">\(\mathbb{X}\)</span>各分类独立同分布，且服从高斯分布，则<span class="math inline">\(\bar{X}, \bar{S^2}\)</span>是独立的。</p>
 <p>证明：</p>
 <p>构造一个矩阵 <span class="math display">\[
 Q = \left[
@@ -721,11 +617,7 @@ Q = \left[
 \end{array}
 \right]_{(n\times n)}
 \]</span></p>
-<p>这里<span class="math inline">\(Q\)</span>第一行确定，且满足<span
-class="math inline">\(Q\)</span>是正交的<span
-class="math inline">\(QQ^\mathrm{T} = I\)</span>。将<span
-class="math inline">\(Q\)</span>作用于<span
-class="math inline">\(\mathbb{X}\)</span> <span class="math display">\[
+<p>这里<span class="math inline">\(Q\)</span>第一行确定，且满足<span class="math inline">\(Q\)</span>是正交的<span class="math inline">\(QQ^\mathrm{T} = I\)</span>。将<span class="math inline">\(Q\)</span>作用于<span class="math inline">\(\mathbb{X}\)</span> <span class="math display">\[
 \mathbb{Y} = Q\mathbb{X} = \left[
 \begin{array}{}
 \cfrac{1}{\sqrt{n}}\sum_{k=1}^n X_k \\
@@ -738,8 +630,7 @@ class="math inline">\(\mathbb{X}\)</span> <span class="math display">\[
 <ol type="1">
 <li><p>由高斯线性性质，<span class="math inline">\(\mathbb{Y} \sim
 N(Q\mu, Q\Sigma Q^\mathrm{T})\)</span></p></li>
-<li><p>计算<span class="math inline">\(\bar{S^2}\)</span> <span
-class="math display">\[
+<li><p>计算<span class="math inline">\(\bar{S^2}\)</span> <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 \sum_{k=1}^{n}\left( X_k -  \cfrac{1}{n}\sum_{k=1}^{n} X_k \right)^2
@@ -749,11 +640,8 @@ class="math display">\[
 &amp; = \sum_{k=1}^{n}X_k ^ 2-  n\bar{X}^2
 \end{aligned}
 \end{equation*}
-\]</span> 由于<span class="math inline">\(Q\)</span>正交，<span
-class="math inline">\(Y=QX\)</span>，故<span
-class="math inline">\(Y^{\mathrm{T}} Y = X^{\mathrm{T}} Q^{\mathrm{T}} Q
-X = X^{\mathrm{T}} X\)</span>。于是，(2.)中， <span
-class="math display">\[
+\]</span> 由于<span class="math inline">\(Q\)</span>正交，<span class="math inline">\(Y=QX\)</span>，故<span class="math inline">\(Y^{\mathrm{T}} Y = X^{\mathrm{T}} Q^{\mathrm{T}} Q
+X = X^{\mathrm{T}} X\)</span>。于是，(2.)中， <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 \sum_{k=1}^{n}\left( X_k -  \cfrac{1}{n}\sum_{k=1}^{n} X_k \right)^2
@@ -774,19 +662,13 @@ class="math display">\[
 \bar{X} =\cfrac{1}{\sqrt{n}} Y_1
 \]</span></p></li>
 </ol>
-<p>至此，可以看出，<span
-class="math inline">\(\bar{X}\)</span>是取决于<span
-class="math inline">\(Y_1\)</span>的，而<span
-class="math inline">\(\bar{S^2}\)</span>是取决于<span
-class="math inline">\(Y_2, Y_3, \cdots, Y_n\)</span>的，故<span
-class="math inline">\(\mathbb{X}\)</span>的样本均值和样本方差是独立的。</p>
+<p>至此，可以看出，<span class="math inline">\(\bar{X}\)</span>是取决于<span class="math inline">\(Y_1\)</span>的，而<span class="math inline">\(\bar{S^2}\)</span>是取决于<span class="math inline">\(Y_2, Y_3, \cdots, Y_n\)</span>的，故<span class="math inline">\(\mathbb{X}\)</span>的样本均值和样本方差是独立的。</p>
 <h2 id="条件分布condition-distribution">条件分布(Condition
 Distribution)</h2>
 <p>设<span class="math inline">\(\mathbb{X} = \left[ \begin{array}{}
 \mathbb{X}_1 \\ \mathbb{X}_2 \end{array} \right]\in
 \mathbb{R}^{m+n}\)</span>，其中<span class="math inline">\(\mathbb{X}_1
-\in \mathbb{R}^m, \mathbb{X}_2 \in \mathbb{R}^n\)</span>。 <span
-class="math display">\[
+\in \mathbb{R}^m, \mathbb{X}_2 \in \mathbb{R}^n\)</span>。 <span class="math display">\[
 \mathbb{X} \sim N \left(
 \left(
 \begin{array}{}
@@ -802,9 +684,7 @@ class="math display">\[
 \right)
 \]</span> 其中<span class="math inline">\(\mu_k,
 \Sigma_{kl}\)</span>相应的均值和协方差矩阵。</p>
-<p>那么在条件<span
-class="math inline">\(\mathbb{X}_2\)</span>的约束下，<span
-class="math inline">\(\mathbb{X}_1\)</span>的分布如何？</p>
+<p>那么在条件<span class="math inline">\(\mathbb{X}_2\)</span>的约束下，<span class="math inline">\(\mathbb{X}_1\)</span>的分布如何？</p>
 <p>写出条件概率密度分布函数 <span class="math display">\[
 f_{\mathbb{X}_1|\mathbb{X}_2}(x_1|x_2) =
 \cfrac{f_{\mathbb{X}_1,\mathbb{X}_2}(x_1, x_2)}{f_{\mathbb{X}_2}(x_2)} =
@@ -881,8 +761,7 @@ x_2 - \mu_2
 \]</span> 这里比较棘手的部分是<span class="math inline">\(\left(
 \begin{array}{} \Sigma_{11} &amp; \Sigma_{12}\\ \Sigma_{21} &amp;
 \Sigma_{22} \end{array}
-\right)^{-1}\)</span>，要求出这个逆，最好把原矩阵对角化 <span
-class="math display">\[
+\right)^{-1}\)</span>，要求出这个逆，最好把原矩阵对角化 <span class="math display">\[
 \left(
 \begin{array}{}
 I &amp; -\Sigma_{12}\Sigma_{22}^{-1}\\
@@ -1074,21 +953,9 @@ E(X_1|X_2),\\
 <li><p>常数项<span class="math inline">\(c\)</span>不用说了。</p></li>
 <li><p><span class="math inline">\(\mu_{1|2} = \mu_1 +
 \Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2) =
-E(X_1|X_2)\)</span>指的是，本来在没有已知条件的情况下，对<span
-class="math inline">\(X_1\)</span>的期望估计就是纯纯的<span
-class="math inline">\(\mu_1\)</span>，现加入估计<span
-class="math inline">\(X_2\)</span>，代表我们有一定的先验信息，那么第二项<span
-class="math inline">\(\Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2) =
-E(X_1|X_2)\)</span>代表的是这一信息对<span
-class="math inline">\(\mu_1\)</span>的调整，其可以认为是随机变量<span
-class="math inline">\(X_1\)</span>在<span
-class="math inline">\(X_2\)</span>方向的投影。<span
-class="math inline">\(\Sigma_{12}\Sigma_{22}^{-1}\)</span>则可以认为是两个随机变量的夹角，意味着两个随机变量的相关，如果这个相关性越强，那么先验信息<span
-class="math inline">\(X_2\)</span>对结果的影响就越大。在高斯分布的前提下，这样的调整实际上是一种最优的调整。下面我们来说明其为何最优。
-现在我们有先验信息<span
-class="math inline">\(X_2\)</span>，我们要估计在这样的先验信息下<span
-class="math inline">\(X_1\)</span>的最优估计。为简化计算，我们假设它们都是均值为<span
-class="math inline">\(0\)</span>的高斯分布。</p>
+E(X_1|X_2)\)</span>指的是，本来在没有已知条件的情况下，对<span class="math inline">\(X_1\)</span>的期望估计就是纯纯的<span class="math inline">\(\mu_1\)</span>，现加入估计<span class="math inline">\(X_2\)</span>，代表我们有一定的先验信息，那么第二项<span class="math inline">\(\Sigma_{12}\Sigma_{22}^{-1} (x_2 - \mu_2) =
+E(X_1|X_2)\)</span>代表的是这一信息对<span class="math inline">\(\mu_1\)</span>的调整，其可以认为是随机变量<span class="math inline">\(X_1\)</span>在<span class="math inline">\(X_2\)</span>方向的投影。<span class="math inline">\(\Sigma_{12}\Sigma_{22}^{-1}\)</span>则可以认为是两个随机变量的夹角，意味着两个随机变量的相关，如果这个相关性越强，那么先验信息<span class="math inline">\(X_2\)</span>对结果的影响就越大。在高斯分布的前提下，这样的调整实际上是一种最优的调整。下面我们来说明其为何最优。
+现在我们有先验信息<span class="math inline">\(X_2\)</span>，我们要估计在这样的先验信息下<span class="math inline">\(X_1\)</span>的最优估计。为简化计算，我们假设它们都是均值为<span class="math inline">\(0\)</span>的高斯分布。</p>
 <ul>
 <li><p>最优线性估计<span class="math inline">\(X_1\leftarrow
 X_2\)</span> <span class="math display">\[
@@ -1099,10 +966,7 @@ X_2\)</span> <span class="math display">\[
 <span class="math display">\[
 \min_gE\left( (X_1 - g(X_2))^2 \right)
 \]</span>
-实际上，在高斯分布的前提下，上面的最优线性估计就是最优估计了，即<span
-class="math inline">\(g\)</span>就是概率期望函数，<span
-class="math inline">\(g(X_2) = E(X_1|X_2)\)</span>。这是因为 <span
-class="math display">\[
+实际上，在高斯分布的前提下，上面的最优线性估计就是最优估计了，即<span class="math inline">\(g\)</span>就是概率期望函数，<span class="math inline">\(g(X_2) = E(X_1|X_2)\)</span>。这是因为 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 E\left( (X_1 - g(X_2))^2 \right) &amp; = E\left( (X_1 -E(X_1|X_2) +
@@ -1129,15 +993,13 @@ E(X_1|X_2) ) |X_2 \right) \\
 \]</span> 这意味着， <span class="math display">\[
 E\left( (X_1 - g(X_2))^2 \right) = E\left( ((X_1 -E(X_1|X_2))^2 \right)
 + E\left((E(X_1|X_2) - g(X_2))^2 \right)
-\]</span> 而第二项作为平方项的期望是非负的，故对于任意的<span
-class="math inline">\(g\)</span>，都有 <span class="math display">\[
+\]</span> 而第二项作为平方项的期望是非负的，故对于任意的<span class="math inline">\(g\)</span>，都有 <span class="math display">\[
 E\left( (X_1 - g(X_2))^2 \right) \geq E\left( ((X_1 -E(X_1|X_2))^2
 \right)
 \]</span> 至此，上面的结论得证了。</p></li>
 </ul></li>
 <li><p><span class="math inline">\(\Sigma_{1|2} = \Sigma_{11} -
-\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}\)</span>表示的是加入先验信息后新估计的协方差矩阵，是大于零（正定）的。这是显然的，因为是协方差矩阵嘛，不过同时这可以直接从Cauthy-Schwarz不等式直接导出。另外不难看出第二项也是正定的，也就是说，新的协方差矩阵一定会比有先验信息之前的<span
-class="math inline">\(\Sigma_{11}\)</span>更小。从信息的角度上来讲，这是因为引入先验信息后，随机变量的熵一定是减小的，这也是符合直觉的。</p></li>
+\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}\)</span>表示的是加入先验信息后新估计的协方差矩阵，是大于零（正定）的。这是显然的，因为是协方差矩阵嘛，不过同时这可以直接从Cauthy-Schwarz不等式直接导出。另外不难看出第二项也是正定的，也就是说，新的协方差矩阵一定会比有先验信息之前的<span class="math inline">\(\Sigma_{11}\)</span>更小。从信息的角度上来讲，这是因为引入先验信息后，随机变量的熵一定是减小的，这也是符合直觉的。</p></li>
 </ol>
 
     </div>
@@ -1239,7 +1101,8 @@ Distribution)</span></a></li></ol></li></ol></div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>

@@ -135,6 +135,11 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
         <li class="menu-item menu-item-resources">
 
     <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
@@ -221,88 +226,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的定义，并通过几个例子说明了高斯过程在不同学科领域的重要地位。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文介绍了高斯过程的定义，并通过几个例子说明了高斯过程在不同学科领域的重要地位。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
 <span id="more"></span>
 <h1 id="高斯过程的定义">高斯过程的定义</h1>
-<p>对于随机过程<span class="math inline">\(X(t)\)</span>，如果有 <span
-class="math display">\[
+<p>对于随机过程<span class="math inline">\(X(t)\)</span>，如果有 <span class="math display">\[
 \forall n,\ \forall t_1\leq t_2\leq \cdots\leq t_n, \\s.t.\ \mathbb{X} =
 (X(t_1), X(t_2), \cdots,X(t_n))^\mathrm{T} \sim N(\mu, \Sigma)
 \]</span> 则称<span class="math inline">\(X(t)\)</span>是高斯过程。</p>
 <p>举例：</p>
 <ol type="1">
-<li><p><span class="math inline">\(n=1\)</span>时， <span
-class="math display">\[
+<li><p><span class="math inline">\(n=1\)</span>时， <span class="math display">\[
 f_X(x) = \cfrac{1}{\sqrt{2\pi}\sigma}
 \exp\left(-\cfrac{(x-\mu)^2}{2\sigma ^2}\right)
 \]</span></p></li>
-<li><p><span class="math inline">\(n=2\)</span>时， <span
-class="math display">\[
+<li><p><span class="math inline">\(n=2\)</span>时， <span class="math display">\[
 f_\mathbb{X}(x_1,x_2) = \cfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
 \exp\left(-\cfrac{1}{2(1-\rho^2)}\left( \cfrac{(x_1-\mu_1)^2}{\sigma_1
 ^2} - \cfrac{2\rho(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1 \sigma_2} +
 \cfrac{(x_2-\mu_2)^2}{\sigma_2 ^2} \right) \right)
 \]</span> 其中，<span class="math inline">\(\mu_k,
-\sigma_k\)</span>是<span
-class="math inline">\(X_k\)</span>的均值和方差<span
-class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
+\sigma_k\)</span>是<span class="math inline">\(X_k\)</span>的均值和方差<span class="math inline">\((k=1,2)\)</span>，<span class="math inline">\(\rho
 = E\left( (X_1-\mu_1)(X_2-\mu_2) \right)\)</span>。</p></li>
-<li><p>一般化的<span
-class="math inline">\(n\)</span>时，需要用到矩阵-向量的语言来描述问题：
+<li><p>一般化的<span class="math inline">\(n\)</span>时，需要用到矩阵-向量的语言来描述问题：
 <span class="math display">\[
 f_\mathbb{X}(x) = \cfrac{1}{(2\pi) ^ \frac{n}{2} (\det\Sigma) ^
 \frac{1}{2}} \exp \left( -\cfrac{1}{2}(x-\mu)^\mathrm{T}\Sigma^{-1}
 (x-\mu) \right)
 \]</span> 其中，<span class="math inline">\(x,\mu \in
-\mathbb{R}^n\)</span>是<span
-class="math inline">\(n\)</span>维向量，<span
-class="math inline">\(\mu\)</span>代表均值；<span
-class="math inline">\(\Sigma \in \mathbb{R}^{n\times
+\mathbb{R}^n\)</span>是<span class="math inline">\(n\)</span>维向量，<span class="math inline">\(\mu\)</span>代表均值；<span class="math inline">\(\Sigma \in \mathbb{R}^{n\times
 n}\)</span>是协方差矩阵，<span class="math inline">\(\Sigma =
 E\left((x-\mu)(x-\mu)^\mathrm{T}\right)\)</span></p></li>
 </ol>
 <h1 id="高斯过程的意义">高斯过程的意义</h1>
 <p>高斯过程是自然界中最为常见、最为普遍的一类随机过程。接下来将用三个例子说明其重要意义。</p>
-<h2
-id="中心极限定理central-limit-theorem-clt与大数定律law-of-large-numbers-lln">中心极限定理(Central
+<h2 id="中心极限定理central-limit-theorem-clt与大数定律law-of-large-numbers-lln">中心极限定理(Central
 Limit Theorem, CLT)与大数定律(Law of Large Numbers, LLN)</h2>
 <p><strong>中心极限定理</strong>表述为：</p>
 <blockquote>
-<p>有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span
-class="math inline">\(X_1, X_2, \cdots,
+<p>有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span class="math inline">\(X_1, X_2, \cdots,
 X_n\)</span>，假定他们均值和方差都是<span class="math inline">\(E(X_k) =
-0,\ Var(X_k) = 1\)</span>，那么当<span
-class="math inline">\(n\)</span>趋于<span
-class="math inline">\(\infty\)</span>时，这些随机变量之和与<span
-class="math inline">\(\sqrt{n}\)</span>的比值是趋于高斯分布的。即 <span
-class="math display">\[
+0,\ Var(X_k) = 1\)</span>，那么当<span class="math inline">\(n\)</span>趋于<span class="math inline">\(\infty\)</span>时，这些随机变量之和与<span class="math inline">\(\sqrt{n}\)</span>的比值是趋于高斯分布的。即 <span class="math display">\[
 \lim_{n\rightarrow \infty} \cfrac{X_1 + X_2 + \cdots +X_n}{\sqrt{n}}
 \sim N(0,1)
 \]</span></p>
 </blockquote>
 <p>要验证这个定理，我们首先介绍一个非常常用的工具：<strong>特征函数</strong></p>
 <blockquote>
-<p>定义随机变量<span class="math inline">\(X\)</span>的特征函数 <span
-class="math display">\[
+<p>定义随机变量<span class="math inline">\(X\)</span>的特征函数 <span class="math display">\[
 \Phi_X(\omega) = E\left((\exp(i\omega X)\right)
 \]</span></p>
 </blockquote>
-<p>忽略系数而言，显然，特征函数<span
-class="math inline">\(\Phi_X(\omega) = E(\exp(i\omega X)) = \int
-_{-\infty}^{+\infty}\exp(i\omega x)f_X(x)\mathrm{d}x\)</span>是<span
-class="math inline">\(f_X\)</span>的傅里叶逆变换。因此，同分布的随机变量与其特征函数是一一对应的。同时，由于傅里叶变换的性质我们可以得到，由于<span
-class="math inline">\(f_X \geq 0\)</span>，特征函数<span
-class="math inline">\(\Phi_X\)</span>是正定的。</p>
-<p>有了特征函数这样一个工具，我们可以来验证中心极限定理了。现有<span
-class="math inline">\(n\)</span>个独立同分布的随机变量<span
-class="math inline">\(X_1, X_2, \cdots,
+<p>忽略系数而言，显然，特征函数<span class="math inline">\(\Phi_X(\omega) = E(\exp(i\omega X)) = \int
+_{-\infty}^{+\infty}\exp(i\omega x)f_X(x)\mathrm{d}x\)</span>是<span class="math inline">\(f_X\)</span>的傅里叶逆变换。因此，同分布的随机变量与其特征函数是一一对应的。同时，由于傅里叶变换的性质我们可以得到，由于<span class="math inline">\(f_X \geq 0\)</span>，特征函数<span class="math inline">\(\Phi_X\)</span>是正定的。</p>
+<p>有了特征函数这样一个工具，我们可以来验证中心极限定理了。现有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span class="math inline">\(X_1, X_2, \cdots,
 X_n\)</span>，假定他们均值和方差都是<span class="math inline">\(E(X_k) =
 0,\ Var(X_k) =
-1\)</span>（这里的假定只是为了简化后面的书写，并不影响该问题的本质），又有随机变量<span
-class="math inline">\(Y=X_1 + X_2 + \cdots + X_n =
-\sum_{k=1}^{n}X_k\)</span>，于是<span
-class="math inline">\(Y\)</span>的特征函数为</p>
+1\)</span>（这里的假定只是为了简化后面的书写，并不影响该问题的本质），又有随机变量<span class="math inline">\(Y=X_1 + X_2 + \cdots + X_n =
+\sum_{k=1}^{n}X_k\)</span>，于是<span class="math inline">\(Y\)</span>的特征函数为</p>
 <p><span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -316,8 +296,7 @@ i\omega X_k \right) \right) \\
 \end{equation*}
 \]</span></p>
 <p>其中，由于<span class="math inline">\(X_k,\
-k=1,2,\cdots,n\)</span>独立同分布，他们的特征函数一样，<span
-class="math inline">\(\Phi_{X_k}(\omega) = \Phi_X(\omega),\
+k=1,2,\cdots,n\)</span>独立同分布，他们的特征函数一样，<span class="math inline">\(\Phi_{X_k}(\omega) = \Phi_X(\omega),\
 x=1,2,\cdots, n\)</span>，又有 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -349,8 +328,7 @@ i\omega\cfrac{X}{\sqrt{n}} + \cfrac{1}{2} \left( i\omega
 o\left(\cfrac{1}{n}\right) \right)^n = \exp(a)
 \]</span></p>
 </blockquote>
-<p>现在将<span class="math inline">\(n\)</span>趋于<span
-class="math inline">\(\infty\)</span>，有 <span class="math display">\[
+<p>现在将<span class="math inline">\(n\)</span>趋于<span class="math inline">\(\infty\)</span>，有 <span class="math display">\[
 \lim_{n\rightarrow\infty}
 \Phi_{\frac{Y}{\sqrt{n}}}(\omega)  =  \lim_{n\rightarrow\infty}
 \left(\Phi_X(\cfrac{\omega}{\sqrt{n}})\right) ^n
@@ -358,9 +336,7 @@ class="math inline">\(\infty\)</span>，有 <span class="math display">\[
 o\left(\cfrac{1}{n}\right)\right)^n
 =  \exp\left(-\cfrac{\omega^2}{2} \right)
 \]</span> 那么高斯分布的特征函数是怎样的呢？下面进一步分析。</p>
-<p>对于均值为<span class="math inline">\(m\)</span>，方差为<span
-class="math inline">\(\sigma^2\)</span>的高斯分布<span
-class="math inline">\(X\)</span>，其概率密度函数为</p>
+<p>对于均值为<span class="math inline">\(m\)</span>，方差为<span class="math inline">\(\sigma^2\)</span>的高斯分布<span class="math inline">\(X\)</span>，其概率密度函数为</p>
 <p><span class="math display">\[
 f_X (x)= \cfrac{1}{\sqrt{2\pi} \sigma} \exp\left(
 -\cfrac{(x-m)^2}{2\sigma^2} \right)
@@ -385,26 +361,17 @@ m\right)^2 + im\omega - \cfrac{1}{2} \omega^2\sigma^2 \right)
 &amp; =  \exp\left(im\omega - \cfrac{1}{2} \omega^2\sigma^2 \right)
 \end{aligned}
 \end{equation*}
-\]</span> 可以看出，高斯分布的特征函数仍是高斯的形状。令均值<span
-class="math inline">\(m=0\)</span>，方差<span
-class="math inline">\(\sigma ^2=1\)</span>，就得到<span
-class="math inline">\(\Phi_X(\omega) = \exp\left( -\cfrac{\omega^2}{2}
-\right)\)</span>。因此，刚才得到的<span
-class="math inline">\(\lim\Phi_Y\)</span>是标标准准的高斯分布的特征函数。至此，中心极限定理就证明出来了。</p>
+\]</span> 可以看出，高斯分布的特征函数仍是高斯的形状。令均值<span class="math inline">\(m=0\)</span>，方差<span class="math inline">\(\sigma ^2=1\)</span>，就得到<span class="math inline">\(\Phi_X(\omega) = \exp\left( -\cfrac{\omega^2}{2}
+\right)\)</span>。因此，刚才得到的<span class="math inline">\(\lim\Phi_Y\)</span>是标标准准的高斯分布的特征函数。至此，中心极限定理就证明出来了。</p>
 <p>进一步地，我们看看大数定律。<strong>大数定律</strong>表述为</p>
 <blockquote>
-<p>有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span
-class="math inline">\(X_1, X_2, \cdots,
+<p>有<span class="math inline">\(n\)</span>个独立同分布的随机变量<span class="math inline">\(X_1, X_2, \cdots,
 X_n\)</span>，假定他们均值都是<span class="math inline">\(E(X_k) =
-m\)</span>，那么当<span class="math inline">\(n\)</span>趋于<span
-class="math inline">\(\infty\)</span>时，这些随机变量之和与<span
-class="math inline">\(n\)</span>的比值趋于一个确定的值，这个值就是均值<span
-class="math inline">\(m\)</span>。即 <span class="math display">\[
+m\)</span>，那么当<span class="math inline">\(n\)</span>趋于<span class="math inline">\(\infty\)</span>时，这些随机变量之和与<span class="math inline">\(n\)</span>的比值趋于一个确定的值，这个值就是均值<span class="math inline">\(m\)</span>。即 <span class="math display">\[
 \lim_{n\rightarrow \infty} \cfrac{X_1 + X_2 + \cdots +X_n}{n} = m
 \]</span></p>
 </blockquote>
-<p>这个定律的验证与中心极限定理类似，不过由于分母是<span
-class="math inline">\(n\)</span>，后续的泰勒展开就只需要展开到一阶即可
+<p>这个定律的验证与中心极限定理类似，不过由于分母是<span class="math inline">\(n\)</span>，后续的泰勒展开就只需要展开到一阶即可
 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
@@ -431,18 +398,8 @@ o\left(\cfrac{1}{n}\right)\right)^n \\
 \]</span> 得到的是常函数m的特征函数，至此，大数定律就证明结束了。</p>
 <h2 id="随机扩散random-diffusion模型">随机扩散(Random
 Diffusion)模型</h2>
-<p>为简化计算，考虑一维情况。现有一维随机扩散模型，用<span
-class="math inline">\(f(x,t)\)</span>表示在<span
-class="math inline">\(t\)</span>时刻，<span
-class="math inline">\(x\)</span>处粒子出现的概率密度。初始化条件为<span
-class="math inline">\(f(0,0)=1\)</span>，求<span
-class="math inline">\(f(x,t)\)</span>的一般表达式。</p>
-<p>首先建立模型，用<span
-class="math inline">\(\rho(y)\)</span>表示在<span
-class="math inline">\(t=\tau\)</span>时位置<span
-class="math inline">\(y\)</span>处的粒子出现的概率密度，即<span
-class="math inline">\(\rho(y) = f(y,\tau)\)</span>，显然，<span
-class="math inline">\(\rho(y)\geq0,\ \int_{-\infty}^{+\infty}
+<p>为简化计算，考虑一维情况。现有一维随机扩散模型，用<span class="math inline">\(f(x,t)\)</span>表示在<span class="math inline">\(t\)</span>时刻，<span class="math inline">\(x\)</span>处粒子出现的概率密度。初始化条件为<span class="math inline">\(f(0,0)=1\)</span>，求<span class="math inline">\(f(x,t)\)</span>的一般表达式。</p>
+<p>首先建立模型，用<span class="math inline">\(\rho(y)\)</span>表示在<span class="math inline">\(t=\tau\)</span>时位置<span class="math inline">\(y\)</span>处的粒子出现的概率密度，即<span class="math inline">\(\rho(y) = f(y,\tau)\)</span>，显然，<span class="math inline">\(\rho(y)\geq0,\ \int_{-\infty}^{+\infty}
 \rho(y)\mathrm{d}y = 1\)</span>。自然地，还可以有这样两个假设：</p>
 <ol type="1">
 <li><span class="math inline">\(\rho(-y) = \rho(y)\)</span></li>
@@ -451,10 +408,7 @@ y\rho(y)\mathrm{d}y = 0\)</span></li>
 </ol>
 <p>于是，不难理解， <span class="math display">\[
 f(x,t+\tau) = \int_{-\infty}^{+\infty} f(x-y, t)\rho(y)\mathrm{d}y
-\]</span> 方程左右的<span class="math inline">\(f\)</span>在<span
-class="math inline">\((x,t)\)</span>处分别对<span
-class="math inline">\(x,\ t\)</span>展开，于是 <span
-class="math display">\[
+\]</span> 方程左右的<span class="math inline">\(f\)</span>在<span class="math inline">\((x,t)\)</span>处分别对<span class="math inline">\(x,\ t\)</span>展开，于是 <span class="math display">\[
 f(x,t) + \cfrac{\partial{f}}{\partial{t}} \tau =
 \int_{-\infty}^{+\infty} \left( f(x,t) -
 \cfrac{\partial{f}}{\partial{x}} y +
@@ -470,36 +424,24 @@ c = \cfrac{1}{2\tau}\int_{-\infty}^{+\infty}y^2\rho(y)\mathrm{d}y
 \cfrac{\partial{f}}{\partial{t}} = c
 \cfrac{\partial^2{f}}{\partial{x^2}}
 \]</span> 这个偏微分方程被称为<strong>扩散方程</strong>(diffusion
-equation)，其解（解法略，很常见的一类微分方程）为 <span
-class="math display">\[
+equation)，其解（解法略，很常见的一类微分方程）为 <span class="math display">\[
 f(x,t) = \cfrac{1}{\sqrt{2\pi ct}} \exp(-\cfrac{x^2}{2ct})
-\]</span> 回到模型，可以看出，对于任一时间<span
-class="math inline">\(t\)</span>，粒子在全空间（模型假设是一维空间，无伤大雅）上密度是标标准准的高斯分布。</p>
+\]</span> 回到模型，可以看出，对于任一时间<span class="math inline">\(t\)</span>，粒子在全空间（模型假设是一维空间，无伤大雅）上密度是标标准准的高斯分布。</p>
 <h2 id="最大熵maximum-entropy">最大熵(Maximum Entropy)</h2>
-<p>对于随机过程<span
-class="math inline">\(X\)</span>，其概率密度分布函数为<span
-class="math inline">\(f_X(x)\)</span>，定义<span
-class="math inline">\(X\)</span>的熵函数<span
-class="math inline">\(H(X)\)</span>：</p>
+<p>对于随机过程<span class="math inline">\(X\)</span>，其概率密度分布函数为<span class="math inline">\(f_X(x)\)</span>，定义<span class="math inline">\(X\)</span>的熵函数<span class="math inline">\(H(X)\)</span>：</p>
 <blockquote>
 <p><span class="math display">\[
 H(X) = -\int_{-\infty}^{+\infty} f_X(x) \log f_X(x) \mathrm{d}x
 \]</span></p>
 </blockquote>
-<p>熵<span class="math inline">\(H(X)\)</span>反映的是随机过程<span
-class="math inline">\(X\)</span>的“无序度”，通俗地说，就是这个随机过程究竟有多“随机”。</p>
+<p>熵<span class="math inline">\(H(X)\)</span>反映的是随机过程<span class="math inline">\(X\)</span>的“无序度”，通俗地说，就是这个随机过程究竟有多“随机”。</p>
 <p>现在我们考察，定义在<span class="math inline">\((-\infty,
-+\infty)\)</span>上的，确定一阶矩<span
-class="math inline">\(E(X)=\mu\)</span>，二阶矩<span
-class="math inline">\(E(X^2) = \sigma^2\)</span>的随机过程<span
-class="math inline">\(X\)</span>，要满足怎样的分布才能让自己是最“随机”的，即熵最大。</p>
-<p><span class="math inline">\(X\)</span>的概率密度函数显然满足 <span
-class="math display">\[
++\infty)\)</span>上的，确定一阶矩<span class="math inline">\(E(X)=\mu\)</span>，二阶矩<span class="math inline">\(E(X^2) = \sigma^2\)</span>的随机过程<span class="math inline">\(X\)</span>，要满足怎样的分布才能让自己是最“随机”的，即熵最大。</p>
+<p><span class="math inline">\(X\)</span>的概率密度函数显然满足 <span class="math display">\[
 \int_{-\infty}^{+\infty}f_X(x)\mathrm{d}x - 1 = 0 \\
 \int_{-\infty}^{+\infty}xf_X(x)\mathrm{d}x - \mu  = 0 \\
 \int_{-\infty}^{+\infty}x^2f_X(x)\mathrm{d}x - \sigma^2 =0 \\
-\]</span> 将这些等式视为约束条件，构建拉格朗日函数 <span
-class="math display">\[
+\]</span> 将这些等式视为约束条件，构建拉格朗日函数 <span class="math display">\[
 \begin{equation*}
 \begin{aligned}
 \mathscr{L}(f_X(x)) = &amp; -\int_{-\infty}^{+\infty} f_X(x) \log f_X(x)
@@ -512,26 +454,16 @@ class="math display">\[
 \sigma^2\right)
 \end{aligned}
 \end{equation*}
-\]</span> 现在要求得一个<span
-class="math inline">\(f_X\)</span>，使得<span
-class="math inline">\(\mathscr{L}\)</span>取极大值。注意，不同于普通的拉格朗日乘子法，这里待求得是一个函数<span
-class="math inline">\(f\)</span>而非自变量<span
-class="math inline">\(x\)</span>，普通得求导显然不可用，那么要如何做到呢？这里我们利用泛函分析里一个重要工具：变分法(funtional
+\]</span> 现在要求得一个<span class="math inline">\(f_X\)</span>，使得<span class="math inline">\(\mathscr{L}\)</span>取极大值。注意，不同于普通的拉格朗日乘子法，这里待求得是一个函数<span class="math inline">\(f\)</span>而非自变量<span class="math inline">\(x\)</span>，普通得求导显然不可用，那么要如何做到呢？这里我们利用泛函分析里一个重要工具：变分法(funtional
 variational method)。</p>
-<p>我们假定待求<span class="math inline">\(f\)</span>的最优解是<span
-class="math inline">\(f_0\)</span>，并且构造一元函数</p>
+<p>我们假定待求<span class="math inline">\(f\)</span>的最优解是<span class="math inline">\(f_0\)</span>，并且构造一元函数</p>
 <p><span class="math display">\[
 G(t) = \mathscr{L}(f_0 + tg)
 \]</span></p>
-<p>其中<span class="math inline">\(g\)</span>是与<span
-class="math inline">\(f\)</span>自变量一致的任意函数。由于<span
-class="math inline">\(f_0\)</span>是待求<span
-class="math inline">\(f\)</span>的最优解，有 <span
-class="math display">\[
+<p>其中<span class="math inline">\(g\)</span>是与<span class="math inline">\(f\)</span>自变量一致的任意函数。由于<span class="math inline">\(f_0\)</span>是待求<span class="math inline">\(f\)</span>的最优解，有 <span class="math display">\[
 G(0) = \mathscr{L}(f_0) \geq \mathscr{L}(f_0 + tg) = G(t)
 \]</span></p>
-<p>即<span class="math inline">\(G(0)\)</span>是<span
-class="math inline">\(G(t)\)</span>的最大值，故有</p>
+<p>即<span class="math inline">\(G(0)\)</span>是<span class="math inline">\(G(t)\)</span>的最大值，故有</p>
 <p><span class="math display">\[
 \left.\cfrac{\partial}{\partial{t}}G(t)\right|_{t=0} = 0
 \]</span></p>
@@ -556,17 +488,14 @@ tg)\)</span>得</p>
 \end{aligned}
 \end{equation*}
 \]</span></p>
-<p>由于<span
-class="math inline">\(g\)</span>是任意的函数，因此被积函数中，必然有
+<p>由于<span class="math inline">\(g\)</span>是任意的函数，因此被积函数中，必然有
 <span class="math display">\[
 -\log{f} + (\lambda_1 - 1) + \lambda_2x + \lambda_3x^2 \equiv 0
 \]</span> 于是 <span class="math display">\[
 f = f_X(x) = \exp\left( \lambda_3 x^2 + \lambda_2 x + \lambda_1 - 1
 \right)
-\]</span> 这是标标准准的高斯概率密度函数，因此随机过程<span
-class="math inline">\(X\)</span>是高斯过程时，其熵最大。</p>
-<p>实际上，<span
-class="math inline">\(\lambda_1,\lambda_2,\lambda_3\)</span>显然是可以解的，虽然过程有点复杂，但结果确确实实是
+\]</span> 这是标标准准的高斯概率密度函数，因此随机过程<span class="math inline">\(X\)</span>是高斯过程时，其熵最大。</p>
+<p>实际上，<span class="math inline">\(\lambda_1,\lambda_2,\lambda_3\)</span>显然是可以解的，虽然过程有点复杂，但结果确确实实是
 <span class="math display">\[
 f_X(x) = \cfrac{1}{\sqrt{2\pi}\sigma}\exp\left(
 -\cfrac{(x-\mu)^2}{2\sigma^2} \right)
@@ -575,16 +504,12 @@ f_X(x) = \cfrac{1}{\sqrt{2\pi}\sigma}\exp\left(
 <p>上面考虑的是双边无界条件。实际上，如果我们考虑单边无解或者双边有界情况的话，情况会有所不同。</p>
 <ol type="1">
 <li><p><span class="math inline">\(x\in
-[0,+\infty)\)</span>，此时只需要约束一阶矩<span
-class="math inline">\(\int_{-\infty}^{+\infty}xf_X(x)\mathrm{d}x - \mu =
+[0,+\infty)\)</span>，此时只需要约束一阶矩<span class="math inline">\(\int_{-\infty}^{+\infty}xf_X(x)\mathrm{d}x - \mu =
 0\)</span>，最大熵的<span class="math inline">\(f\)</span>为指数分布：
 <span class="math display">\[
 f_X(x) = \lambda \exp\left( -\lambda x \right) I_{[0,+\infty)}(x)
 \]</span></p></li>
-<li><p><span
-class="math inline">\(x\in[a,b]\)</span>，此时不需要对矩有所约束，最大熵的<span
-class="math inline">\(f\)</span>为均匀分布： <span
-class="math display">\[
+<li><p><span class="math inline">\(x\in[a,b]\)</span>，此时不需要对矩有所约束，最大熵的<span class="math inline">\(f\)</span>为均匀分布： <span class="math display">\[
 f_X(x) = \cfrac{1}{b-a}
 \]</span></p></li>
 </ol>
@@ -688,7 +613,8 @@ Diffusion)模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-l
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>

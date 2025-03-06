@@ -135,6 +135,11 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
         <li class="menu-item menu-item-resources">
 
     <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
@@ -215,8 +220,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文进一步研究了高斯过程在经历一些常见的非线性系统后的新特性。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
+        <p>高斯过程是非常重要的一类随机过程，其应用在各领域都非常广泛。本文进一步研究了高斯过程在经历一些常见的非线性系统后的新特性。本文属于随机过程笔记，根据清华大学电子工程系张颢副研究员的随机过程线上课程笔记整理而成，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi?share_source=copy_web">这是课程链接</a>。</p>
 <span id="more"></span>
 <p>我们知道，高斯过程在经过线性变换后仍然是高斯的。本文将进一步研究，当非线性系统作用域高斯过程后，其将会有怎样的新性质。此前，我们快速回顾，常见的非线性系统包括：</p>
 <ol type="1">
@@ -231,19 +235,13 @@ target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1V44y1z7yi
 <h1 id="高斯分布的高阶矩计算">高斯分布的高阶矩计算</h1>
 <p>现有一个一维零均值的高斯分布 <span class="math display">\[
 X\sim N(0,\sigma),
-\]</span> 其均值（一阶矩）<span
-class="math inline">\(E(X)=0\)</span>，二阶矩<span
-class="math inline">\(E(X^2)=\text{Var}(X)+(E(X))^2=\sigma
+\]</span> 其均值（一阶矩）<span class="math inline">\(E(X)=0\)</span>，二阶矩<span class="math inline">\(E(X^2)=\text{Var}(X)+(E(X))^2=\sigma
 ^2\)</span>.</p>
-<p>现计算<span class="math inline">\(X\)</span>的<span
-class="math inline">\(n\)</span>阶矩： <span class="math display">\[
+<p>现计算<span class="math inline">\(X\)</span>的<span class="math inline">\(n\)</span>阶矩： <span class="math display">\[
 E(X^n)=\cfrac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^\infty x^n \exp
 (-\cfrac{x^2}{2\sigma ^2})\text{d}x ,
 \]</span>
-显然，要计算这个积分，分部积分法大概率是一个好法子（指数部分可以在求导过程中保持不变，<span
-class="math inline">\(x^n\)</span>可以最终求导为<span
-class="math inline">\(x\)</span>或<span
-class="math inline">\(x^2\)</span>，得到的形式即我们熟悉的一阶矩和二阶矩）。令
+显然，要计算这个积分，分部积分法大概率是一个好法子（指数部分可以在求导过程中保持不变，<span class="math inline">\(x^n\)</span>可以最终求导为<span class="math inline">\(x\)</span>或<span class="math inline">\(x^2\)</span>，得到的形式即我们熟悉的一阶矩和二阶矩）。令
 <span class="math display">\[
 I_n =\int_{-\infty}^\infty x^n \exp (-\cfrac{x^2}{2\sigma ^2})\text{d}x,
 \]</span> 有 <span class="math display">\[
@@ -260,19 +258,11 @@ I_n &amp; =-\sigma ^2 \int_{-\infty}^\infty x^{n-1} \text{d} \exp
 \end{equation*}
 \]</span> 即 <span class="math display">\[
 I_n = (n-1) \sigma ^2 I_{n-2}.
-\]</span> 进一步地，将<span
-class="math inline">\(n\)</span>分奇偶情况讨论。当<span
-class="math inline">\(n=2k\)</span>为偶数时， <span
-class="math display">\[
+\]</span> 进一步地，将<span class="math inline">\(n\)</span>分奇偶情况讨论。当<span class="math inline">\(n=2k\)</span>为偶数时， <span class="math display">\[
 I_n = (n-1) \sigma ^2 \cdot I_{n-2} = (n-1) \sigma ^2 \cdot (n-3) \sigma
 ^2 \cdot I_{n-4} = \cdots = (n-1)(n-3) \cdots 3 \cdot \sigma^{2k} \cdot
 I_2,
-\]</span> 其中<span
-class="math inline">\(I_2=E(X^2)=\sigma^2\)</span>；而当<span
-class="math inline">\(n=2k+1\)</span>为奇数时，递推后最终得到的结果必然有一个因子<span
-class="math inline">\(I_1\)</span>，即<span
-class="math inline">\(E(X)=0\)</span>，故此时<span
-class="math inline">\(I_n\)</span>必然为零。</p>
+\]</span> 其中<span class="math inline">\(I_2=E(X^2)=\sigma^2\)</span>；而当<span class="math inline">\(n=2k+1\)</span>为奇数时，递推后最终得到的结果必然有一个因子<span class="math inline">\(I_1\)</span>，即<span class="math inline">\(E(X)=0\)</span>，故此时<span class="math inline">\(I_n\)</span>必然为零。</p>
 <p>递推可以得到 <span class="math display">\[
 \begin{equation*} I_n = \left\{
 \begin{aligned}
@@ -284,11 +274,8 @@ class="math inline">\(I_n\)</span>必然为零。</p>
 \]</span> 其中<span class="math inline">\(k=1,2,3,
 \cdots\)</span>为正整数。</p>
 <h1 id="利用特征函数计算表示高阶矩">利用特征函数计算（表示）高阶矩</h1>
-<p>我们知道，<strong>任意</strong>一个<span
-class="math inline">\(n\)</span>元随机矢量<span
-class="math inline">\(\mathbb{X}=(X_1, X_2, \cdots ,
-X_n)^\top\)</span>，其特征函数表示为 $$ <span
-class="math display">\[\begin{equation*}
+<p>我们知道，<strong>任意</strong>一个<span class="math inline">\(n\)</span>元随机矢量<span class="math inline">\(\mathbb{X}=(X_1, X_2, \cdots ,
+X_n)^\top\)</span>，其特征函数表示为 $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
 \Phi _\mathbb{X}(\omega) &amp; = E(\exp{\left(
@@ -326,30 +313,19 @@ E(X_1^{\alpha_1} X_2^{\alpha_2} \cdots X_n^{\alpha_n}) E(\exp{\left(
 X_2^{_2} X_n^{_n}), <span class="math display">\[
 即我们要求的高阶矩（至少从形式上）可以被表示为
 \]</span> E(X_1^{_1} X_2^{<em>2} X_n^{<em>n}) = . </em>() |</em>{= 0},
-$$ 其中，<span
-class="math inline">\(\Phi_\mathbb{X}(\omega)\)</span>是<span
-class="math inline">\(n\)</span>元随机矢量<span
-class="math inline">\(\mathbb{X}=(X_1, X_2, \cdots ,
+$$ 其中，<span class="math inline">\(\Phi_\mathbb{X}(\omega)\)</span>是<span class="math inline">\(n\)</span>元随机矢量<span class="math inline">\(\mathbb{X}=(X_1, X_2, \cdots ,
 X_n)^\top\)</span>的特征函数。</p>
 <h1 id="平方器与高斯过程">平方器与高斯过程</h1>
-<p>我们从最简单的多项式入手。设有一个高斯过程满足零均值：<span
-class="math inline">\(E(\mathbb{X}(t))=0\)</span>，且宽平稳：<span
-class="math inline">\(E(\mathbb{X}(t)\mathbb{X}(s))=E_\mathbb{X}(t-s)=E_\mathbb{X}(\tau)\)</span>，现将一个平方算子作用在该高斯过程上：
+<p>我们从最简单的多项式入手。设有一个高斯过程满足零均值：<span class="math inline">\(E(\mathbb{X}(t))=0\)</span>，且宽平稳：<span class="math inline">\(E(\mathbb{X}(t)\mathbb{X}(s))=E_\mathbb{X}(t-s)=E_\mathbb{X}(\tau)\)</span>，现将一个平方算子作用在该高斯过程上：
 <span class="math display">\[
 \mathbb{X}(t)\stackrel{h(x)=x^2}{\longrightarrow}\mathbb{Y}(t).
-\]</span> 显然，<span
-class="math inline">\(\mathbb{Y}\)</span>不是高斯的，它起码连个负值都没有。那么，新得到的随机过程<span
-class="math inline">\(\mathbb{Y}(t)\)</span>有哪些性质呢？接下来我们逐一讨论它的分布情况，以及随机过程<span
-class="math inline">\(\mathbb{Y}(t)\)</span>的相关函数。</p>
+\]</span> 显然，<span class="math inline">\(\mathbb{Y}\)</span>不是高斯的，它起码连个负值都没有。那么，新得到的随机过程<span class="math inline">\(\mathbb{Y}(t)\)</span>有哪些性质呢？接下来我们逐一讨论它的分布情况，以及随机过程<span class="math inline">\(\mathbb{Y}(t)\)</span>的相关函数。</p>
 <h2 id="均值与概率密度函数">均值与概率密度函数</h2>
-<p>根据定义，<span
-class="math inline">\(\mathbb{Y}(t)\)</span>的均值计算非常简单，直接带进去就完了：
+<p>根据定义，<span class="math inline">\(\mathbb{Y}(t)\)</span>的均值计算非常简单，直接带进去就完了：
 <span class="math display">\[
 E(\mathbb{Y}(t))=E(\mathbb{X}^2(t))=R_\mathbb{X}(0),
-\]</span> 这里我们用到了假设中<span
-class="math inline">\(\mathbb{X}(t)\)</span>的宽平稳性质。</p>
-<p>接下来，我们再来讨论<span
-class="math inline">\(\mathbb{Y}(t)\)</span>具体的分布情况。首先根据定义写出分布函数：
+\]</span> 这里我们用到了假设中<span class="math inline">\(\mathbb{X}(t)\)</span>的宽平稳性质。</p>
+<p>接下来，我们再来讨论<span class="math inline">\(\mathbb{Y}(t)\)</span>具体的分布情况。首先根据定义写出分布函数：
 $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
@@ -365,8 +341,7 @@ P(\left|\mathbb{X}(t)\right|\leq \sqrt{y}), &amp; y\geq0 \\
 \end{aligned}
 \end{equation*}\]</span> <span class="math display">\[
 这里仅考虑$y\geq 0$的情况：
-\]</span> P(|(t)|) = 2 <em>0^ f</em>{(t)}(s)s <span
-class="math display">\[
+\]</span> P(|(t)|) = 2 <em>0^ f</em>{(t)}(s)s <span class="math display">\[
 其中，$f_{\mathbb{X}(t)}$是$\mathbb{X}(t)$的概率密度函数。进一步地，对上式求导即可得到$f_{\mathbb{Y}(t)}$的概率密度函数：
 \]</span> <span class="math display">\[\begin{equation*}
 \begin{aligned}
@@ -394,10 +369,7 @@ R_\mathbb{X}(0)}\right)}, &amp; y\geq0 \\
 
 \end{aligned}
 \end{equation*}\]</span>. $$ ## 相关函数</p>
-<p>上述讨论的实际上是<span
-class="math inline">\(\mathbb{Y}(t)\)</span>在某一点的分布情况。作为随机过程，我们还应该关注其相关函数的表现如何。根据定义，<span
-class="math inline">\(\mathbb{Y}(t)\)</span>的相关函数表示为 $$ <span
-class="math display">\[\begin{equation*}
+<p>上述讨论的实际上是<span class="math inline">\(\mathbb{Y}(t)\)</span>在某一点的分布情况。作为随机过程，我们还应该关注其相关函数的表现如何。根据定义，<span class="math inline">\(\mathbb{Y}(t)\)</span>的相关函数表示为 $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
 R_\mathbb{Y}(t,s) &amp; = E(\mathbb{Y}(t)\mathbb{Y}(s)) \\
@@ -422,8 +394,7 @@ R_\mathbb{Y}(t,s) &amp; = E(\mathbb{X}^2(t)\mathbb{X}^2(s)) \\
 \end{aligned}
 \end{equation*}\]</span> $$</p>
 <blockquote>
-<p>计算时需要注意，由于这里的<span
-class="math inline">\(\mathbb{X}\)</span>是零均值的，所以协方差的每一项就是对应的相关函数，即
+<p>计算时需要注意，由于这里的<span class="math inline">\(\mathbb{X}\)</span>是零均值的，所以协方差的每一项就是对应的相关函数，即
 $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
@@ -435,9 +406,7 @@ $$ <span class="math display">\[\begin{equation*}
 \end{equation*}\]</span> $$</p>
 </blockquote>
 <h1 id="硬限幅器与高斯过程">硬限幅器与高斯过程</h1>
-<p>所谓硬限幅器，在数学上指的就是符号函数。设有一个高斯过程满足零均值：<span
-class="math inline">\(E(\mathbb{X}(t))=0\)</span>，且宽平稳：<span
-class="math inline">\(E(\mathbb{X}(t)\mathbb{X}(s))=E_\mathbb{X}(t-s)=E_\mathbb{X}(\tau)\)</span>，现将一个平方算子作用在该高斯过程上：
+<p>所谓硬限幅器，在数学上指的就是符号函数。设有一个高斯过程满足零均值：<span class="math inline">\(E(\mathbb{X}(t))=0\)</span>，且宽平稳：<span class="math inline">\(E(\mathbb{X}(t)\mathbb{X}(s))=E_\mathbb{X}(t-s)=E_\mathbb{X}(\tau)\)</span>，现将一个平方算子作用在该高斯过程上：
 <span class="math display">\[
 \mathbb{X}(t)\stackrel{h(x)=\text{sgn}(x)}{\longrightarrow}\mathbb{Y}(t).
 \]</span> 其中， $$ <span class="math display">\[\begin{equation*}
@@ -450,12 +419,9 @@ class="math inline">\(E(\mathbb{X}(t)\mathbb{X}(s))=E_\mathbb{X}(t-s)=E_\mathbb{
 \right.
 
 \end{equation*}\]</span>, $$</p>
-<p>这里，<span class="math inline">\(\text{sgn}(x)\)</span>在<span
-class="math inline">\(x=0\)</span>处的取值对于我们之后的内容而言并不重要，因此没给定义。同样地，我们讨论<span
-class="math inline">\(\mathbb{Y}(t)\)</span>的均值函数和相关函数。</p>
+<p>这里，<span class="math inline">\(\text{sgn}(x)\)</span>在<span class="math inline">\(x=0\)</span>处的取值对于我们之后的内容而言并不重要，因此没给定义。同样地，我们讨论<span class="math inline">\(\mathbb{Y}(t)\)</span>的均值函数和相关函数。</p>
 <h2 id="均值函数">均值函数</h2>
-<p>显然地不能再显然了，均值为0。 $$ <span
-class="math display">\[\begin{equation*}
+<p>显然地不能再显然了，均值为0。 $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
 E(\mathbb{Y}(t)) = &amp; 1 \cdot p(\mathbb{X}(t)&gt;0) + (-1) \cdot
@@ -464,9 +430,7 @@ p(\mathbb{X}(t)&lt;0) \\
 = &amp; 0 .
 
 \end{aligned}
-\end{equation*}\]</span> $$ 这里，由于<span
-class="math inline">\(\mathbb{X}(t)\)</span>是零均值的，故<span
-class="math inline">\(p(\mathbb{X}(t)&gt;0) =
+\end{equation*}\]</span> $$ 这里，由于<span class="math inline">\(\mathbb{X}(t)\)</span>是零均值的，故<span class="math inline">\(p(\mathbb{X}(t)&gt;0) =
 p(\mathbb{X}(t)&lt;0)\)</span>.</p>
 <h2 id="相关函数">相关函数</h2>
 <p>根据定义， $$ <span class="math display">\[\begin{equation*}
@@ -481,20 +445,15 @@ p(\mathbb{X}(t)\mathbb{X}(s)&lt;0),
 这里，我们记$P =
 p(\mathbb{X}(t)\mathbb{X}(s)&gt;0)$。显然，$p(\mathbb{X}(t)\mathbb{X}(s)&lt;0)
 = 1-P$，故
-\]</span> R_ (t,s) = 2P-1. $$ 现在我们开始计算<span
-class="math inline">\(P\)</span>。</p>
-<p>设<span
-class="math inline">\(\mathbb{X}(t)\mathbb{X}(s)\)</span>的联合概率密度如图？所示，并被表示为
+\]</span> R_ (t,s) = 2P-1. $$ 现在我们开始计算<span class="math inline">\(P\)</span>。</p>
+<p>设<span class="math inline">\(\mathbb{X}(t)\mathbb{X}(s)\)</span>的联合概率密度如图？所示，并被表示为
 <span class="math display">\[
 f_{\mathbb{X}(t)\mathbb{X}(s)}(x_1,x_2) = \cfrac{1}{2\pi\sigma_1
 \sigma_2 \sqrt{1-\rho^2}} \exp \left[ -\cfrac{1}{2(1-\rho^2)} \left(
 \cfrac{x_1^2}{\sigma_1^2} + \cfrac{x_2^2}{\sigma_2^2} - 2\rho
 \cfrac{x_1}{\sigma_1} \cfrac{x_2}{\sigma_2} \right)\right],
-\]</span> 其中，<span class="math inline">\(\rho\)</span>是<span
-class="math inline">\(\mathbb{X}(t),\mathbb{X}(s)\)</span>的相关，即<span
-class="math inline">\(\rho = E(\mathbb{X}(t) \mathbb{X}(s))\)</span>。
-要求<span
-class="math inline">\(\mathbb{X}(t)\mathbb{X}(s)&gt;0\)</span>的概率，即对联合概率密度分布在第一、第三象限中积分，即图？的灰色区域：
+\]</span> 其中，<span class="math inline">\(\rho\)</span>是<span class="math inline">\(\mathbb{X}(t),\mathbb{X}(s)\)</span>的相关，即<span class="math inline">\(\rho = E(\mathbb{X}(t) \mathbb{X}(s))\)</span>。
+要求<span class="math inline">\(\mathbb{X}(t)\mathbb{X}(s)&gt;0\)</span>的概率，即对联合概率密度分布在第一、第三象限中积分，即图？的灰色区域：
 <span class="math display">\[
 P= \left( \int_0^\infty\int_0^\infty + \int_{-\infty}^0\int_{-\infty}^0
 \right) \cfrac{1}{2\pi\sigma_1 \sigma_2 \sqrt{1-\rho^2}} \exp \left[
@@ -502,8 +461,7 @@ P= \left( \int_0^\infty\int_0^\infty + \int_{-\infty}^0\int_{-\infty}^0
 \cfrac{x_2^2}{\sigma_2^2} - 2\rho \cfrac{x_1}{\sigma_1}
 \cfrac{x_2}{\sigma_2} \right)\right] \text{d}x_1 \text{d}x_2.
 \]</span> 接下来将花费一定篇幅来计算这一积分。</p>
-首先，观察到被积函数是关于原点对称的<span
-class="math inline">\(f_{\mathbb{X}(t)\mathbb{X}(s)}(x_1,x_2) =
+首先，观察到被积函数是关于原点对称的<span class="math inline">\(f_{\mathbb{X}(t)\mathbb{X}(s)}(x_1,x_2) =
 f_{\mathbb{X}(t)\mathbb{X}(s)}(-x_1,-x_2)\)</span>，而被积区域恰好也是关于原点对称的，这在图？中也很容易直观地被看出来，因此，积分可以被化简为
 <span class="math display">\[
 P= \int_0^\infty\int_0^\infty \cfrac{1}{\pi\sigma_1 \sigma_2
@@ -511,10 +469,8 @@ P= \int_0^\infty\int_0^\infty \cfrac{1}{\pi\sigma_1 \sigma_2
 \cfrac{x_1^2}{\sigma_1^2} + \cfrac{x_2^2}{\sigma_2^2} - 2\rho
 \cfrac{x_1}{\sigma_1} \cfrac{x_2}{\sigma_2} \right)\right] \text{d}x_1
 \text{d}x_2.
-\]</span> 为了让积分变量显得更简洁，我们进行换元<span
-class="math inline">\(y_1 = \cfrac{x_1}{\sigma_1\sqrt{1-\rho^2}}, y_2 =
-\cfrac{x_2}{\sigma_2\sqrt{1-\rho^2}}\)</span>,于是 $$ <span
-class="math display">\[\begin{equation*}
+\]</span> 为了让积分变量显得更简洁，我们进行换元<span class="math inline">\(y_1 = \cfrac{x_1}{\sigma_1\sqrt{1-\rho^2}}, y_2 =
+\cfrac{x_2}{\sigma_2\sqrt{1-\rho^2}}\)</span>,于是 $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
 P &amp; = \int_0^\infty\int_0^\infty \cfrac{1}{\pi\sigma_1 \sigma_2
@@ -616,21 +572,10 @@ P &amp; = \iint_{\text{Area}^\prime} \cfrac{2}{\pi} \exp \left[-
 \end{equation*}\]</span> <span class="math display">\[
 即
 \]</span> P = . $$
-实际上，至此我们已经得到答案了。不过，当我们对照图？来考察这个答案时，不禁会思考这样一个问题：目前得到的<span
-class="math inline">\(P\)</span>似乎没有太直观的几何意义，这个<span
-class="math inline">\(P\)</span>跟图？中的灰色区域到底有何联系？当然我们可以猜想，当图？所示的联合高斯分布正相关越强（<span
-class="math inline">\(\rho\)</span>越接近<span
-class="math inline">\(1\)</span>），<span
-class="math inline">\(P\)</span>应该越大，反之，当图？所示的联合高斯分布正相关越强（<span
-class="math inline">\(\rho\)</span>越接近<span
-class="math inline">\(-1\)</span>），<span
-class="math inline">\(P\)</span>应该越小。为了验证这一猜想，我们可以利用三角函数的若干性质，来改写这个<span
-class="math inline">\(P\)</span>，使之具有更为直观的几何意义。</p>
+实际上，至此我们已经得到答案了。不过，当我们对照图？来考察这个答案时，不禁会思考这样一个问题：目前得到的<span class="math inline">\(P\)</span>似乎没有太直观的几何意义，这个<span class="math inline">\(P\)</span>跟图？中的灰色区域到底有何联系？当然我们可以猜想，当图？所示的联合高斯分布正相关越强（<span class="math inline">\(\rho\)</span>越接近<span class="math inline">\(1\)</span>），<span class="math inline">\(P\)</span>应该越大，反之，当图？所示的联合高斯分布正相关越强（<span class="math inline">\(\rho\)</span>越接近<span class="math inline">\(-1\)</span>），<span class="math inline">\(P\)</span>应该越小。为了验证这一猜想，我们可以利用三角函数的若干性质，来改写这个<span class="math inline">\(P\)</span>，使之具有更为直观的几何意义。</p>
 <p>记<span class="math inline">\(\arctan
-\cfrac{\sqrt{1-\rho}}{\sqrt{1+\rho}}=\alpha\)</span>，代入三角函数公式<span
-class="math inline">\(\cos 2\alpha =
-\cfrac{1-\tan^2\alpha}{1+\tan^2\alpha}\)</span>，我们可以得到： <span
-class="math display">\[
+\cfrac{\sqrt{1-\rho}}{\sqrt{1+\rho}}=\alpha\)</span>，代入三角函数公式<span class="math inline">\(\cos 2\alpha =
+\cfrac{1-\tan^2\alpha}{1+\tan^2\alpha}\)</span>，我们可以得到： <span class="math display">\[
 \cos 2\alpha = \cfrac{1-\tan^2\alpha}{1+\tan^2\alpha} =
 \cfrac{1-\cfrac{1-\rho}{1+\rho}}{1+\cfrac{1-\rho}{1+\rho}} = -\rho
 \]</span> 即 <span class="math display">\[
@@ -648,30 +593,11 @@ P &amp; = \cfrac{2}{\pi} \alpha \\
 \end{equation*}\]</span> $$ 即<span class="math inline">\(P =
 p(\mathbb{X}(t)\mathbb{X}(s)&gt;0) = \cfrac{1}{2} + \cfrac{1}{\pi}
 \arcsin (\rho)\)</span>
-。至此，我们可以很完美地将这个答案与图？中对应起来，并验证我们刚才的猜想了：当<span
-class="math inline">\(\mathbb{X}(t)\)</span>与<span
-class="math inline">\(\mathbb{X}(s)\)</span>越是正相关，即<span
-class="math inline">\(\rho\)</span>越接近<span
-class="math inline">\(1\)</span>，图？所示的椭圆区域越偏向于东北-西南方向，此时<span
-class="math inline">\(P\)</span>不断增大直至<span
-class="math inline">\(P\rightarrow 1, \rho \rightarrow
-1\)</span>；反之，当<span
-class="math inline">\(\mathbb{X}(t)\)</span>与<span
-class="math inline">\(\mathbb{X}(s)\)</span>越是负相关，即<span
-class="math inline">\(\rho\)</span>越接近<span
-class="math inline">\(-1\)</span>，图？所示的椭圆区域越偏向于东北-西南方向，此时<span
-class="math inline">\(P\)</span>不断减小直至<span
-class="math inline">\(P\rightarrow 0, \rho \rightarrow
--1\)</span>；而当<span
-class="math inline">\(\mathbb{X}(t)\)</span>与<span
-class="math inline">\(\mathbb{X}(s)\)</span>接近独立时，即<span
-class="math inline">\(\rho\)</span>越接近<span
-class="math inline">\(0\)</span>，图？所示的椭圆区域就越接近正圆形，此时，此时<span
-class="math inline">\(P\)</span>将趋近至<span
-class="math inline">\(P\rightarrow \cfrac{1}{2}, \rho \rightarrow
+。至此，我们可以很完美地将这个答案与图？中对应起来，并验证我们刚才的猜想了：当<span class="math inline">\(\mathbb{X}(t)\)</span>与<span class="math inline">\(\mathbb{X}(s)\)</span>越是正相关，即<span class="math inline">\(\rho\)</span>越接近<span class="math inline">\(1\)</span>，图？所示的椭圆区域越偏向于东北-西南方向，此时<span class="math inline">\(P\)</span>不断增大直至<span class="math inline">\(P\rightarrow 1, \rho \rightarrow
+1\)</span>；反之，当<span class="math inline">\(\mathbb{X}(t)\)</span>与<span class="math inline">\(\mathbb{X}(s)\)</span>越是负相关，即<span class="math inline">\(\rho\)</span>越接近<span class="math inline">\(-1\)</span>，图？所示的椭圆区域越偏向于东北-西南方向，此时<span class="math inline">\(P\)</span>不断减小直至<span class="math inline">\(P\rightarrow 0, \rho \rightarrow
+-1\)</span>；而当<span class="math inline">\(\mathbb{X}(t)\)</span>与<span class="math inline">\(\mathbb{X}(s)\)</span>接近独立时，即<span class="math inline">\(\rho\)</span>越接近<span class="math inline">\(0\)</span>，图？所示的椭圆区域就越接近正圆形，此时，此时<span class="math inline">\(P\)</span>将趋近至<span class="math inline">\(P\rightarrow \cfrac{1}{2}, \rho \rightarrow
 0\)</span>。</p>
-<p>至此，我们可以得到<span
-class="math inline">\(\mathbb{Y}(t)=\text{sgn}(\mathbb{X}(t))\)</span>的相关函数为
+<p>至此，我们可以得到<span class="math inline">\(\mathbb{Y}(t)=\text{sgn}(\mathbb{X}(t))\)</span>的相关函数为
 <span class="math display">\[
 R_\mathbb{Y} (t,s) = 2P-1 = \cfrac{2}{\pi} \arcsin (\rho).
 \]</span></p>
@@ -680,28 +606,19 @@ R_\mathbb{Y} (t,s) = 2P-1 = \cfrac{2}{\pi} \arcsin (\rho).
 定理。</p>
 <blockquote>
 <p><strong>Price 定理：</strong></p>
-<p>对于一个均值分别为<span
-class="math inline">\(0,0\)</span>，方差分别为<span
-class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>，相关系数为<span
-class="math inline">\(\rho\)</span>的联合高斯分布<span
-class="math inline">\((X_1,X_2)\sim N\)</span>，和一个非线性函数<span
-class="math inline">\(g(x_1,x_2)\)</span>，有 <span
-class="math display">\[
+<p>对于一个均值分别为<span class="math inline">\(0,0\)</span>，方差分别为<span class="math inline">\(\sigma_1^2,\sigma_2^2\)</span>，相关系数为<span class="math inline">\(\rho\)</span>的联合高斯分布<span class="math inline">\((X_1,X_2)\sim N\)</span>，和一个非线性函数<span class="math inline">\(g(x_1,x_2)\)</span>，有 <span class="math display">\[
 \cfrac{\partial E (g(X_1,X_2))}{\partial \rho} = \sigma_1 \sigma_2
 E\left(\cfrac{\partial^2g}{\partial x_1 \partial x_2} (X_1,X_2)\right).
 \]</span></p>
 </blockquote>
 <p>以刚才我们限幅器下高斯过程的相关函数计算为例，</p>
-<p>第一步，确定<span
-class="math inline">\(g(X_1,X_2)=\text{sgn}(X_1)\text{sgn}(X_2)\)</span>；</p>
-<p>第二步，计算<span class="math inline">\(g\)</span>的导数： <span
-class="math display">\[
+<p>第一步，确定<span class="math inline">\(g(X_1,X_2)=\text{sgn}(X_1)\text{sgn}(X_2)\)</span>；</p>
+<p>第二步，计算<span class="math inline">\(g\)</span>的导数： <span class="math display">\[
 \cfrac{\partial^2g}{\partial x_1 \partial x_2} (X_1,X_2) =
 2\delta(X_1)\cdot 2\delta(X_2) = 4\delta(X_1)\delta(X_2);
 \]</span></p>
 <blockquote>
-<p>这里，<span
-class="math inline">\(\delta(\cdot)\)</span>是狄拉克函数，或称冲击函数，在数学中是一种抽象函数：
+<p>这里，<span class="math inline">\(\delta(\cdot)\)</span>是狄拉克函数，或称冲击函数，在数学中是一种抽象函数：
 <span class="math display">\[
 \begin{equation*}
 \delta (x-x_0) = \left\{
@@ -713,33 +630,21 @@ class="math inline">\(\delta(\cdot)\)</span>是狄拉克函数，或称冲击函
 \end{equation*}
 \]</span> 且满足： <span class="math display">\[
 \int_{-\infty}^\infty \delta (x) \text{d}x = 1.
-\]</span> 一般地，为方便计算，无特别说明时，取<span
-class="math inline">\(x_0 = 0\)</span>。</p>
+\]</span> 一般地，为方便计算，无特别说明时，取<span class="math inline">\(x_0 = 0\)</span>。</p>
 <p>狄拉克函数是很好的泛函分析工具，我们用到了或将用到其这些性质（在此就不展开证明了）：</p>
 <p><strong>与阶跃函数的关系</strong></p>
-<p>狄拉克<span
-class="math inline">\(\delta\)</span>函数可以看作是阶跃函数<span
-class="math inline">\(H(x)\)</span>的导数，表达为： <span
-class="math display">\[
+<p>狄拉克<span class="math inline">\(\delta\)</span>函数可以看作是阶跃函数<span class="math inline">\(H(x)\)</span>的导数，表达为： <span class="math display">\[
 \cfrac{\text{d}}{\text{d}x}H(x)=\delta(x),
 \]</span> 而符号函数可以被阶跃函数表示为 <span class="math display">\[
 \text{sgn}(x)=2H(x)-1,
 \]</span> 故有 <span class="math display">\[
 \cfrac{\text{d}}{\text{d}x}\text{sgn}(x)=2\delta(x).
 \]</span></p>
-<p><strong>抽取性质</strong> 对于任意的连续函数<span
-class="math inline">\(f(x)\)</span>，我们有： <span
-class="math display">\[
+<p><strong>抽取性质</strong> 对于任意的连续函数<span class="math inline">\(f(x)\)</span>，我们有： <span class="math display">\[
 \int_{-\infty}^\infty f(x)δ(x−x_0) dx=f(x_0),
-\]</span> 也就是说，<span
-class="math inline">\(\delta\)</span>函数在积分中使得<span
-class="math inline">\(f(x)\)</span>只在点<span
-class="math inline">\(x=x_0\)</span>作出贡献，因此它起到了在积分中“选取”函数<span
-class="math inline">\(f(x)\)</span>在<span
-class="math inline">\(x_0\)</span>处的值的作用。</p>
+\]</span> 也就是说，<span class="math inline">\(\delta\)</span>函数在积分中使得<span class="math inline">\(f(x)\)</span>只在点<span class="math inline">\(x=x_0\)</span>作出贡献，因此它起到了在积分中“选取”函数<span class="math inline">\(f(x)\)</span>在<span class="math inline">\(x_0\)</span>处的值的作用。</p>
 </blockquote>
-<p>第三步，计算Price等式右端： $$ <span
-class="math display">\[\begin{equation*}
+<p>第三步，计算Price等式右端： $$ <span class="math display">\[\begin{equation*}
 \begin{aligned}
 
 \sigma_1 \sigma_2E\left(\cfrac{\partial^2g}{\partial x_1 \partial x_2}
@@ -885,7 +790,8 @@ h(0) &amp; = E (g(X_1,X_2)) \\ &amp; = E(\text{sgn}(X_1)\text{sgn}(X_2))
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
