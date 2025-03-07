@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="GRACE(-FO)二级重力产品以球谐系数形式给出了地球重力场异常在不同频段的分布情况，其后续使用以及科学分析等仍然需要进一步处理（如物理量分离、滤波去噪等）。SAGEA (Satellite Gravity Error Assessment) 项目基于Python，提供了相应的数据下载、数据处理和误差分析等功能，项目开源地址为https:&#x2F;&#x2F;github.com&#x2F;NCSGgroup&#x2F;SaGE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAGEA卫星重力数据处理：数据类型SHC和GRID初步介绍（编辑中）">
+<meta property="og:url" content="http://example.com/2025/03/07/SAGEA(1)_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BSHC%E5%92%8CGRID/index.html">
+<meta property="og:site_name" content="刘书豪 个人">
+<meta property="og:description" content="GRACE(-FO)二级重力产品以球谐系数形式给出了地球重力场异常在不同频段的分布情况，其后续使用以及科学分析等仍然需要进一步处理（如物理量分离、滤波去噪等）。SAGEA (Satellite Gravity Error Assessment) 项目基于Python，提供了相应的数据下载、数据处理和误差分析等功能，项目开源地址为https:&#x2F;&#x2F;github.com&#x2F;NCSGgroup&#x2F;SaGE">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-07T09:45:06.820Z">
+<meta property="article:modified_time" content="2025-03-07T09:47:06.000Z">
+<meta property="article:author" content="刘书豪">
+<meta property="article:tag" content="卫星重力数据">
+<meta property="article:tag" content="GRACE">
+<meta property="article:tag" content="球谐产品">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/07/SAGEA(1)_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BSHC%E5%92%8CGRID/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SAGEA卫星重力数据处理：数据类型SHC和GRID初步介绍（编辑中） | 刘书豪 个人</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">刘书豪 个人</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/07/SAGEA(1)_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BSHC%E5%92%8CGRID/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘书豪">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘书豪 个人">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SAGEA卫星重力数据处理：数据类型SHC和GRID初步介绍（编辑中）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-03-07 17:45:06 / 修改时间：17:47:06" itemprop="dateCreated datePublished" datetime="2025-03-07T17:45:06+08:00">2025-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SAGEA%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">SAGEA使用手册</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>GRACE(-FO)二级重力产品以球谐系数形式给出了地球重力场异常在不同频段的分布情况，其后续使用以及科学分析等仍然需要进一步处理（如物理量分离、滤波去噪等）。SAGEA
+(Satellite Gravity Error Assessment)
+项目基于Python，提供了相应的数据下载、数据处理和误差分析等功能，项目开源地址为<a target="_blank" rel="noopener" href="https://github.com/NCSGgroup/SaGEA">https://github.com/NCSGgroup/SaGEA</a>
+。本系列作为使用手册，希望可以帮助你更好地使用该工具，如果你在使用过程中有任何问题，欢迎与我讨论（<a href="mailto:liushuhao@hust.edu.cn">liushuhao@hust.edu.cn</a>）。本文将介绍SAGEA中的数据类型SHC（Spherical
+Harmonic Coefficient）和GRID (Gridded
+data)，并对它们的基本用法作简单介绍。</p>
+<span id="more"></span>
+<p>按照项目中README.md的指引安装后，路径<code>pysrc/auxiliary/data_class/</code>下的源文件<code>SHC.py</code>和<code>GRID.py</code>将提供对该工具包核心数据类型的定义。本篇文章主要介绍它们的结构和基本用法。</p>
+<h1 id="球谐系数shc">球谐系数SHC</h1>
+<h2 id="属性和生成">属性和生成</h2>
+<p><code>SHC</code>被实例化后，其核心属性<code>SHC().value</code>以一个<code>numpy.ndarray</code>二维数组给出了一组或多组球谐系数，其中第一个维度是数据的组数，第二个维度则是对该组球谐系数的有序排列，具体为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc = SHC().value</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc</span><br><span class="line"></span><br><span class="line">[[c1[<span class="number">0</span>,<span class="number">0</span>], s1[<span class="number">1</span>,<span class="number">1</span>], c1[<span class="number">1</span>,<span class="number">0</span>], c1[<span class="number">1</span>,<span class="number">1</span>], s1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">0</span>], c1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">3</span>,<span class="number">3</span>] ...],</span><br><span class="line"> [c2[<span class="number">0</span>,<span class="number">0</span>], s2[<span class="number">1</span>,<span class="number">1</span>], c2[<span class="number">1</span>,<span class="number">0</span>], c2[<span class="number">1</span>,<span class="number">1</span>], s2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">0</span>], c2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">3</span>,<span class="number">3</span>] ...],</span><br><span class="line"> [                                        ...                                         ]]</span><br></pre></td></tr></table></figure>
+<p>注意，即使被存储的数据仅含有一组时，其属性<code>.value</code>仍然为一个二维数组，此时的第一维长度为1。另外，如果存储的数据是多组的，那么这些组球谐系数的最大阶次一定是一致的。</p>
+<p>一般来说，<code>SHC</code>不会直接拿来实例化，而是通过<code>load_SHC</code>等函数得到（具体请查看该系列相关文章）。不过仍然可以通过传入数据来得到其实例。具体操作为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shc = SHC(c, s=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<p>有四种方式来传入参数：</p>
+<ol type="1">
+<li>参数<code>c</code>和<code>s</code>都是二维的数组，均以<code>(l,m)</code>的索引方式分别给出cos系数和sin系数的单组球谐系数，其中l是阶索引，m是次索引；</li>
+<li>参数<code>c</code>和<code>s</code>都是二维的数组，均以<code>(q,l,m)</code>的索引方式分别给出cos系数和sin系数的多组球谐系数，其中q是组数索引，l是阶索引，m是次索引；</li>
+<li>参数<code>s</code>为None,
+<code>c</code>是表示一组完整球谐系数的一维数组，以<code>[c[0,0], s[1,1], c[1,0], c[1,1], s[2,2], s[2,1], ...]</code>的顺序给出；</li>
+<li>参数<code>s</code>为None,
+<code>c</code>是表示多组完整球谐系数的二维数组，以<code>[[c1[0,0], s1[1,1], c1[1,0], ...], [c2[0,0], s2[1,1], c2[1,0], ...], ...]</code>的顺序给出。</li>
+</ol>
+<p>不论以哪种方式传入，<code>shc.value</code>的结构与按照前面所描述的一致。</p>
+<h2 id="基本信息获取">基本信息获取</h2>
+<p>如前所述，<code>SHC().value</code>是该类型以二维数组的形式给出，其第一维代表组数，可以用方法<code>SHC().get_length() -&gt; int</code>来得到组数个数，也可以用<code>SHC().is_series() -&gt; bool</code>来判断其是否为多组数据。<code>SHC().value</code>的第二维代表该组的球谐系数，因此，其长度一定是<span class="math inline">\((\text{lmax}+1)^2\)</span>，而不能是任意整数。其中<span class="math inline">\(\text{lmax}\)</span>是整数，代表最大的阶次数，可以用方法<code>SHC().get_lmax() -&gt; int</code>来得到最大的阶次数。</p>
+<p>用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sh_array = np.array([</span><br><span class="line">    [c1[<span class="number">0</span>,<span class="number">0</span>], s1[<span class="number">1</span>,<span class="number">1</span>], c1[<span class="number">1</span>,<span class="number">0</span>], c1[<span class="number">1</span>,<span class="number">1</span>], s1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">0</span>], c1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">3</span>,<span class="number">3</span>] ..., c1[<span class="number">96</span>,<span class="number">96</span>]],</span><br><span class="line">	[c2[<span class="number">0</span>,<span class="number">0</span>], s2[<span class="number">1</span>,<span class="number">1</span>], c2[<span class="number">1</span>,<span class="number">0</span>], c2[<span class="number">1</span>,<span class="number">1</span>], s2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">0</span>], c2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">3</span>,<span class="number">3</span>] ..., c2[<span class="number">96</span>,<span class="number">96</span>]],</span><br><span class="line">])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc = SHC(sh_array)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc.get_length()</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc.is_series()</span><br><span class="line"><span class="literal">True</span></span><br><span class="line">&gt;&gt;&gt;shc.get_lmax()</span><br><span class="line"><span class="number">96</span></span><br></pre></td></tr></table></figure>
+<p>有时用户需要得到以二维矩阵形式给出的c,
+s系数，可以用方法<code>SHC().get_CS2d()</code>实现。该方法返回的是一个二维元组，分别是系数c构成的<code>numpy.ndarray</code>三维数组和s构成的<code>numpy.ndarray</code>三维数组。其中第一维度是组数，第二维度是阶索引l，第三维度是次索引m。注意即使<code>SHC().is_series() is False</code>，方法<code>SHC().get_CS2d()</code>返回的c和s仍然是三维的，此时第一维长度是1。具体如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sh_array = np.array([</span><br><span class="line">    [c1[<span class="number">0</span>,<span class="number">0</span>], s1[<span class="number">1</span>,<span class="number">1</span>], c1[<span class="number">1</span>,<span class="number">0</span>], c1[<span class="number">1</span>,<span class="number">1</span>], s1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">0</span>], c1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">3</span>,<span class="number">3</span>] ..., c1[<span class="number">96</span>,<span class="number">96</span>]],</span><br><span class="line">	[c2[<span class="number">0</span>,<span class="number">0</span>], s2[<span class="number">1</span>,<span class="number">1</span>], c2[<span class="number">1</span>,<span class="number">0</span>], c2[<span class="number">1</span>,<span class="number">1</span>], s2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">0</span>], c2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">3</span>,<span class="number">3</span>] ..., c2[<span class="number">96</span>,<span class="number">96</span>]],</span><br><span class="line">])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc = SHC(sh_array)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c, s = SHC().get_CS2d()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.shape, s.shape</span><br><span class="line">(<span class="number">1</span>, <span class="number">97</span>, <span class="number">97</span>), (<span class="number">1</span>, <span class="number">97</span>, <span class="number">97</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="球谐系数的加减">球谐系数的加减</h2>
+<p><code>SHC</code>添加了内置魔法方法<code>__add__(self, other)</code>,
+<code>__sub__(self, other)</code>以实现两个<code>SHC</code>实例的加减运算，实现的本质是二者属性<code>value</code>的的加减。因此，它们的运算规则应该与相应的数组加减规则一致。如这句代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc_1 + shc_2</span><br></pre></td></tr></table></figure>
+<p>返回的结果是一个新的<code>SHC</code>实例，其属性<code>value</code>应该等于<code>shc_1.value + shc_2.value</code>。并且计算过程中，应该满足下列条件之一：</p>
+<ol type="1">
+<li><code>shc_2.value.shape</code>与<code>shc_1.value.shape</code>一致，即二者拥有同样的组数和最大阶次。此时分别计算每组对应系数的相加；</li>
+<li><code>shc_2.is_series is False</code>，即<code>shc_2</code>仅代表一组球谐系数。此时<code>shc_1</code>中的每一组系数分别与<code>shc_2</code>代表的这一组系数相加。</li>
+</ol>
+<p>这些规则同样适用于相减的情况。</p>
+<p>实际应用中，有时候可能只需要从某一阶开始或结束加减，此时可以使用方法<code>SHC().add(other, lbegin, lend)</code>和<code>SHC()..value(other, lbegin, lend)</code>。其中参数<code>other</code>是<code>SHC</code>的实例，<code>lbegin</code>和<code>lend</code>均以<code>int</code>类型给出，分别代表从哪一阶开始（含）加减，从哪一阶结束（含）加减。返回的结果是自身按照相应规则加减被传入参数<code>other</code>后的<code>SHC</code>实例。具体如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc1 = SHC(np.array([</span><br><span class="line">    [c1[<span class="number">0</span>,<span class="number">0</span>], s1[<span class="number">1</span>,<span class="number">1</span>], c1[<span class="number">1</span>,<span class="number">0</span>], c1[<span class="number">1</span>,<span class="number">1</span>], s1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">0</span>], c1[<span class="number">2</span>,<span class="number">1</span>], c1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">3</span>,<span class="number">3</span>] ..., c1[<span class="number">61</span>,<span class="number">61</span>]],</span><br><span class="line">]))</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc2 = SHC(np.array([</span><br><span class="line">    [c2[<span class="number">0</span>,<span class="number">0</span>], s2[<span class="number">1</span>,<span class="number">1</span>], c2[<span class="number">1</span>,<span class="number">0</span>], c2[<span class="number">1</span>,<span class="number">1</span>], s2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">0</span>], c2[<span class="number">2</span>,<span class="number">1</span>], c2[<span class="number">2</span>,<span class="number">2</span>], s2[<span class="number">3</span>,<span class="number">3</span>] ..., c2[<span class="number">61</span>,<span class="number">61</span>]],</span><br><span class="line">]))</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc1.add(shc2, lbegin=<span class="number">0</span>, lend=<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc1.value</span><br><span class="line">np.array([</span><br><span class="line">    [c1[<span class="number">0</span>,<span class="number">0</span>]+c2[<span class="number">0</span>,<span class="number">0</span>], s1[<span class="number">1</span>,<span class="number">1</span>] + s2[<span class="number">1</span>,<span class="number">1</span>], c1[<span class="number">1</span>,<span class="number">0</span>]  +c2[<span class="number">1</span>,<span class="number">0</span>], c1[<span class="number">1</span>,<span class="number">1</span>] + c2[<span class="number">1</span>,<span class="number">1</span>], s1[<span class="number">2</span>,<span class="number">2</span>], s1[<span class="number">2</span>,<span class="number">1</span>], ...],</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>基于加减方法，<code>SHC()</code>还定义了<code>.de_background(background: SHC=None)</code>方法，即扣除背景场。参数<code>background</code>以<code>SHC</code>实例的形式传入，或者为<code>None</code>。如果。如果参数<code>background</code>是<code>SHC</code>实例，需要确保<code>background.is_series() if False</code>，即传入的背景场必须是单组球谐系数，此时返回的结果等价于自身每一组球谐系数减去背景场后构成的<code>SHC</code>实例。如果<code>back_ground is None</code>，则扣除自身所有组球谐系数的平均值。具体如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc.de_background(shc_bg).value == (shc - shc_bg).value</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shc.de_background().value == shc.value - numpy.mean(shc.value, axis=<span class="number">0</span>)</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="阶方差rss和rms的获取待续">阶方差RSS和RMS的获取（待续）</h2>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8D%AB%E6%98%9F%E9%87%8D%E5%8A%9B%E6%95%B0%E6%8D%AE/" rel="tag"># 卫星重力数据</a>
+              <a href="/tags/GRACE/" rel="tag"># GRACE</a>
+              <a href="/tags/%E7%90%83%E8%B0%90%E4%BA%A7%E5%93%81/" rel="tag"># 球谐产品</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/05/%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%BC%A0%E6%92%AD%E5%AE%9A%E5%BE%8B/" rel="prev" title="误差理论：协方差传播定律">
+      <i class="fa fa-chevron-left"></i> 误差理论：协方差传播定律
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%83%E8%B0%90%E7%B3%BB%E6%95%B0shc"><span class="nav-number">1.</span> <span class="nav-text">球谐系数SHC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%92%8C%E7%94%9F%E6%88%90"><span class="nav-number">1.1.</span> <span class="nav-text">属性和生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96"><span class="nav-number">1.2.</span> <span class="nav-text">基本信息获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%83%E8%B0%90%E7%B3%BB%E6%95%B0%E7%9A%84%E5%8A%A0%E5%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">球谐系数的加减</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6%E6%96%B9%E5%B7%AErss%E5%92%8Crms%E7%9A%84%E8%8E%B7%E5%8F%96%E5%BE%85%E7%BB%AD"><span class="nav-number">1.4.</span> <span class="nav-text">阶方差RSS和RMS的获取（待续）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘书豪</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LiuSH1997" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LiuSH1997" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liushuhao@hust.edu.cn" title="E-Mail → mailto:liushuhao@hust.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘书豪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
