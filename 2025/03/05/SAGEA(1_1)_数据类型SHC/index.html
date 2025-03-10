@@ -305,11 +305,11 @@ s系数，可以用方法<code>SHC().get_CS2d()</code>实现。该方法返回�
 <p>顾名思义，<code>from_type</code>定义自身目前代表的物理量类型，<code>to_type</code>定义了转换后的物理量类型。它们缺省值均为<code>None</code>，并且当传入<code>None</code>时，程序将为其赋值为<code>PhysicalDimensions.Dimensionless</code>。使用中，如果一个<code>SHC</code>实例在调用<code>.convert_type()</code>时会改变自身的值<code>.value</code>。</p>
 <p>而阶方差的形式在不同情景下会使用RMS (Root Mean Squre)或RSS (Root Sum
 Squre)，即 <span class="math display">\[
-\text{RMS}(l) = \left(\cfrac{1}{2l+1} \sum_{m=0}^l \left( C_{l,m}^2 +
-S_{l,m}^2 \right) \right) ^ {\cfrac{1}{2}} ,
+\text{RMS}(l) = \left(\cfrac{1}{2l+1} \left( C_{l,0}^2 + \sum_{m=1}^l
+\left( C_{l,m}^2 + S_{l,m}^2 \right) \right) \right) ^ {\cfrac{1}{2}} ,
 \]</span> 或 <span class="math display">\[
-\text{RSS}(l) = \left( \sum_{m=0}^l \left( C_{l,m}^2 + S_{l,m}^2 \right)
-\right) ^ {\cfrac{1}{2}} .
+\text{RSS}(l) = \left( C_{l,0}^2 + \sum_{m=1}^l \left( C_{l,m}^2 +
+S_{l,m}^2 \right) \right) ^ {\cfrac{1}{2}} .
 \]</span>
 对应的<code>SHC()</code>方法分别是<code>.get_degree_rms()</code>和<code>.get_degree_rss()</code>。对于<code>.value.shape == (n, (lmax+1)^2)</code>情况，这两种方法返回的结果形状为<code>(n, lmax + 1)</code>，其中<code>n</code>是组数,
 <code>lmax</code>是最大阶数。具体使用如下：</p>
